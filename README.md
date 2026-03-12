@@ -1,1 +1,94 @@
-# Bulgarian Learning App
+# Bulgarian Learning App 🇧🇬
+
+A comprehensive Flutter mobile application for learning the Bulgarian language from absolute beginner (A1) to advanced mastery (C2).
+
+## Features
+
+- **Alphabet Trainer** — All 30 Cyrillic letters with pronunciation guides, example words, and quiz mode
+- **Vocabulary Trainer** — Animated flashcard system with spaced repetition (SRS) across 9 categories (110+ words)
+- **Grammar Lessons** — 7 structured topics (A1–B1) with examples and multiple-choice quizzes
+- **Pronunciation Trainer** — Phonetic guides for every letter and word
+- **Listening Practice** — 3 authentic dialogues with comprehension quizzes
+- **Speaking Practice** — 15 phrases with level filter and context hints
+- **Reading Practice** — 3 texts (A1–B1) with translation toggle and comprehension quizzes
+- **Writing Practice** — Translation and fill-in-the-blank exercises with instant feedback
+- **Progress Analytics** — XP chart, streak, words learned, level roadmap
+- **Settings** — Dark mode toggle, daily XP goal selector
+
+## Gamification
+
+- 🔥 Daily streak system (auto-updated on login)
+- ⭐ XP points: 10/lesson · 5/word · 15/quiz
+- 📈 Level progression: A1 → A2 → B1 → B2 → C1 → C2
+- 🏆 All progress persisted offline via SharedPreferences
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Flutter 3.x (Material 3) |
+| State Management | Riverpod 2.x |
+| Navigation | go_router (StatefulShellRoute) |
+| Local Storage | SharedPreferences (offline-first) |
+| Charts | fl_chart |
+| Fonts | Google Fonts (Noto Sans – Cyrillic support) |
+| Architecture | Clean Architecture, feature-based modules |
+
+## Project Structure
+
+```
+lib/
+├── main.dart                    # Entry point (ProviderScope + SharedPrefs init)
+├── app.dart                     # MaterialApp.router + dark/light theme
+├── core/
+│   ├── constants/               # AppConstants, BulgarianData (all lesson content)
+│   ├── providers/               # SharedPreferencesProvider
+│   ├── router/                  # GoRouter with bottom navigation shell
+│   ├── theme/                   # Light and dark Material 3 themes
+│   └── widgets/                 # Shared UI components
+├── data/
+│   ├── models/                  # Word, Lesson, UserProgress, Exercise
+│   └── repositories/            # ProgressRepository (CRUD) + UserProgressNotifier
+└── features/
+    ├── home/                    # Dashboard: streak, XP, level cards, module grid
+    ├── alphabet/                # 30 Cyrillic letters grid + quiz mode
+    ├── vocabulary/              # Flashcards with SRS (9 categories)
+    ├── grammar/                 # 7 topics with expandable explanations + quizzes
+    ├── pronunciation/           # Phonetic letter guide
+    ├── listening/               # Dialogues with comprehension quiz
+    ├── speaking/                # Phrase practice with level filter
+    ├── reading/                 # Reading texts with translation + quiz
+    ├── writing/                 # Translation and fill-in-the-blank
+    ├── progress/                # Analytics (bar charts, level roadmap)
+    └── settings/                # Dark mode, daily goal
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Flutter SDK ≥ 3.0.0
+- Dart SDK ≥ 3.0.0
+
+### Installation
+
+```bash
+flutter pub get
+flutter run
+```
+
+### Running Tests
+
+```bash
+flutter test
+```
+
+## Future Enhancements
+
+- [ ] Bulgarian TTS audio integration (`flutter_tts`)
+- [ ] Speech recognition for pronunciation scoring
+- [ ] AI conversation partner (GPT-based)
+- [ ] Cloud sync and user accounts
+- [ ] Teacher mode and community practice
+- [ ] Multiplayer vocabulary games
+- [ ] Content marketplace
