@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/lesson_session_model.dart';
+import '../models/srs_model.dart';
 import '../models/user_learning_profile.dart';
 import 'srs_service.dart';
 
@@ -24,50 +25,78 @@ class EvaluationService {
     final correctCount = answers.where((a) => a.isCorrect).length;
     final accuracy = answers.isEmpty ? 0.0 : correctCount / answers.length;
 
-    // Calculate XP.
     int xpEarned = 0;
+    final weakItems = <String>{};
+    final strongItems = <String>{};
+    final mistakes = <MistakeRecord>[];
+
     for (final answer in answers) {
-      if (answer.isCorrect) {
-        // Base points for the exercise.
-        final exercise = session.exercises.firstWhere(
-          (e) => e.id == answer.exerciseId,
-          orElse: () => session.exercises.first,
+      final exercise = session.exercises.firstWhere(
+        (e) => e.id == answer.exerciseId,
+        orElse: () => session.exercises.first,
+      );
+
+      if (answer.itemId == null) {
+        xpEarned += _xpForAnswer(
+          answer: answer,
+          exercise: exercise,
+          card: null,
         );
-        xpEarned += exercise.points;
+        continue;
       }
-    }
 
-    // Accuracy bonus.
-    if (accuracy >= 0.9) xpEarned += 5;
-    if (accuracy >= 1.0) xpEarned += 5; // perfect bonus
+      final itemId = answer.itemId!;
+      final card = _srsService.getOrCreateCard(session.languageId, itemId, 'word');
+      final quality = _answerToQuality(
+        answer,
+        exerciseType: answer.exerciseType,
+        previousCard: card,
+      );
 
-    // Streak bonus.
-    final streakBonus = streakDays >= 7 ? 10 : (streakDays >= 3 ? 5 : 0);
-    xpEarned += streakBonus;
-
-    // Identify weak and strong items.
-    final weakItems = <String>[];
-    final strongItems = <String>[];
-    for (final answer in answers) {
-      if (answer.itemId == null) continue;
-      if (answer.isCorrect) {
-        strongItems.add(answer.itemId!);
-      } else {
-        weakItems.add(answer.itemId!);
-      }
-    }
-
-    // Update SRS cards for each answered item.
-    for (final answer in answers) {
-      if (answer.itemId == null) continue;
-      final quality = _answerToQuality(answer);
       await _srsService.processAnswer(
         session.languageId,
-        answer.itemId!,
+        itemId,
         'word',
         quality,
       );
+
+      xpEarned += _xpForAnswer(
+        answer: answer,
+        exercise: exercise,
+        card: card,
+      );
+
+      if (answer.isCorrect) {
+        strongItems.add(itemId);
+      } else {
+        weakItems.add(itemId);
+      }
+
+      final taggedError = answer.errorType ?? _tagError(answer);
+      if (!answer.isCorrect || _isFragileCorrect(answer)) {
+        mistakes.add(MistakeRecord(
+          atomId: itemId,
+          exerciseType: answer.exerciseType,
+          errorType: taggedError,
+          userResponse: answer.userAnswer,
+          expectedResponse: answer.correctAnswer,
+          latency: answer.responseTime,
+          hintsUsed: answer.hintsUsed,
+          timestamp: DateTime.now(),
+          contextSentenceId: answer.contextSentenceId,
+          severityScore: _severityScore(
+            answer: answer,
+            card: card,
+            quality: quality,
+          ),
+        ));
+      }
     }
+
+    if (accuracy >= 0.9) xpEarned += 4;
+    if (accuracy >= 1.0) xpEarned += 4;
+    final streakBonus = streakDays >= 7 ? 8 : (streakDays >= 3 ? 4 : 0);
+    xpEarned += streakBonus;
 
     return SessionResult(
       sessionId: session.id,
@@ -82,8 +111,9 @@ class EvaluationService {
         (sum, a) => sum + a.responseTime,
       ),
       exerciseResults: answers,
-      weakItems: weakItems,
-      strongItems: strongItems,
+      weakItems: weakItems.toList(),
+      strongItems: strongItems.toList(),
+      mistakes: mistakes,
       isPerfect: accuracy >= 1.0,
     );
   }
@@ -200,21 +230,150 @@ class EvaluationService {
       base -= 2;
     }
 
-    return base.clamp(1, 10);
+    return (base.clamp(1, 10)) as int;
   }
 
   /// Convert an exercise result to SM-2 quality score (0–5).
-  int _answerToQuality(ExerciseResult result) {
+  int _answerToQuality(
+    ExerciseResult result, {
+    required ExerciseType exerciseType,
+    SrsCard? previousCard,
+  }) {
     if (!result.isCorrect) {
-      // Wrong answer: use time to differentiate severity.
-      if (result.responseTime.inSeconds < 3) return 1; // guessed wrong
-      return 2; // tried but wrong
+      if (result.attempts > 1 || result.hintsUsed > 0) return 2;
+      return 1;
     }
 
-    // Correct answer: distinguish by response time and type.
-    if (result.responseTime.inSeconds < 3) return 5; // instant recall
-    if (result.responseTime.inSeconds < 8) return 4; // good recall
-    return 3; // correct but slow
+    final expectedSeconds = _expectedLatency(exerciseType);
+    final ratio = expectedSeconds == 0
+        ? 1.0
+        : result.responseTime.inMilliseconds / (expectedSeconds * 1000);
+
+    var quality = 4;
+    if (ratio <= 0.7 && result.hintsUsed == 0 && result.attempts <= 1) {
+      quality = 5;
+    } else if (ratio > 1.35 || result.hintsUsed > 0 || result.attempts > 1) {
+      quality = 3;
+    }
+
+    if (previousCard != null && previousCard.overdueDays >= 3 && quality >= 4) {
+      quality = 5;
+    }
+    return quality;
+  }
+
+  int _xpForAnswer({
+    required ExerciseResult answer,
+    required SessionExercise exercise,
+    required SrsCard? card,
+  }) {
+    final base = exercise.points;
+    final typeWeight = _typeWeight(answer.exerciseType);
+    final latencySeconds = answer.responseTime.inMilliseconds / 1000;
+    final expectedSeconds = _expectedLatency(answer.exerciseType).toDouble();
+    final speedFactor = (expectedSeconds / (latencySeconds + 0.5)).clamp(0.6, 1.25);
+    final hintPenalty = (answer.hintsUsed * 0.12).clamp(0.0, 0.35);
+    final attemptPenalty = ((answer.attempts - 1) * 0.08).clamp(0.0, 0.25);
+
+    var xp = base * typeWeight;
+    if (answer.isCorrect) {
+      xp *= (speedFactor - hintPenalty - attemptPenalty).clamp(0.45, 1.35);
+      if (card != null && card.totalReviews == 0) xp += 2; // novelty stabilize bonus
+      if (card != null && card.overdueDays > 0) xp += 1; // overdue recovery bonus
+    } else {
+      xp *= 0.1;
+    }
+    return (xp.round().clamp(0, 30)) as int;
+  }
+
+  bool _isFragileCorrect(ExerciseResult answer) {
+    if (!answer.isCorrect) return false;
+    return answer.hintsUsed > 0 || answer.attempts > 1 || answer.responseTime.inSeconds >= 12;
+  }
+
+  int _severityScore({
+    required ExerciseResult answer,
+    required SrsCard card,
+    required int quality,
+  }) {
+    var severity = 3;
+    if (!answer.isCorrect) severity += 3;
+    severity += (answer.hintsUsed.clamp(0, 2)) as int;
+    if (answer.responseTime.inSeconds > 12) severity += 1;
+    if (card.failureStreak >= 2) severity += 2;
+    if (quality <= 1) severity += 1;
+    return (severity.clamp(1, 10)) as int;
+  }
+
+  ErrorType _tagError(ExerciseResult result) {
+    if (!result.isCorrect && result.userAnswer.trim().isEmpty) {
+      return ErrorType.recallFailure;
+    }
+
+    final expected = result.correctAnswer.trim().toLowerCase();
+    final got = result.userAnswer.trim().toLowerCase();
+
+    switch (result.exerciseType) {
+      case ExerciseType.mcq:
+      case ExerciseType.match:
+        return ErrorType.comprehension;
+      case ExerciseType.fillBlank:
+        if (_looksLikeSameStem(got, expected)) return ErrorType.morphology;
+        return ErrorType.orthography;
+      case ExerciseType.translate:
+        if (_looksLikeWordOrderIssue(got, expected)) return ErrorType.syntax;
+        return ErrorType.comprehension;
+      case ExerciseType.sentenceBuild:
+        return ErrorType.syntax;
+      case ExerciseType.listening:
+        return ErrorType.phonology;
+    }
+  }
+
+  bool _looksLikeSameStem(String got, String expected) {
+    if (got.isEmpty || expected.isEmpty) return false;
+    final shortest = got.length < expected.length ? got.length : expected.length;
+    if (shortest < 3) return false;
+    return got.substring(0, 3) == expected.substring(0, 3) && got != expected;
+  }
+
+  bool _looksLikeWordOrderIssue(String got, String expected) {
+    if (got == expected) return false;
+    final gotWords = got.split(RegExp(r'\s+'))..sort();
+    final expectedWords = expected.split(RegExp(r'\s+'))..sort();
+    return gotWords.join(' ') == expectedWords.join(' ');
+  }
+
+  double _typeWeight(ExerciseType type) {
+    switch (type) {
+      case ExerciseType.mcq:
+        return 0.8;
+      case ExerciseType.match:
+        return 0.85;
+      case ExerciseType.fillBlank:
+        return 1.0;
+      case ExerciseType.translate:
+        return 1.2;
+      case ExerciseType.sentenceBuild:
+        return 1.1;
+      case ExerciseType.listening:
+        return 1.15;
+    }
+  }
+
+  int _expectedLatency(ExerciseType type) {
+    switch (type) {
+      case ExerciseType.mcq:
+      case ExerciseType.match:
+        return 4;
+      case ExerciseType.fillBlank:
+        return 7;
+      case ExerciseType.translate:
+      case ExerciseType.sentenceBuild:
+        return 10;
+      case ExerciseType.listening:
+        return 8;
+    }
   }
 }
 

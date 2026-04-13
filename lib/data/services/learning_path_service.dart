@@ -49,15 +49,26 @@ class LearningPathService {
   }) {
     final recommendations = <PathRecommendation>[];
 
+    final urgentRepairs = _srsService.getUrgentCards(languageId, limit: 5).length;
+    if (urgentRepairs > 0) {
+      recommendations.add(PathRecommendation(
+        action: PathAction.review,
+        title: 'Repair Weak Spots',
+        description: '$urgentRepairs high-risk items need immediate repair.',
+        estimatedMinutes: 3,
+        priority: 1,
+      ));
+    }
+
     // Priority 1: Urgent SRS reviews
     final dueCount = _srsService.getDailyReviewCount(languageId);
     if (dueCount > 5) {
       recommendations.add(PathRecommendation(
         action: PathAction.review,
-        title: 'Review Time',
+        title: 'Delayed Retrieval Review',
         description: '$dueCount items need review to maintain retention.',
-        estimatedMinutes: 2,
-        priority: 1,
+        estimatedMinutes: 6,
+        priority: urgentRepairs > 0 ? 2 : 1,
       ));
     }
 
@@ -83,8 +94,8 @@ class LearningPathService {
           title: 'New Lesson',
           description: 'Ready for something new!',
           lessonId: nextLessonId,
-          estimatedMinutes: 3,
-          priority: profile?.isExcelling == true ? 1 : 3,
+          estimatedMinutes: 6,
+          priority: profile?.isExcelling == true ? 2 : 3,
         ));
       }
     }
@@ -178,6 +189,6 @@ class LearningPathService {
 
   int _countRemainingLessons(UserProgressModel progress) {
     const total = 10; // A1 lessons
-    return total - progress.lessonsCompleted.clamp(0, total);
+    return total - ((progress.lessonsCompleted.clamp(0, total)) as int);
   }
 }

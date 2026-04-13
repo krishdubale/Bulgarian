@@ -77,8 +77,7 @@ class SrsService {
 
   /// Get a limited review queue for daily review.
   List<SrsCard> getReviewQueue(String languageId, {int limit = 15}) {
-    final due = getDueCards(languageId);
-    return due.take(limit).toList();
+    return getAdaptiveReviewQueue(languageId, limit: limit);
   }
 
   /// Get the weakest items (lowest easeFactor, highest error rate).
@@ -97,6 +96,68 @@ class SrsService {
   /// Number of items due for review today.
   int getDailyReviewCount(String languageId) {
     return getDueCards(languageId).length;
+  }
+
+  /// High-risk cards that need urgent repair work.
+  List<SrsCard> getUrgentCards(String languageId, {int limit = 10}) {
+    final cards = loadCards(languageId).values.toList();
+    final urgent = cards
+        .where((c) => c.failureStreak >= 2 || c.overdueDays >= 3)
+        .toList();
+    urgent.sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
+    return urgent.take(limit).toList();
+  }
+
+  /// Fragile items with low stability score.
+  List<SrsCard> getFragileCards(String languageId, {int limit = 20}) {
+    final cards = loadCards(languageId).values.toList();
+    final fragile = cards.where((c) => c.stabilityScore < 0.72).toList();
+    fragile.sort((a, b) => a.stabilityScore.compareTo(b.stabilityScore));
+    return fragile.take(limit).toList();
+  }
+
+  /// Interleaved adaptive queue:
+  /// 40% mature due + 40% fragile/recent + 20% hotspots.
+  List<SrsCard> getAdaptiveReviewQueue(String languageId, {int limit = 15}) {
+    if (limit <= 0) return [];
+
+    final due = getDueCards(languageId);
+    final matureDue = due.where((c) => c.stabilityScore >= 0.72).toList();
+    final fragile = getFragileCards(languageId, limit: limit * 2);
+    final hotspots = getUrgentCards(languageId, limit: limit * 2);
+
+    final matureTarget = (limit * 0.4).round();
+    final fragileTarget = (limit * 0.4).round();
+    final hotspotTarget = limit - matureTarget - fragileTarget;
+
+    final queue = <SrsCard>[];
+    final seen = <String>{};
+
+    void takeCards(List<SrsCard> source, int count) {
+      var remaining = count;
+      for (final card in source) {
+        if (queue.length >= limit || remaining <= 0) break;
+        if (seen.add(card.itemId)) {
+          queue.add(card);
+          remaining--;
+        }
+      }
+    }
+
+    takeCards(matureDue, matureTarget);
+    takeCards(fragile, fragileTarget);
+    takeCards(hotspots, hotspotTarget);
+
+    if (queue.length < limit) {
+      takeCards(due, limit - queue.length);
+    }
+    if (queue.length < limit) {
+      final all = loadCards(languageId).values.toList()
+        ..sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
+      takeCards(all, limit - queue.length);
+    }
+
+    return queue.take(limit).toList();
   }
 
   /// Get items that haven't been seen in [days] days.

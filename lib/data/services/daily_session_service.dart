@@ -37,10 +37,11 @@ class DailySessionService {
         ? _evaluationService.getRecommendedDifficulty(profile)
         : 3;
 
-    // 1. Warm-up: review SRS due items.
+    // 1. Repair: urgent mistakes/high-risk due items.
     LessonSession? warmup;
+    final urgentCount = _srsService.getUrgentCards(languageId, limit: 5).length;
     final dueCount = _srsService.getDailyReviewCount(languageId);
-    if (dueCount > 0) {
+    if (urgentCount > 0 || dueCount > 0) {
       warmup = await _sessionGenerator.generateWarmupSession(
         languageId: languageId,
       );
@@ -58,7 +59,7 @@ class DailySessionService {
       );
     }
 
-    // 3. Practice: mix weak and new items.
+    // 3. Review: delayed retrieval from weak + due items.
     final practice = await _sessionGenerator.generatePracticeSession(
       languageId: languageId,
       difficulty: difficulty,
@@ -74,16 +75,16 @@ class DailySessionService {
     int totalMinutes = 0;
     int totalActivities = 0;
     if (warmup != null) {
-      totalMinutes += 2;
-      totalActivities++;
-    }
-    if (newLesson != null) {
       totalMinutes += 3;
       totalActivities++;
     }
-    totalMinutes += 2; // practice always exists
+    if (newLesson != null) {
+      totalMinutes += 6;
+      totalActivities++;
+    }
+    totalMinutes += 6; // review/practice always exists
     totalActivities++;
-    totalMinutes += 2; // challenge
+    totalMinutes += 2; // micro-check/challenge
     totalActivities++;
 
     return DailyPlan(
@@ -102,18 +103,24 @@ class DailySessionService {
     UserLearningProfile? profile,
     required String languageId,
   }) {
-    // Priority 1: Review if SRS items are due.
+    // Priority 1: Repair urgent weak items.
+    final urgentCount = _srsService.getUrgentCards(languageId, limit: 5).length;
+    if (urgentCount > 0) {
+      return LearningAction.review;
+    }
+
+    // Priority 2: Review if SRS items are due.
     final dueCount = _srsService.getDailyReviewCount(languageId);
     if (dueCount > 3) {
       return LearningAction.review;
     }
 
-    // Priority 2: Practice if struggling.
+    // Priority 3: Practice if struggling.
     if (profile != null && profile.isStruggling) {
       return LearningAction.practice;
     }
 
-    // Priority 3: Continue with lessons.
+    // Priority 4: Continue with lessons.
     return LearningAction.nextLesson;
   }
 

@@ -8,6 +8,17 @@ enum ExerciseType {
   listening,
 }
 
+/// Canonical learning error taxonomy used by the adaptive engine.
+enum ErrorType {
+  comprehension,
+  recallFailure,
+  morphology,
+  syntax,
+  orthography,
+  phonology,
+  falseFriend,
+}
+
 /// A complete interactive learning session.
 class LessonSession {
   final String id;
@@ -84,6 +95,7 @@ class SessionResult {
   final List<ExerciseResult> exerciseResults;
   final List<String> weakItems; // items to reinforce
   final List<String> strongItems; // items mastered
+  final List<MistakeRecord> mistakes;
   final bool isPerfect;
 
   const SessionResult({
@@ -98,6 +110,7 @@ class SessionResult {
     required this.exerciseResults,
     this.weakItems = const [],
     this.strongItems = const [],
+    this.mistakes = const [],
     this.isPerfect = false,
   });
 }
@@ -111,6 +124,11 @@ class ExerciseResult {
   final String correctAnswer;
   final Duration responseTime;
   final ExerciseType exerciseType;
+  final int hintsUsed;
+  final int attempts;
+  final String? contextSentenceId;
+  final ErrorType? errorType;
+  final bool usedScaffold;
 
   const ExerciseResult({
     required this.exerciseId,
@@ -120,6 +138,38 @@ class ExerciseResult {
     required this.correctAnswer,
     required this.responseTime,
     required this.exerciseType,
+    this.hintsUsed = 0,
+    this.attempts = 1,
+    this.contextSentenceId,
+    this.errorType,
+    this.usedScaffold = false,
+  });
+}
+
+/// Stores a tagged weak or wrong response for remediation and review priority.
+class MistakeRecord {
+  final String atomId;
+  final ExerciseType exerciseType;
+  final ErrorType errorType;
+  final String userResponse;
+  final String expectedResponse;
+  final Duration latency;
+  final int hintsUsed;
+  final DateTime timestamp;
+  final String? contextSentenceId;
+  final int severityScore; // 1-10
+
+  const MistakeRecord({
+    required this.atomId,
+    required this.exerciseType,
+    required this.errorType,
+    required this.userResponse,
+    required this.expectedResponse,
+    required this.latency,
+    required this.hintsUsed,
+    required this.timestamp,
+    this.contextSentenceId,
+    required this.severityScore,
   });
 }
 
@@ -146,10 +196,10 @@ class DailyPlan {
     if (warmup != null) {
       list.add(DailyActivity(
         type: SessionType.warmup,
-        title: 'Warm-up Review',
-        description: 'Review previous words',
+        title: 'Repair',
+        description: 'Fix urgent mistakes',
         session: warmup!,
-        estimatedMinutes: 2,
+        estimatedMinutes: 3,
       ));
     }
     if (newLesson != null) {
@@ -158,16 +208,16 @@ class DailyPlan {
         title: 'New Lesson',
         description: 'Learn something new',
         session: newLesson!,
-        estimatedMinutes: 3,
+        estimatedMinutes: 6,
       ));
     }
     if (practice != null) {
       list.add(DailyActivity(
         type: SessionType.practice,
-        title: 'Practice',
-        description: 'Strengthen your skills',
+        title: 'Review',
+        description: 'Delayed retrieval practice',
         session: practice!,
-        estimatedMinutes: 2,
+        estimatedMinutes: 6,
       ));
     }
     if (challenge != null) {

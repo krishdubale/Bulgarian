@@ -13,6 +13,7 @@ class SrsCard {
   final int totalReviews;
   final int correctCount;
   final int incorrectCount;
+  final int failureStreak;
 
   const SrsCard({
     required this.itemId,
@@ -25,6 +26,7 @@ class SrsCard {
     this.totalReviews = 0,
     this.correctCount = 0,
     this.incorrectCount = 0,
+    this.failureStreak = 0,
   });
 
   factory SrsCard.create({
@@ -54,11 +56,24 @@ class SrsCard {
   double get accuracy =>
       totalReviews > 0 ? (correctCount / totalReviews) * 100 : 0;
 
+  /// Memory strength estimate (0.0–1.0) used for adaptive queueing.
+  double get stabilityScore {
+    final intervalScore = ((interval / 30).clamp(0.0, 1.0)).toDouble();
+    final easeScore = (((easeFactor - 1.3) / (2.8 - 1.3)).clamp(0.0, 1.0))
+        .toDouble();
+    final accuracyScore = ((accuracy / 100).clamp(0.0, 1.0)).toDouble();
+    final penalty = ((failureStreak * 0.08).clamp(0.0, 0.4)).toDouble();
+    final weighted =
+        (intervalScore * 0.35) + (easeScore * 0.30) + (accuracyScore * 0.35);
+    return ((weighted - penalty).clamp(0.0, 1.0)).toDouble();
+  }
+
   /// Priority score for review queue — higher = more urgent.
   double get reviewPriority {
     return (overdueDays * 2.0) +
         (incorrectCount * 1.5) -
-        (easeFactor * 0.5);
+        (easeFactor * 0.5) +
+        (failureStreak * 2.0);
   }
 
   /// Process an answer using SM-2 algorithm.
@@ -76,20 +91,13 @@ class SrsCard {
     int newRepetition;
     double newEaseFactor;
 
-    if (quality >= 3) {
-      // Correct response
-      if (repetitionCount == 0) {
-        newInterval = 1;
-      } else if (repetitionCount == 1) {
-        newInterval = 6;
-      } else {
-        newInterval = (interval * easeFactor).round();
-      }
+    final wasSuccessful = quality >= 3;
+    if (wasSuccessful) {
       newRepetition = repetitionCount + 1;
+      newInterval = _successfulInterval(newRepetition, quality);
     } else {
-      // Incorrect — reset
       newRepetition = 0;
-      newInterval = 1;
+      newInterval = _failedInterval(quality);
     }
 
     // Update ease factor
@@ -107,8 +115,9 @@ class SrsCard {
       nextReviewDate: now.add(Duration(days: newInterval)),
       lastReviewDate: now,
       totalReviews: totalReviews + 1,
-      correctCount: quality >= 3 ? correctCount + 1 : correctCount,
-      incorrectCount: quality < 3 ? incorrectCount + 1 : incorrectCount,
+      correctCount: wasSuccessful ? correctCount + 1 : correctCount,
+      incorrectCount: !wasSuccessful ? incorrectCount + 1 : incorrectCount,
+      failureStreak: wasSuccessful ? 0 : failureStreak + 1,
     );
   }
 
@@ -123,6 +132,7 @@ class SrsCard {
     int? totalReviews,
     int? correctCount,
     int? incorrectCount,
+    int? failureStreak,
   }) {
     return SrsCard(
       itemId: itemId ?? this.itemId,
@@ -135,6 +145,7 @@ class SrsCard {
       totalReviews: totalReviews ?? this.totalReviews,
       correctCount: correctCount ?? this.correctCount,
       incorrectCount: incorrectCount ?? this.incorrectCount,
+      failureStreak: failureStreak ?? this.failureStreak,
     );
   }
 
@@ -149,6 +160,7 @@ class SrsCard {
         'totalReviews': totalReviews,
         'correctCount': correctCount,
         'incorrectCount': incorrectCount,
+        'failureStreak': failureStreak,
       };
 
   factory SrsCard.fromJson(Map<String, dynamic> json) {
@@ -167,6 +179,25 @@ class SrsCard {
       totalReviews: (json['totalReviews'] as num?)?.toInt() ?? 0,
       correctCount: (json['correctCount'] as num?)?.toInt() ?? 0,
       incorrectCount: (json['incorrectCount'] as num?)?.toInt() ?? 0,
+      failureStreak: (json['failureStreak'] as num?)?.toInt() ?? 0,
     );
+  }
+
+  int _successfulInterval(int repetition, int quality) {
+    const base = [1, 3, 7, 14, 30, 60, 120];
+    final idx = (repetition - 1).clamp(0, base.length - 1) as int;
+    final intervalDays = base[idx];
+    if (quality >= 5) {
+      return ((intervalDays * 1.15).round().clamp(1, 120)) as int;
+    }
+    if (quality == 3) {
+      return ((intervalDays * 0.85).round().clamp(1, 120)) as int;
+    }
+    return intervalDays;
+  }
+
+  int _failedInterval(int quality) {
+    if (quality <= 1) return 0;
+    return 1;
   }
 }

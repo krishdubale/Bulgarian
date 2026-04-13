@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/lesson_session_model.dart';
+import '../models/srs_model.dart';
 import '../models/user_learning_profile.dart';
 import 'srs_service.dart';
 import 'content_loader.dart';
@@ -122,7 +123,7 @@ class SessionGenerator {
 
       exercises.add(_createExercise(
         item: word,
-        type: ExerciseType.mcq,
+        type: _pickReviewExerciseType(card, 4, null),
         allWords: allWords,
         index: i,
         difficulty: 3,
@@ -157,7 +158,7 @@ class SessionGenerator {
       final word = allWords.where((w) => w.id == card.itemId).firstOrNull;
       if (word == null) continue;
 
-      final type = _pickExerciseType(difficulty, profile);
+      final type = _pickReviewExerciseType(card, difficulty, profile);
       exercises.add(_createExercise(
         item: word,
         type: type,
@@ -225,7 +226,7 @@ class SessionGenerator {
       lessonId: 'challenge',
       languageId: languageId,
       exercises: exercises,
-      difficulty: (difficulty + 2).clamp(1, 10),
+      difficulty: ((difficulty + 2).clamp(1, 10)) as int,
       xpReward: exercises.length * 5,
       targetDuration: const Duration(minutes: 2),
       sessionType: SessionType.challenge,
@@ -370,6 +371,33 @@ class SessionGenerator {
     }
   }
 
+  ExerciseType _pickReviewExerciseType(
+    SrsCard card,
+    int difficulty,
+    UserLearningProfile? profile,
+  ) {
+    if (card.stabilityScore >= 0.82) {
+      const harder = [
+        ExerciseType.translate,
+        ExerciseType.sentenceBuild,
+        ExerciseType.fillBlank,
+        ExerciseType.listening,
+      ];
+      return harder[_random.nextInt(harder.length)];
+    }
+
+    if (card.stabilityScore < 0.55 || card.failureStreak >= 2) {
+      const scaffolded = [
+        ExerciseType.mcq,
+        ExerciseType.match,
+        ExerciseType.fillBlank,
+      ];
+      return scaffolded[_random.nextInt(scaffolded.length)];
+    }
+
+    return _pickExerciseType(difficulty, profile);
+  }
+
   List<ContentWord> _getLessonWords(
     String lessonId,
     List<ContentWord> allWords,
@@ -392,6 +420,6 @@ class SessionGenerator {
   }
 
   int _calculateXpReward(int difficulty, int exerciseCount) {
-    return (exerciseCount * 3 + difficulty * 2).clamp(10, 50);
+    return ((exerciseCount * 3 + difficulty * 2).clamp(10, 50)) as int;
   }
 }
