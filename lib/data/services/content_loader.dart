@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/course_blueprint_model.dart';
 import '../models/language_model.dart';
 
 final contentLoaderProvider = Provider<ContentLoader>((ref) {
@@ -73,6 +74,11 @@ final writingProvider =
   },
 );
 
+final courseBlueprintProvider = FutureProvider<CourseBlueprint>((ref) async {
+  final loader = ref.watch(contentLoaderProvider);
+  return loader.loadCourseBlueprint();
+});
+
 /// Dynamically loads content JSON for any language.
 /// Caches loaded data in memory for performance.
 class ContentLoader {
@@ -84,6 +90,7 @@ class ContentLoader {
   final Map<String, List<PhraseData>> _phraseCache = {};
   final Map<String, List<ReadingData>> _readingCache = {};
   final Map<String, List<WritingData>> _writingCache = {};
+  CourseBlueprint? _courseBlueprintCache;
 
   /// Load vocabulary for a language.
   Future<List<VocabularyCategory>> loadVocabulary(String langId) async {
@@ -249,6 +256,18 @@ class ContentLoader {
     }
   }
 
+  /// Load the shared A1-B1 course blueprint.
+  Future<CourseBlueprint> loadCourseBlueprint() async {
+    if (_courseBlueprintCache != null) return _courseBlueprintCache!;
+
+    final raw = await rootBundle.loadString(
+      'assets/data/course_blueprint.json',
+    );
+    final data = json.decode(raw) as Map<String, dynamic>;
+    _courseBlueprintCache = CourseBlueprint.fromJson(data);
+    return _courseBlueprintCache!;
+  }
+
   /// Clear all cached data.
   void clearCache() {
     _vocabCache.clear();
@@ -259,6 +278,7 @@ class ContentLoader {
     _phraseCache.clear();
     _readingCache.clear();
     _writingCache.clear();
+    _courseBlueprintCache = null;
   }
 
   /// Preload all content for a language.
@@ -272,6 +292,7 @@ class ContentLoader {
       loadPhrases(langId),
       loadReading(langId),
       loadWriting(langId),
+      loadCourseBlueprint(),
     ]);
   }
 }

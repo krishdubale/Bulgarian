@@ -1,0 +1,205 @@
+{
+  "version": "1.0",
+  "name": "A1-B1 Course Blueprint",
+  "scope": {
+    "levels": ["A1", "A2", "B1"],
+    "unitsTotal": 36,
+    "unitsPerLevel": 12,
+    "lessonsPerUnit": 8,
+    "newContentLessonsPerUnit": 6,
+    "consolidationLessonIndex": 7,
+    "checkpointLessonIndex": 8,
+    "totalLessons": 288
+  },
+  "units": [
+    {"id": "u01", "level": "A1", "title": "Greetings & Identity", "grammarFocus": ["pronouns", "present of to be", "statement/question basics"], "vocabFocus": ["greetings", "names", "countries", "basic adjectives"]},
+    {"id": "u02", "level": "A1", "title": "Family & People", "grammarFocus": ["possessives", "singular/plural", "basic agreement"], "vocabFocus": ["family members", "professions", "age"]},
+    {"id": "u03", "level": "A1", "title": "Numbers, Time, Date", "grammarFocus": ["cardinal numbers", "clock expressions", "simple prepositions"], "vocabFocus": ["numbers", "days", "months", "time words"]},
+    {"id": "u04", "level": "A1", "title": "Home & Everyday Objects", "grammarFocus": ["articles/definiteness", "there is/are patterns"], "vocabFocus": ["rooms", "furniture", "household objects"]},
+    {"id": "u05", "level": "A1", "title": "Food & Drinks", "grammarFocus": ["count/non-count patterns", "quantity expressions"], "vocabFocus": ["meals", "common foods", "shopping items"]},
+    {"id": "u06", "level": "A1", "title": "Daily Routines", "grammarFocus": ["regular present-tense verbs", "negation"], "vocabFocus": ["routine verbs", "adverbs of frequency"]},
+    {"id": "u07", "level": "A1", "title": "City & Directions", "grammarFocus": ["location prepositions", "imperative basic"], "vocabFocus": ["places in town", "transport basics"]},
+    {"id": "u08", "level": "A1", "title": "Shopping & Money", "grammarFocus": ["polite requests", "comparatives intro"], "vocabFocus": ["clothes", "prices", "sizes", "payment"]},
+    {"id": "u09", "level": "A1", "title": "Health Basics", "grammarFocus": ["modals can/should equivalents"], "vocabFocus": ["body parts", "symptoms", "pharmacy"]},
+    {"id": "u10", "level": "A1", "title": "Leisure & Preferences", "grammarFocus": ["like/dislike patterns", "object marking basics"], "vocabFocus": ["hobbies", "media", "sports"]},
+    {"id": "u11", "level": "A1", "title": "Weather & Seasons", "grammarFocus": ["impersonal weather expressions", "future intention intro"], "vocabFocus": ["weather terms", "seasonal activities"]},
+    {"id": "u12", "level": "A1", "title": "Travel Basics", "grammarFocus": ["motion verbs basic", "past reference intro"], "vocabFocus": ["stations", "tickets", "hotel basics"]},
+
+    {"id": "u13", "level": "A2", "title": "Past Events I", "grammarFocus": ["recent past", "personal experiences"], "vocabFocus": ["experience verbs", "time markers"]},
+    {"id": "u14", "level": "A2", "title": "Past Events II", "grammarFocus": ["narrative sequencing", "time connectors"], "vocabFocus": ["sequence adverbs", "story events"]},
+    {"id": "u15", "level": "A2", "title": "Future Plans & Arrangements", "grammarFocus": ["future plans", "intentions"], "vocabFocus": ["planning", "appointments"]},
+    {"id": "u16", "level": "A2", "title": "Work & Study Life", "grammarFocus": ["tense control in routines", "modality expansion"], "vocabFocus": ["workplace", "study tasks"]},
+    {"id": "u17", "level": "A2", "title": "Services & Bureaucracy", "grammarFocus": ["forms", "requests", "condition basics"], "vocabFocus": ["documents", "appointments", "public services"]},
+    {"id": "u18", "level": "A2", "title": "Food Culture & Eating Out", "grammarFocus": ["comparison expanded", "preferences"], "vocabFocus": ["restaurant", "menus", "taste"]},
+    {"id": "u19", "level": "A2", "title": "Housing & Living Conditions", "grammarFocus": ["descriptions", "problem reports"], "vocabFocus": ["housing", "repairs", "amenities"]},
+    {"id": "u20", "level": "A2", "title": "Relationships & Social Situations", "grammarFocus": ["pronoun systems", "connectors"], "vocabFocus": ["social interactions", "relationship language"]},
+    {"id": "u21", "level": "A2", "title": "Travel Problems & Solutions", "grammarFocus": ["problem/solution patterns", "if/when connectors"], "vocabFocus": ["delays", "complaints", "assistance"]},
+    {"id": "u22", "level": "A2", "title": "Technology & Communication", "grammarFocus": ["aspect/control where relevant", "linked clauses"], "vocabFocus": ["devices", "online communication"]},
+    {"id": "u23", "level": "A2", "title": "Health & Wellbeing Expanded", "grammarFocus": ["advice patterns", "modality expansion"], "vocabFocus": ["wellbeing", "treatments", "lifestyle"]},
+    {"id": "u24", "level": "A2", "title": "Culture, Holidays, Traditions", "grammarFocus": ["past/future linking", "contrast connectors"], "vocabFocus": ["traditions", "celebrations", "customs"]},
+
+    {"id": "u25", "level": "B1", "title": "Opinions & Arguments I", "grammarFocus": ["claim-reason scaffolds", "subordination"], "vocabFocus": ["opinion markers", "argument verbs"]},
+    {"id": "u26", "level": "B1", "title": "Opinions & Arguments II", "grammarFocus": ["counter-argument patterns", "discourse markers"], "vocabFocus": ["debate language", "evidence language"]},
+    {"id": "u27", "level": "B1", "title": "News & Current Events", "grammarFocus": ["reported speech basics", "time framing"], "vocabFocus": ["news", "public topics"]},
+    {"id": "u28", "level": "B1", "title": "Workplace Communication", "grammarFocus": ["register control", "formal requests"], "vocabFocus": ["meetings", "emails", "coordination"]},
+    {"id": "u29", "level": "B1", "title": "Education & Skills", "grammarFocus": ["relative clauses", "goal statements"], "vocabFocus": ["learning", "competencies", "qualifications"]},
+    {"id": "u30", "level": "B1", "title": "Travel Narratives & Experiences", "grammarFocus": ["narrative packing", "clause combining"], "vocabFocus": ["journey narratives", "experience reporting"]},
+    {"id": "u31", "level": "B1", "title": "Problem Solving & Negotiation", "grammarFocus": ["conditionals", "proposal patterns"], "vocabFocus": ["negotiation", "solutions", "trade-offs"]},
+    {"id": "u32", "level": "B1", "title": "Media & Digital Life", "grammarFocus": ["stance markers", "subordinate clauses"], "vocabFocus": ["media", "digital behavior", "privacy"]},
+    {"id": "u33", "level": "B1", "title": "Environment & Society", "grammarFocus": ["cause/effect chains", "complex sentence linking"], "vocabFocus": ["environment", "societal issues"]},
+    {"id": "u34", "level": "B1", "title": "Health Decisions & Advice", "grammarFocus": ["risk/benefit expressions", "reported recommendations"], "vocabFocus": ["health decisions", "treatment options"]},
+    {"id": "u35", "level": "B1", "title": "Formal vs Informal Registers", "grammarFocus": ["register shifts", "politeness strategy"], "vocabFocus": ["formal language", "informal language"]},
+    {"id": "u36", "level": "B1", "title": "Integrated B1 Capstone Themes", "grammarFocus": ["integrated discourse", "argument structures"], "vocabFocus": ["cross-theme production", "capstone communication"]}
+  ],
+  "lessonTemplate": {
+    "standardLessons": {
+      "lessonIndices": [1, 2, 3, 4, 5, 6],
+      "objective": {"functionTargets": 1, "grammarTargets": 1},
+      "newLexicalSet": {"default": 6, "a1Early": 5, "a2b1Max": 8, "hardCap": 8},
+      "coreModelSentences": {
+        "total": 8,
+        "newOnly": 4,
+        "mixedOldNew": 4
+      },
+      "patternBlock": {
+        "microPatterns": 2,
+        "examplesPerPattern": 3
+      },
+      "controlledPractice": 6,
+      "contextPracticeMiniDialogueTurns": 4,
+      "cumulativeRecycle": {
+        "items": 6,
+        "minOldContentRatio": 0.7
+      },
+      "lessonCheck": {
+        "items": 10,
+        "balance": "old_new_balanced"
+      }
+    },
+    "consolidationLesson": {
+      "lessonIndex": 7,
+      "newWords": 0,
+      "newGrammar": 0,
+      "policy": "all_recombination"
+    },
+    "checkpointLesson": {
+      "lessonIndex": 8,
+      "coverageCurrentUnitRatio": 0.6,
+      "coveragePriorUnitsRatio": 0.4
+    }
+  },
+  "vocabularySystem": {
+    "newWordLoad": {
+      "A1": {"min": 5, "max": 6},
+      "A2": {"min": 6, "max": 7},
+      "B1": {"min": 6, "max": 8}
+    },
+    "groupingLogic": [
+      "Primary: communicative theme",
+      "Secondary: frequency and usefulness",
+      "Tertiary: combinability"
+    ],
+    "repetitionScheduling": {
+      "introLessonAppearances": 2,
+      "nextTwoLessonsAppearances": {"min": 1, "max": 2},
+      "minSameUnitAppearances": 5,
+      "minByNextThreeUnitsAppearances": 8,
+      "mustReappearInNextThreeLessons": true
+    },
+    "beginnerCoreFirst80Categories": [
+      "pronouns",
+      "be/have/go/want/need/can",
+      "yes/no/please/thanks/sorry",
+      "numbers 1-20",
+      "time basics",
+      "people core",
+      "places core",
+      "food staples",
+      "adjectives core",
+      "question words"
+    ],
+    "difficultyScaling": {
+      "A1": "concrete high-frequency low-morphology",
+      "A2": "abstract everyday + service vocabulary",
+      "B1": "opinion argument workplace media societal vocabulary"
+    }
+  },
+  "grammarProgression": {
+    "A1": [
+      "Pronouns + to be + simple statements",
+      "Basic questions + negation",
+      "Noun number + core agreement",
+      "Definiteness/article behavior",
+      "Present tense high-frequency verbs",
+      "Basic prepositions place/time",
+      "Modals ability/necessity basic",
+      "Imperative and polite requests",
+      "Comparison intro",
+      "Past/future intro minimal functional"
+    ],
+    "A2": [
+      "Past system stabilization",
+      "Future plans and intentions",
+      "Pronoun/object handling expansion",
+      "Aspect/action-completion contrasts",
+      "Subordination basics because/when/if",
+      "Comparison and quantity expansion",
+      "Connected discourse sequencing/contrast"
+    ],
+    "B1": [
+      "Clause combining and subordination depth",
+      "Relative clauses",
+      "Conditional patterns",
+      "Reported/indirect speech basics",
+      "Register shifts formal/informal",
+      "Argument structures claim-reason-example"
+    ]
+  },
+  "sentenceDesign": {
+    "sentenceBankLines": {"min": 40, "max": 60},
+    "compositionRatios": {
+      "targetNewStructures": 0.4,
+      "mixedOldNew": 0.4,
+      "reviewHeavy": 0.2
+    },
+    "complexityRamp": {
+      "A1": {"structure": "single-clause", "tokensMin": 4, "tokensMax": 8},
+      "A2": {"structure": "coordinated clauses", "tokensMin": 7, "tokensMax": 12},
+      "B1": {"structure": "subordinate/relative structures", "tokensMin": 10, "tokensMax": 18}
+    },
+    "reusePolicy": {
+      "minTokenReuseFromOldContent": 0.5,
+      "newGrammarMustAppearIn": [
+        "isolated pattern sentence",
+        "functional dialogue sentence",
+        "mixed review sentence"
+      ]
+    }
+  },
+  "multiLanguageDesign": {
+    "sharedSkeleton": {
+      "unitMap": 36,
+      "lessonCounts": "fixed",
+      "lessonTemplate": "fixed",
+      "recyclingAndScalingRules": "fixed"
+    },
+    "languageSpecificVariation": [
+      "grammar sequence details per unit",
+      "lexical lists and collocations",
+      "sentence bank and morphology constraints"
+    ],
+    "adaptationPrinciple": "preserve communicative function, not literal one-to-one mapping"
+  },
+  "strictScalingRules": [
+    {"id": 1, "rule": "Max new words", "value": "8 absolute cap per lesson"},
+    {"id": 2, "rule": "Max new grammar", "value": "2 micro-targets per lesson"},
+    {"id": 3, "rule": "Old-content floor", "value": "minimum 60% old material in practice after Unit 4"},
+    {"id": 4, "rule": "Reappearance", "value": "every introduced word reappears in next 3 lessons"},
+    {"id": 5, "rule": "Checkpoint recycle", "value": "40% prior-unit content"},
+    {"id": 6, "rule": "No double novelty", "value": "avoid max grammar load + max vocab in same lesson"},
+    {"id": 7, "rule": "Complexity cadence", "value": "every 2 units increase average sentence length by ~1 token"},
+    {"id": 8, "rule": "Functional coverage", "value": "each unit includes at least 2 real-world dialogue contexts"},
+    {"id": 9, "rule": "B1 discourse", "value": "every B1 lesson includes at least one multi-sentence response prompt"},
+    {"id": 10, "rule": "Content retirement", "value": "no item retired before appearing in at least 3 separate unit contexts"}
+  ]
+}
