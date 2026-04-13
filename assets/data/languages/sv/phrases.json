@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "phrases": [
+    {"id": "sv_phrase_001", "target": "Jag heter...", "transliteration": "Yah heh-ter", "english": "My name is...", "category": "Introduction", "level": "A1"},
+    {"id": "sv_phrase_002", "target": "Jag förstår inte.", "transliteration": "Yah fur-stohr in-teh", "english": "I don't understand.", "category": "Communication", "level": "A1"},
+    {"id": "sv_phrase_003", "target": "Talar du engelska?", "transliteration": "Tah-lar doo eng-el-ska?", "english": "Do you speak English?", "category": "Communication", "level": "A1"},
+    {"id": "sv_phrase_004", "target": "Hur mycket kostar det?", "transliteration": "Hoor myk-et kos-tar deh?", "english": "How much does it cost?", "category": "Shopping", "level": "A1"},
+    {"id": "sv_phrase_005", "target": "Var är...?", "transliteration": "Var air...?", "english": "Where is...?", "category": "Directions", "level": "A1"},
+    {"id": "sv_phrase_006", "target": "Hjälp!", "transliteration": "Yelp!", "english": "Help!", "category": "Emergency", "level": "A1"},
+    {"id": "sv_phrase_007", "target": "Jag är hungrig.", "transliteration": "Yah air hoong-rig", "english": "I'm hungry.", "category": "Basic Needs", "level": "A1"},
+    {"id": "sv_phrase_008", "target": "Jag är törstig.", "transliteration": "Yah air turstig", "english": "I'm thirsty.", "category": "Basic Needs", "level": "A1"}
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "dialogues": [
+    {
+      "id": "sv_dialogue_fika",
+      "title": "Fika (Coffee Break)",
+      "level": "A1",
+      "description": "Having a Swedish fika (coffee break)",
+      "lines": [
+        {"speaker": "A", "target": "Hej! Vill du ha en fika?", "english": "Hi! Do you want to have a fika?"},
+        {"speaker": "B", "target": "Ja, gärna! Vad har du?", "english": "Yes, gladly! What do you have?"},
+        {"speaker": "A", "target": "Kaffe och kanelbullar.", "english": "Coffee and cinnamon buns."},
+        {"speaker": "B", "target": "Perfekt! Jag vill ha kaffe med mjölk, tack.", "english": "Perfect! I want coffee with milk, please."},
+        {"speaker": "A", "target": "Varsågod!", "english": "Here you go!"},
+        {"speaker": "B", "target": "Tack så mycket! Den är jättegod.", "english": "Thank you very much! It's very good."}
+      ]
+    }
+  ]
+}

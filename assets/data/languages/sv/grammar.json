@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "topics": [
+    {
+      "id": "sv_grammar_sentence_structure",
+      "title": "Basic Sentence Structure & V2 Rule",
+      "level": "A1",
+      "explanation": "Swedish follows Subject-Verb-Object (SVO) order in simple sentences, similar to English.\n\nThe V2 rule: In main clauses, the verb must always be in the SECOND position. If the sentence starts with something other than the subject, the subject moves after the verb.\n\n• Jag äter bröd. (I eat bread) – SVO\n• Idag äter jag bröd. (Today eat I bread) – V2\n\nSwedish has two genders: en-words (common) and ett-words (neuter).\n• en bok (a book) – boken (the book)\n• ett hus (a house) – huset (the house)",
+      "examples": [
+        {"target": "Jag talar svenska.", "transliteration": "Yah tah-lar sven-ska", "english": "I speak Swedish."},
+        {"target": "Hon läser en bok.", "transliteration": "Hon leh-ser en book", "english": "She reads a book."},
+        {"target": "Idag är jag glad.", "transliteration": "Ee-dag air yah glad", "english": "Today I am happy. (V2 rule)"}
+      ],
+      "quiz": [
+        {"question": "What special rule applies to Swedish main clauses?", "options": ["Verb always last", "Verb always second (V2)", "No fixed order", "Verb always first"], "correctIndex": 1},
+        {"question": "Swedish has how many grammatical genders?", "options": ["1", "2 (en/ett)", "3", "4"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

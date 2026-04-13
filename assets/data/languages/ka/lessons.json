@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "lessons": [
+    {"id": "alphabet_a1", "title": "Georgian Alphabet", "description": "Learn the unique Mkhedruli script", "level": "A1", "category": "Alphabet", "xpReward": 20, "wordIds": [], "objectives": ["Recognize Georgian letters", "Sound out basic words"]},
+    {"id": "greetings_a1", "title": "Greetings & Farewells", "description": "Essential Georgian greetings", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ka_greetings_001","ka_greetings_002","ka_greetings_003","ka_greetings_004","ka_greetings_005","ka_greetings_006","ka_greetings_007","ka_greetings_008"], "objectives": ["Greet people", "Say goodbye"]},
+    {"id": "numbers_a1", "title": "Numbers 1–10", "description": "Count in Georgian", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ka_numbers_001","ka_numbers_002","ka_numbers_003","ka_numbers_004","ka_numbers_005","ka_numbers_006","ka_numbers_007","ka_numbers_008","ka_numbers_009","ka_numbers_010"], "objectives": ["Count from 1 to 10"]},
+    {"id": "family_a1", "title": "Family Members", "description": "Family vocabulary in Georgian", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ka_family_001","ka_family_002","ka_family_003","ka_family_004","ka_family_005","ka_family_006","ka_family_007"], "objectives": ["Name family members"]},
+    {"id": "food_a1", "title": "Food & Drinks", "description": "Georgian cuisine vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ka_food_001","ka_food_002","ka_food_003","ka_food_004","ka_food_005","ka_food_006","ka_food_007"], "objectives": ["Name common foods"]},
+    {"id": "colors_a1", "title": "Colors", "description": "Color vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ka_colors_001","ka_colors_002","ka_colors_003","ka_colors_004","ka_colors_005","ka_colors_006"], "objectives": ["Name basic colors"]}
+  ]
+}

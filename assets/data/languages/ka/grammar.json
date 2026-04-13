@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "topics": [
+    {
+      "id": "ka_grammar_sentence_structure",
+      "title": "Basic Sentence Structure",
+      "level": "A1",
+      "explanation": "Georgian follows Subject-Object-Verb (SOV) order, which is different from English.\n\nExample: 'I bread eat' instead of 'I eat bread'\n\nGeorgian does not use articles (the/a). Context determines definiteness.",
+      "examples": [
+        {"target": "მე ქართულს ვსწავლობ.", "transliteration": "me kartuls vsts'avlob", "english": "I study Georgian. (lit: I Georgian study)"},
+        {"target": "ის წიგნს კითხულობს.", "transliteration": "is ts'igns k'itkhulobs", "english": "He/she reads a book. (lit: He/she book reads)"}
+      ],
+      "quiz": [
+        {"question": "What is the basic word order in Georgian?", "options": ["SVO", "SOV", "VSO", "OVS"], "correctIndex": 1},
+        {"question": "Does Georgian have articles like 'the' and 'a'?", "options": ["Yes, before nouns", "Yes, after nouns", "No, Georgian has no articles", "Only definite articles"], "correctIndex": 2}
+      ]
+    }
+  ]
+}

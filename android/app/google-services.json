@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "589876337034",
+    "project_id": "bulgarian-learning-app",
+    "storage_bucket": "bulgarian-learning-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589876337034:android:afc4bfc9a7cbda8f5e9073",
+        "android_client_info": {
+          "package_name": "com.example.bulgarian_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIvtSntILoLtuvnM2RhqLdIU9GNlQS96Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

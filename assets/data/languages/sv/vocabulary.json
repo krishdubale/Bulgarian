@@ -1,0 +1,96 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "categories": [
+    {
+      "id": "greetings",
+      "name": "Greetings",
+      "icon": "👋",
+      "words": [
+        {"id": "sv_greetings_001", "target": "Hej", "transliteration": "Hey", "english": "Hi / Hello", "category": "Greetings", "level": "A1", "example": {"target": "Hej, hur mår du?", "english": "Hi, how are you?"}},
+        {"id": "sv_greetings_002", "target": "God morgon", "transliteration": "Good moron", "english": "Good morning", "category": "Greetings", "level": "A1", "example": {"target": "God morgon! Sov du gott?", "english": "Good morning! Did you sleep well?"}},
+        {"id": "sv_greetings_003", "target": "God kväll", "transliteration": "Good kvell", "english": "Good evening", "category": "Greetings", "level": "A1", "example": {"target": "God kväll allihopa!", "english": "Good evening everyone!"}},
+        {"id": "sv_greetings_004", "target": "Hej då", "transliteration": "Hey doh", "english": "Goodbye", "category": "Greetings", "level": "A1", "example": {"target": "Hej då, vi ses imorgon!", "english": "Goodbye, see you tomorrow!"}},
+        {"id": "sv_greetings_005", "target": "Tack", "transliteration": "Tahk", "english": "Thank you", "category": "Greetings", "level": "A1", "example": {"target": "Tack så mycket!", "english": "Thank you very much!"}},
+        {"id": "sv_greetings_006", "target": "Snälla", "transliteration": "Snel-ah", "english": "Please", "category": "Greetings", "level": "A1", "example": {"target": "Snälla, hjälp mig.", "english": "Please, help me."}},
+        {"id": "sv_greetings_007", "target": "Ursäkta", "transliteration": "Ur-shek-ta", "english": "Excuse me", "category": "Greetings", "level": "A1", "example": {"target": "Ursäkta, var är stationen?", "english": "Excuse me, where is the station?"}},
+        {"id": "sv_greetings_008", "target": "Ja", "transliteration": "Ya", "english": "Yes", "category": "Greetings", "level": "A1", "example": {"target": "Ja, jag förstår.", "english": "Yes, I understand."}},
+        {"id": "sv_greetings_009", "target": "Nej", "transliteration": "Ney", "english": "No", "category": "Greetings", "level": "A1", "example": {"target": "Nej, jag vet inte.", "english": "No, I don't know."}},
+        {"id": "sv_greetings_010", "target": "Hur mår du?", "transliteration": "Hoor mohr doo?", "english": "How are you?", "category": "Greetings", "level": "A1", "example": {"target": "Hej! Hur mår du idag?", "english": "Hi! How are you today?"}}
+      ]
+    },
+    {
+      "id": "numbers",
+      "name": "Numbers",
+      "icon": "🔢",
+      "words": [
+        {"id": "sv_numbers_001", "target": "en / ett", "transliteration": "en / ett", "english": "one", "category": "Numbers", "level": "A1", "example": {"target": "en kaffe, tack", "english": "one coffee, please"}},
+        {"id": "sv_numbers_002", "target": "två", "transliteration": "tvoh", "english": "two", "category": "Numbers", "level": "A1", "example": {"target": "två glas vatten", "english": "two glasses of water"}},
+        {"id": "sv_numbers_003", "target": "tre", "transliteration": "treh", "english": "three", "category": "Numbers", "level": "A1", "example": {"target": "tre barn", "english": "three children"}},
+        {"id": "sv_numbers_004", "target": "fyra", "transliteration": "fee-rah", "english": "four", "category": "Numbers", "level": "A1", "example": {"target": "fyra årstider", "english": "four seasons"}},
+        {"id": "sv_numbers_005", "target": "fem", "transliteration": "fem", "english": "five", "category": "Numbers", "level": "A1", "example": {"target": "fem minuter", "english": "five minutes"}},
+        {"id": "sv_numbers_006", "target": "sex", "transliteration": "sex", "english": "six", "category": "Numbers", "level": "A1", "example": {"target": "sex timmar", "english": "six hours"}},
+        {"id": "sv_numbers_007", "target": "sju", "transliteration": "shoo", "english": "seven", "category": "Numbers", "level": "A1", "example": {"target": "sju dagar i veckan", "english": "seven days in a week"}},
+        {"id": "sv_numbers_008", "target": "åtta", "transliteration": "oh-tah", "english": "eight", "category": "Numbers", "level": "A1", "example": {"target": "åtta timmars sömn", "english": "eight hours of sleep"}},
+        {"id": "sv_numbers_009", "target": "nio", "transliteration": "nee-oh", "english": "nine", "category": "Numbers", "level": "A1", "example": {"target": "nio månader", "english": "nine months"}},
+        {"id": "sv_numbers_010", "target": "tio", "transliteration": "tee-oh", "english": "ten", "category": "Numbers", "level": "A1", "example": {"target": "tio kronor", "english": "ten kronor (Swedish currency)"}}
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Family",
+      "icon": "👨‍👩‍👧‍👦",
+      "words": [
+        {"id": "sv_family_001", "target": "mamma", "transliteration": "mam-ma", "english": "mother", "category": "Family", "level": "A1", "example": {"target": "Min mamma är lärare.", "english": "My mother is a teacher."}},
+        {"id": "sv_family_002", "target": "pappa", "transliteration": "pap-pa", "english": "father", "category": "Family", "level": "A1", "example": {"target": "Min pappa jobbar i Stockholm.", "english": "My father works in Stockholm."}},
+        {"id": "sv_family_003", "target": "bror", "transliteration": "broor", "english": "brother", "category": "Family", "level": "A1", "example": {"target": "Jag har en bror.", "english": "I have a brother."}},
+        {"id": "sv_family_004", "target": "syster", "transliteration": "sys-ter", "english": "sister", "category": "Family", "level": "A1", "example": {"target": "Min syster är 15 år.", "english": "My sister is 15 years old."}},
+        {"id": "sv_family_005", "target": "farfar", "transliteration": "far-far", "english": "grandfather (paternal)", "category": "Family", "level": "A1", "example": {"target": "Farfar berättar historier.", "english": "Grandfather tells stories."}},
+        {"id": "sv_family_006", "target": "mormor", "transliteration": "moor-moor", "english": "grandmother (maternal)", "category": "Family", "level": "A1", "example": {"target": "Mormor lagar god mat.", "english": "Grandmother cooks good food."}},
+        {"id": "sv_family_007", "target": "barn", "transliteration": "barn", "english": "child", "category": "Family", "level": "A1", "example": {"target": "Barnet leker i parken.", "english": "The child plays in the park."}},
+        {"id": "sv_family_008", "target": "familj", "transliteration": "fa-milj", "english": "family", "category": "Family", "level": "A1", "example": {"target": "Familjen är viktig.", "english": "Family is important."}}
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "icon": "🍎",
+      "words": [
+        {"id": "sv_food_001", "target": "bröd", "transliteration": "bruhd", "english": "bread", "category": "Food", "level": "A1", "example": {"target": "Jag vill ha bröd, tack.", "english": "I want bread, please."}},
+        {"id": "sv_food_002", "target": "vatten", "transliteration": "vat-ten", "english": "water", "category": "Food", "level": "A1", "example": {"target": "Ett glas vatten, tack.", "english": "A glass of water, please."}},
+        {"id": "sv_food_003", "target": "kaffe", "transliteration": "kaf-feh", "english": "coffee", "category": "Food", "level": "A1", "example": {"target": "Jag älskar kaffe med mjölk.", "english": "I love coffee with milk."}},
+        {"id": "sv_food_004", "target": "te", "transliteration": "teh", "english": "tea", "category": "Food", "level": "A1", "example": {"target": "Teet är varmt.", "english": "The tea is hot."}},
+        {"id": "sv_food_005", "target": "mjölk", "transliteration": "myuhlk", "english": "milk", "category": "Food", "level": "A1", "example": {"target": "Färsk mjölk från butiken.", "english": "Fresh milk from the store."}},
+        {"id": "sv_food_006", "target": "ägg", "transliteration": "egg", "english": "egg", "category": "Food", "level": "A1", "example": {"target": "Två ägg till frukost.", "english": "Two eggs for breakfast."}},
+        {"id": "sv_food_007", "target": "ost", "transliteration": "oost", "english": "cheese", "category": "Food", "level": "A1", "example": {"target": "Osten är god.", "english": "The cheese is good."}},
+        {"id": "sv_food_008", "target": "kött", "transliteration": "shut", "english": "meat", "category": "Food", "level": "A1", "example": {"target": "Jag äter inte kött.", "english": "I don't eat meat."}}
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "icon": "🎨",
+      "words": [
+        {"id": "sv_colors_001", "target": "röd", "transliteration": "ruhd", "english": "red", "category": "Colors", "level": "A1", "example": {"target": "Den röda rosen är vacker.", "english": "The red rose is beautiful."}},
+        {"id": "sv_colors_002", "target": "blå", "transliteration": "bloh", "english": "blue", "category": "Colors", "level": "A1", "example": {"target": "Himlen är blå.", "english": "The sky is blue."}},
+        {"id": "sv_colors_003", "target": "grön", "transliteration": "gruhn", "english": "green", "category": "Colors", "level": "A1", "example": {"target": "Gräset är grönt.", "english": "The grass is green."}},
+        {"id": "sv_colors_004", "target": "gul", "transliteration": "gool", "english": "yellow", "category": "Colors", "level": "A1", "example": {"target": "Solen är gul.", "english": "The sun is yellow."}},
+        {"id": "sv_colors_005", "target": "vit", "transliteration": "veet", "english": "white", "category": "Colors", "level": "A1", "example": {"target": "Snön är vit.", "english": "The snow is white."}},
+        {"id": "sv_colors_006", "target": "svart", "transliteration": "svart", "english": "black", "category": "Colors", "level": "A1", "example": {"target": "Katten är svart.", "english": "The cat is black."}}
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "Animals",
+      "icon": "🐾",
+      "words": [
+        {"id": "sv_animals_001", "target": "hund", "transliteration": "hoond", "english": "dog", "category": "Animals", "level": "A1", "example": {"target": "Hunden skäller.", "english": "The dog barks."}},
+        {"id": "sv_animals_002", "target": "katt", "transliteration": "kaht", "english": "cat", "category": "Animals", "level": "A1", "example": {"target": "Katten sover.", "english": "The cat sleeps."}},
+        {"id": "sv_animals_003", "target": "fågel", "transliteration": "foh-gel", "english": "bird", "category": "Animals", "level": "A1", "example": {"target": "Fågeln sjunger.", "english": "The bird sings."}},
+        {"id": "sv_animals_004", "target": "fisk", "transliteration": "fisk", "english": "fish", "category": "Animals", "level": "A1", "example": {"target": "Fisken simmar.", "english": "The fish swims."}},
+        {"id": "sv_animals_005", "target": "häst", "transliteration": "hest", "english": "horse", "category": "Animals", "level": "A1", "example": {"target": "Hästen springer fort.", "english": "The horse runs fast."}},
+        {"id": "sv_animals_006", "target": "älg", "transliteration": "ely", "english": "moose", "category": "Animals", "level": "A1", "example": {"target": "Älgen bor i skogen.", "english": "The moose lives in the forest."}}
+      ]
+    }
+  ]
+}

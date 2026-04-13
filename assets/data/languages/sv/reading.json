@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "passages": [
+    {
+      "id": "sv_reading_001",
+      "title": "På kafét",
+      "level": "A1",
+      "text": "Erik går till kafét. Han beställer en kaffe och en kanelbulle. Servitrisen frågar: 'Vill du ha mjölk?' Erik svarar: 'Ja, tack!' Kaffet är varmt och kanelbullen är jättegod.",
+      "translation": "Erik goes to the café. He orders a coffee and a cinnamon bun. The waitress asks: 'Do you want milk?' Erik answers: 'Yes, please!' The coffee is hot and the cinnamon bun is very good.",
+      "questions": [
+        {"question": "Vart går Erik?", "options": ["Till skolan", "Till kafét", "Till kontoret"], "correctIndex": 1},
+        {"question": "Vad beställer Erik?", "options": ["Te och kaka", "Kaffe och kanelbulle", "Vatten och bröd"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

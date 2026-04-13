@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "lessons": [
+    {"id": "greetings_a1", "title": "Greetings & Farewells", "description": "Essential Swedish greetings", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_greetings_001","sv_greetings_002","sv_greetings_003","sv_greetings_004","sv_greetings_005","sv_greetings_006","sv_greetings_007","sv_greetings_008","sv_greetings_009","sv_greetings_010"], "objectives": ["Greet people", "Say goodbye", "Use polite expressions"]},
+    {"id": "numbers_a1", "title": "Numbers 1–10", "description": "Count in Swedish", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_numbers_001","sv_numbers_002","sv_numbers_003","sv_numbers_004","sv_numbers_005","sv_numbers_006","sv_numbers_007","sv_numbers_008","sv_numbers_009","sv_numbers_010"], "objectives": ["Count from 1 to 10"]},
+    {"id": "family_a1", "title": "Family Members", "description": "Family vocabulary in Swedish", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_family_001","sv_family_002","sv_family_003","sv_family_004","sv_family_005","sv_family_006","sv_family_007","sv_family_008"], "objectives": ["Name family members"]},
+    {"id": "grammar_sentence_a1", "title": "Basic Sentence Structure", "description": "Swedish word order and V2 rule", "level": "A1", "category": "Grammar", "xpReward": 20, "wordIds": [], "objectives": ["Understand SVO and V2 word order"]},
+    {"id": "food_a1", "title": "Food & Drinks", "description": "Common food vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_food_001","sv_food_002","sv_food_003","sv_food_004","sv_food_005","sv_food_006","sv_food_007","sv_food_008"], "objectives": ["Name common foods"]},
+    {"id": "colors_a1", "title": "Colors", "description": "Learn color vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_colors_001","sv_colors_002","sv_colors_003","sv_colors_004","sv_colors_005","sv_colors_006"], "objectives": ["Name basic colors"]},
+    {"id": "animals_a1", "title": "Animals", "description": "Swedish animal vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["sv_animals_001","sv_animals_002","sv_animals_003","sv_animals_004","sv_animals_005","sv_animals_006"], "objectives": ["Name common animals"]}
+  ]
+}

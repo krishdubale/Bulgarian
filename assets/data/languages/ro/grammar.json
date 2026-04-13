@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "topics": [
+    {
+      "id": "ro_grammar_sentence_structure",
+      "title": "Basic Sentence Structure",
+      "level": "A1",
+      "explanation": "Romanian follows Subject-Verb-Object (SVO) order like English.\n\nRomanian has definite and indefinite articles. The definite article is attached to the END of the noun (enclitic):\n• carte (book) → cartea (the book)\n• om (man) → omul (the man)",
+      "examples": [
+        {"target": "Eu vorbesc română.", "transliteration": "Yeh-oo vor-besk ro-muh-nuh", "english": "I speak Romanian."},
+        {"target": "Ea citește o carte.", "transliteration": "Yah chee-tesh-teh o kar-teh", "english": "She reads a book."},
+        {"target": "Cartea este interesantă.", "transliteration": "Kar-teh-ah yes-teh in-teh-reh-san-tuh", "english": "The book is interesting."}
+      ],
+      "quiz": [
+        {"question": "Where is the definite article placed in Romanian?", "options": ["Before the noun", "Attached to the END of the noun", "It doesn't exist", "Between adjective and noun"], "correctIndex": 1},
+        {"question": "What is the basic word order in Romanian?", "options": ["SOV", "SVO", "VSO", "OVS"], "correctIndex": 1}
+      ]
+    },
+    {
+      "id": "ro_grammar_noun_gender",
+      "title": "Noun Gender",
+      "level": "A1",
+      "explanation": "Romanian has three genders: masculine, feminine, and neuter.\n\n• Masculine: ends in consonant (om, băiat)\n• Feminine: ends in -ă or -e (femeie, casă)\n• Neuter: masculine in singular, feminine in plural (scaun/scaune)",
+      "examples": [
+        {"target": "un om bun · o femeie bună · un scaun bun", "transliteration": "oon om boon · o feh-mey-eh boo-nuh · oon ska-oon boon", "english": "a good man (m) · a good woman (f) · a good chair (n)"}
+      ],
+      "quiz": [
+        {"question": "What gender is 'femeie' (woman)?", "options": ["Masculine", "Feminine", "Neuter"], "correctIndex": 1},
+        {"question": "Which ending is typical for feminine nouns?", "options": ["-consonant", "-ă / -e", "-i", "-u"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "exercises": [
+    {
+      "id": "ka_writing_001",
+      "title": "Introduce Yourself",
+      "level": "A1",
+      "prompt": "Write 3 sentences in Georgian introducing yourself.",
+      "hints": ["მე მქვია...", "მე ვარ...-დან", "მე ვსწავლობ..."],
+      "exampleAnswer": "მე მქვია ალექსი. მე ლონდონიდან ვარ. მე ქართულს ვსწავლობ."
+    }
+  ]
+}

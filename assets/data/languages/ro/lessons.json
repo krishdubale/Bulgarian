@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "lessons": [
+    {"id": "greetings_a1", "title": "Greetings & Farewells", "description": "Essential phrases for meeting people", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_greetings_001","ro_greetings_002","ro_greetings_003","ro_greetings_004","ro_greetings_005","ro_greetings_006","ro_greetings_007"], "objectives": ["Greet people at different times of day", "Say goodbye", "Use basic polite expressions"]},
+    {"id": "numbers_a1", "title": "Numbers 1–10", "description": "Count in Romanian", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_numbers_001","ro_numbers_002","ro_numbers_003","ro_numbers_004","ro_numbers_005","ro_numbers_006","ro_numbers_007","ro_numbers_008","ro_numbers_009","ro_numbers_010"], "objectives": ["Count from 1 to 10"]},
+    {"id": "grammar_sentence_a1", "title": "Basic Sentence Structure", "description": "SVO order and definite articles", "level": "A1", "category": "Grammar", "xpReward": 20, "wordIds": [], "objectives": ["Understand SVO word order", "Recognize enclitic definite articles"]},
+    {"id": "family_a1", "title": "Family Members", "description": "Vocabulary for family relationships", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_family_001","ro_family_002","ro_family_003","ro_family_004","ro_family_005","ro_family_006","ro_family_007","ro_family_008"], "objectives": ["Name immediate family members"]},
+    {"id": "grammar_noun_gender_a1", "title": "Noun Gender", "description": "Masculine, feminine, and neuter nouns", "level": "A1", "category": "Grammar", "xpReward": 20, "wordIds": [], "objectives": ["Identify noun genders"]},
+    {"id": "food_a1", "title": "Food & Drinks", "description": "Common food and beverage vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_food_001","ro_food_002","ro_food_003","ro_food_004","ro_food_005","ro_food_006","ro_food_007","ro_food_008"], "objectives": ["Name common foods", "Order food"]},
+    {"id": "colors_a1", "title": "Colors", "description": "Learn color vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_colors_001","ro_colors_002","ro_colors_003","ro_colors_004","ro_colors_005","ro_colors_006"], "objectives": ["Name basic colors"]},
+    {"id": "animals_a1", "title": "Animals", "description": "Common animal vocabulary", "level": "A1", "category": "Vocabulary", "xpReward": 15, "wordIds": ["ro_animals_001","ro_animals_002","ro_animals_003","ro_animals_004","ro_animals_005","ro_animals_006"], "objectives": ["Name common animals"]}
+  ]
+}

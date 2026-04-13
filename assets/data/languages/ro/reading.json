@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "passages": [
+    {
+      "id": "ro_reading_001",
+      "title": "La piață",
+      "level": "A1",
+      "text": "Maria merge la piață. Ea cumpără mere, pâine și brânză. Vânzătorul spune: „Bună ziua! Cu ce vă pot ajuta?" Maria răspunde: „Vreau un kilogram de mere, vă rog." Merele sunt proaspete și roșii.",
+      "translation": "Maria goes to the market. She buys apples, bread and cheese. The seller says: 'Good day! How can I help you?' Maria answers: 'I want a kilogram of apples, please.' The apples are fresh and red.",
+      "questions": [
+        {"question": "Unde merge Maria?", "options": ["La școală", "La piață", "La birou"], "correctIndex": 1},
+        {"question": "Ce cumpără Maria?", "options": ["Carne și pâine", "Mere, pâine și brânză", "Cafea și ceai"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

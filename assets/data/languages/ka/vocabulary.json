@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "categories": [
+    {
+      "id": "greetings",
+      "name": "Greetings",
+      "icon": "👋",
+      "words": [
+        {"id": "ka_greetings_001", "target": "გამარჯობა", "transliteration": "gamarjoba", "english": "Hello", "category": "Greetings", "level": "A1", "example": {"target": "გამარჯობა, როგორ ხარ?", "english": "Hello, how are you?"}},
+        {"id": "ka_greetings_002", "target": "დილა მშვიდობისა", "transliteration": "dila mshvidobisa", "english": "Good morning", "category": "Greetings", "level": "A1", "example": {"target": "დილა მშვიდობისა! კარგად ხარ?", "english": "Good morning! Are you well?"}},
+        {"id": "ka_greetings_003", "target": "საღამო მშვიდობისა", "transliteration": "saghamo mshvidobisa", "english": "Good evening", "category": "Greetings", "level": "A1", "example": {"target": "საღამო მშვიდობისა, ბატონო!", "english": "Good evening, sir!"}},
+        {"id": "ka_greetings_004", "target": "ნახვამდის", "transliteration": "nakhvamdis", "english": "Goodbye", "category": "Greetings", "level": "A1", "example": {"target": "ნახვამდის, ხვალ შევხვდებით!", "english": "Goodbye, see you tomorrow!"}},
+        {"id": "ka_greetings_005", "target": "მადლობა", "transliteration": "madloba", "english": "Thank you", "category": "Greetings", "level": "A1", "example": {"target": "დიდი მადლობა!", "english": "Thank you very much!"}},
+        {"id": "ka_greetings_006", "target": "თუ შეიძლება", "transliteration": "tu sheidzleba", "english": "Please", "category": "Greetings", "level": "A1", "example": {"target": "თუ შეიძლება, დამეხმარეთ.", "english": "Please, help me."}},
+        {"id": "ka_greetings_007", "target": "დიახ", "transliteration": "diakh", "english": "Yes", "category": "Greetings", "level": "A1", "example": {"target": "დიახ, გასაგებია.", "english": "Yes, I understand."}},
+        {"id": "ka_greetings_008", "target": "არა", "transliteration": "ara", "english": "No", "category": "Greetings", "level": "A1", "example": {"target": "არა, არ ვიცი.", "english": "No, I don't know."}}
+      ]
+    },
+    {
+      "id": "numbers",
+      "name": "Numbers",
+      "icon": "🔢",
+      "words": [
+        {"id": "ka_numbers_001", "target": "ერთი", "transliteration": "erti", "english": "one", "category": "Numbers", "level": "A1", "example": {"target": "ერთი ყავა, თუ შეიძლება", "english": "one coffee, please"}},
+        {"id": "ka_numbers_002", "target": "ორი", "transliteration": "ori", "english": "two", "category": "Numbers", "level": "A1", "example": {"target": "ორი ჭიქა წყალი", "english": "two glasses of water"}},
+        {"id": "ka_numbers_003", "target": "სამი", "transliteration": "sami", "english": "three", "category": "Numbers", "level": "A1", "example": {"target": "სამი ბავშვი", "english": "three children"}},
+        {"id": "ka_numbers_004", "target": "ოთხი", "transliteration": "otkhi", "english": "four", "category": "Numbers", "level": "A1", "example": {"target": "ოთხი სეზონი", "english": "four seasons"}},
+        {"id": "ka_numbers_005", "target": "ხუთი", "transliteration": "khuti", "english": "five", "category": "Numbers", "level": "A1", "example": {"target": "ხუთი წუთი", "english": "five minutes"}},
+        {"id": "ka_numbers_006", "target": "ექვსი", "transliteration": "ekvsi", "english": "six", "category": "Numbers", "level": "A1", "example": {"target": "ექვსი საათი", "english": "six hours"}},
+        {"id": "ka_numbers_007", "target": "შვიდი", "transliteration": "shvidi", "english": "seven", "category": "Numbers", "level": "A1", "example": {"target": "შვიდი დღე კვირაში", "english": "seven days in a week"}},
+        {"id": "ka_numbers_008", "target": "რვა", "transliteration": "rva", "english": "eight", "category": "Numbers", "level": "A1", "example": {"target": "რვა საათი ძილი", "english": "eight hours of sleep"}},
+        {"id": "ka_numbers_009", "target": "ცხრა", "transliteration": "tskhra", "english": "nine", "category": "Numbers", "level": "A1", "example": {"target": "ცხრა თვე", "english": "nine months"}},
+        {"id": "ka_numbers_010", "target": "ათი", "transliteration": "ati", "english": "ten", "category": "Numbers", "level": "A1", "example": {"target": "ათი ლარი", "english": "ten lari (Georgian currency)"}}
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Family",
+      "icon": "👨‍👩‍👧‍👦",
+      "words": [
+        {"id": "ka_family_001", "target": "დედა", "transliteration": "deda", "english": "mother", "category": "Family", "level": "A1", "example": {"target": "ჩემი დედა მასწავლებელია.", "english": "My mother is a teacher."}},
+        {"id": "ka_family_002", "target": "მამა", "transliteration": "mama", "english": "father", "category": "Family", "level": "A1", "example": {"target": "ჩემი მამა თბილისში მუშაობს.", "english": "My father works in Tbilisi."}},
+        {"id": "ka_family_003", "target": "ძმა", "transliteration": "dzma", "english": "brother", "category": "Family", "level": "A1", "example": {"target": "მე ერთი ძმა მყავს.", "english": "I have one brother."}},
+        {"id": "ka_family_004", "target": "და", "transliteration": "da", "english": "sister", "category": "Family", "level": "A1", "example": {"target": "ჩემი და 15 წლისაა.", "english": "My sister is 15 years old."}},
+        {"id": "ka_family_005", "target": "ბაბუა", "transliteration": "babua", "english": "grandfather", "category": "Family", "level": "A1", "example": {"target": "ბაბუა ზღაპრებს ყვება.", "english": "Grandfather tells stories."}},
+        {"id": "ka_family_006", "target": "ბებია", "transliteration": "bebia", "english": "grandmother", "category": "Family", "level": "A1", "example": {"target": "ბებია კარგად ამზადებს.", "english": "Grandmother cooks well."}},
+        {"id": "ka_family_007", "target": "ოჯახი", "transliteration": "ojakhi", "english": "family", "category": "Family", "level": "A1", "example": {"target": "ოჯახი მნიშვნელოვანია.", "english": "Family is important."}}
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "icon": "🍎",
+      "words": [
+        {"id": "ka_food_001", "target": "პური", "transliteration": "puri", "english": "bread", "category": "Food", "level": "A1", "example": {"target": "პური მინდა, თუ შეიძლება.", "english": "I want bread, please."}},
+        {"id": "ka_food_002", "target": "წყალი", "transliteration": "ts'q'ali", "english": "water", "category": "Food", "level": "A1", "example": {"target": "ერთი ჭიქა წყალი.", "english": "One glass of water."}},
+        {"id": "ka_food_003", "target": "ყავა", "transliteration": "q'ava", "english": "coffee", "category": "Food", "level": "A1", "example": {"target": "ყავა რძით მიყვარს.", "english": "I like coffee with milk."}},
+        {"id": "ka_food_004", "target": "ჩაი", "transliteration": "chai", "english": "tea", "category": "Food", "level": "A1", "example": {"target": "ჩაი ცხელია.", "english": "The tea is hot."}},
+        {"id": "ka_food_005", "target": "რძე", "transliteration": "rdze", "english": "milk", "category": "Food", "level": "A1", "example": {"target": "ახალი რძე მაღაზიიდან.", "english": "Fresh milk from the store."}},
+        {"id": "ka_food_006", "target": "ხაჭაპური", "transliteration": "khachapuri", "english": "cheese bread", "category": "Food", "level": "A1", "example": {"target": "ხაჭაპური გემრიელია.", "english": "Khachapuri is delicious."}},
+        {"id": "ka_food_007", "target": "ხორცი", "transliteration": "khortsi", "english": "meat", "category": "Food", "level": "A1", "example": {"target": "ხორცს არ ვჭამ.", "english": "I don't eat meat."}}
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "icon": "🎨",
+      "words": [
+        {"id": "ka_colors_001", "target": "წითელი", "transliteration": "ts'iteli", "english": "red", "category": "Colors", "level": "A1", "example": {"target": "წითელი ვარდი ლამაზია.", "english": "The red rose is beautiful."}},
+        {"id": "ka_colors_002", "target": "ლურჯი", "transliteration": "lurji", "english": "blue", "category": "Colors", "level": "A1", "example": {"target": "ცა ლურჯია.", "english": "The sky is blue."}},
+        {"id": "ka_colors_003", "target": "მწვანე", "transliteration": "mts'vane", "english": "green", "category": "Colors", "level": "A1", "example": {"target": "ბალახი მწვანეა.", "english": "The grass is green."}},
+        {"id": "ka_colors_004", "target": "ყვითელი", "transliteration": "q'viteli", "english": "yellow", "category": "Colors", "level": "A1", "example": {"target": "მზე ყვითელია.", "english": "The sun is yellow."}},
+        {"id": "ka_colors_005", "target": "თეთრი", "transliteration": "tetri", "english": "white", "category": "Colors", "level": "A1", "example": {"target": "თოვლი თეთრია.", "english": "The snow is white."}},
+        {"id": "ka_colors_006", "target": "შავი", "transliteration": "shavi", "english": "black", "category": "Colors", "level": "A1", "example": {"target": "კატა შავია.", "english": "The cat is black."}}
+      ]
+    }
+  ]
+}

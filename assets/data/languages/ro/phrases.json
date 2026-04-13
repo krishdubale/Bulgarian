@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "phrases": [
+    {"id": "ro_phrase_001", "target": "Mă numesc...", "transliteration": "Muh noo-mesk", "english": "My name is...", "category": "Introduction", "level": "A1"},
+    {"id": "ro_phrase_002", "target": "Nu înțeleg.", "transliteration": "Noo uhn-tse-leg", "english": "I don't understand.", "category": "Communication", "level": "A1"},
+    {"id": "ro_phrase_003", "target": "Vorbiți engleză?", "transliteration": "Vor-bits eng-leh-zuh", "english": "Do you speak English?", "category": "Communication", "level": "A1"},
+    {"id": "ro_phrase_004", "target": "Cât costă?", "transliteration": "Kuht kos-tuh", "english": "How much does it cost?", "category": "Shopping", "level": "A1"},
+    {"id": "ro_phrase_005", "target": "Unde este...?", "transliteration": "Oon-deh yes-teh", "english": "Where is...?", "category": "Directions", "level": "A1"},
+    {"id": "ro_phrase_006", "target": "Ajutor!", "transliteration": "Ah-zhoo-tor", "english": "Help!", "category": "Emergency", "level": "A1"},
+    {"id": "ro_phrase_007", "target": "Mi-e foame.", "transliteration": "Mee-eh foh-ah-meh", "english": "I'm hungry.", "category": "Basic Needs", "level": "A1"},
+    {"id": "ro_phrase_008", "target": "Mi-e sete.", "transliteration": "Mee-eh seh-teh", "english": "I'm thirsty.", "category": "Basic Needs", "level": "A1"}
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "languageId": "bg",
+  "dialogues": [
+    {
+      "id": "bg_dialogue_001", "title": "Meeting Someone New", "level": "A1",
+      "lines": [
+        {"speaker": "Иван", "target": "Здравей! Аз съм Иван. Как се казваш?", "transliteration": "Zdravey! Az sam Ivan. Kak se kazvash?", "english": "Hello! I am Ivan. What is your name?"},
+        {"speaker": "Мария", "target": "Здравей, Иване! Аз съм Мария. Много ми е приятно.", "transliteration": "Zdravey, Ivane! Az sam Mariya. Mnogo mi e priyatno.", "english": "Hello, Ivan! I am Maria. Very nice to meet you."},
+        {"speaker": "Иван", "target": "И мен. Откъде си?", "transliteration": "I men. Otkade si?", "english": "Likewise. Where are you from?"},
+        {"speaker": "Мария", "target": "Аз съм от Пловдив. А ти?", "transliteration": "Az sam ot Plovdiv. A ti?", "english": "I am from Plovdiv. And you?"},
+        {"speaker": "Иван", "target": "Аз съм от София. Живея там от десет години.", "transliteration": "Az sam ot Sofiya. Zhiveya tam ot deset godini.", "english": "I am from Sofia. I have lived there for ten years."}
+      ],
+      "questions": [
+        {"question": "Where is Maria from?", "options": ["Sofia", "Varna", "Plovdiv", "Burgas"], "correctIndex": 2},
+        {"question": "How long has Ivan lived in Sofia?", "options": ["5 years", "10 years", "15 years", "20 years"], "correctIndex": 1}
+      ]
+    },
+    {
+      "id": "bg_dialogue_002", "title": "At the Café", "level": "A1",
+      "lines": [
+        {"speaker": "Сервитьор", "target": "Добър ден! Какво ще вземете?", "transliteration": "Dobur den! Kakvo shte vzemete?", "english": "Good afternoon! What will you have?"},
+        {"speaker": "Клиент", "target": "Едно кафе и парче торта, моля.", "transliteration": "Edno kafe i parche torta, molya.", "english": "One coffee and a piece of cake, please."},
+        {"speaker": "Сервитьор", "target": "Какво кафе искате? Черно или с мляко?", "transliteration": "Kakvo kafe iskate? Cherno ili s mlyako?", "english": "What kind of coffee do you want? Black or with milk?"},
+        {"speaker": "Клиент", "target": "С мляко, моля. И без захар.", "transliteration": "S mlyako, molya. I bez zakhar.", "english": "With milk, please. And without sugar."},
+        {"speaker": "Сервитьор", "target": "Веднага. Нещо друго?", "transliteration": "Vednaga. Neshto drugo?", "english": "Right away. Anything else?"},
+        {"speaker": "Клиент", "target": "Не, благодаря. Само сметката.", "transliteration": "Ne, blagodarya. Samo smetkata.", "english": "No, thank you. Just the bill."}
+      ],
+      "questions": [
+        {"question": "What does the customer order?", "options": ["Tea and cake", "Coffee and cake", "Coffee and sandwich", "Two coffees"], "correctIndex": 1},
+        {"question": "How does the customer want the coffee?", "options": ["Black with sugar", "Black without sugar", "With milk and sugar", "With milk without sugar"], "correctIndex": 3}
+      ]
+    },
+    {
+      "id": "bg_dialogue_003", "title": "Asking for Directions", "level": "A2",
+      "lines": [
+        {"speaker": "Турист", "target": "Извинете, може ли да ми помогнете?", "transliteration": "Izvinete, mozhe li da mi pomognete?", "english": "Excuse me, can you help me?"},
+        {"speaker": "Местен", "target": "Да, разбира се. Какво ви трябва?", "transliteration": "Da, razbira se. Kakvo vi tryabva?", "english": "Yes, of course. What do you need?"},
+        {"speaker": "Турист", "target": "Търся Националния исторически музей. Далеко ли е?", "transliteration": "Tarsya Natsionalniya istoricheski muzey. Daleko li e?", "english": "I am looking for the National History Museum. Is it far?"},
+        {"speaker": "Местен", "target": "Не, на около десет минути пеша. Вървете направо, после завийте наляво.", "transliteration": "Ne, na okolo deset minuti pesha. Varvete napravo, posle zaviyte nalyavo.", "english": "No, about ten minutes on foot. Go straight, then turn left."},
+        {"speaker": "Турист", "target": "Благодаря ви много!", "transliteration": "Blagodarya vi mnogo!", "english": "Thank you very much!"}
+      ],
+      "questions": [
+        {"question": "What is the tourist looking for?", "options": ["The train station", "The National History Museum", "A hotel", "A restaurant"], "correctIndex": 1},
+        {"question": "How far away is the destination?", "options": ["5 minutes by car", "10 minutes on foot", "20 minutes by bus", "Very far"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

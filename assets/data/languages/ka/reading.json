@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "passages": [
+    {
+      "id": "ka_reading_001",
+      "title": "ბაზარში",
+      "level": "A1",
+      "text": "ნინო ბაზარში მიდის. ის პურს, ყველს და ხილს ყიდულობს. გამყიდველი ეუბნება: „გამარჯობა! რა გსურთ?" ნინო პასუხობს: „პური და ვაშლი მინდა, თუ შეიძლება."",
+      "translation": "Nino goes to the market. She buys bread, cheese and fruit. The seller says: 'Hello! What would you like?' Nino answers: 'I want bread and an apple, please.'",
+      "questions": [
+        {"question": "სად მიდის ნინო?", "options": ["სკოლაში", "ბაზარში", "სახლში"], "correctIndex": 1},
+        {"question": "რას ყიდულობს ნინო?", "options": ["ხორცს", "პურს, ყველს და ხილს", "ყავას"], "correctIndex": 1}
+      ]
+    }
+  ]
+}

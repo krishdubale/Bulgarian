@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "languageId": "bg",
+  "topics": [
+    {
+      "id": "bg_grammar_sentence_structure",
+      "title": "Basic Sentence Structure",
+      "level": "A1",
+      "explanation": "Bulgarian sentences follow Subject-Verb-Object (SVO) order, similar to English. However, word order is more flexible than in English because nouns are marked for case through context and articles.\n\nThe definite article in Bulgarian is attached to the END of the word (postpositive), not placed before it.",
+      "examples": [
+        {"target": "Аз говоря български.", "transliteration": "Az govorya balgarski.", "english": "I speak Bulgarian."},
+        {"target": "Тя чете книга.", "transliteration": "Tya chete kniga.", "english": "She reads a book."},
+        {"target": "Книгата е интересна.", "transliteration": "Knigata e interesna.", "english": "The book is interesting. (definite article -та attached)"}
+      ],
+      "quiz": [
+        {"question": "How is the definite article positioned in Bulgarian?", "options": ["Before the noun (like English \"the\")", "Attached to the END of the noun", "It does not exist in Bulgarian", "It is a separate word in the middle"], "correctIndex": 1},
+        {"question": "What is the basic word order in Bulgarian?", "options": ["SOV", "SVO", "VSO", "OVS"], "correctIndex": 1}
+      ]
+    },
+    {
+      "id": "bg_grammar_noun_gender",
+      "title": "Noun Gender",
+      "level": "A1",
+      "explanation": "Bulgarian nouns have three grammatical genders: masculine, feminine, and neuter.\n\n• Masculine nouns typically end in a consonant: стол (chair), град (city)\n• Feminine nouns typically end in -а or -я: жена (woman), земя (earth)\n• Neuter nouns typically end in -о or -е: дете (child), слово (word)\n\nAdjectives must agree in gender, number, and definiteness with the noun they modify.",
+      "examples": [
+        {"target": "голям град (m) · голяма жена (f) · голямо дете (n)", "transliteration": "golyam grad · golyama zhena · golyamo dete", "english": "big city (m) · big woman (f) · big child (n)"},
+        {"target": "нов стол · нова книга · ново куче", "transliteration": "nov stol · nova kniga · novo kuche", "english": "new chair (m) · new book (f) · new dog (n)"}
+      ],
+      "quiz": [
+        {"question": "What gender is \"жена\" (woman)?", "options": ["Masculine", "Feminine", "Neuter", "No gender"], "correctIndex": 1},
+        {"question": "Which ending is typical for neuter nouns in Bulgarian?", "options": ["-consonant", "-а / -я", "-о / -е", "-и"], "correctIndex": 2}
+      ]
+    },
+    {
+      "id": "bg_grammar_pronouns",
+      "title": "Personal Pronouns",
+      "level": "A1",
+      "explanation": "Bulgarian personal pronouns change form based on their function in the sentence.\n\nSubject pronouns:\n• аз – I\n• ти – you (singular)\n• той – he\n• тя – she\n• то – it\n• ние – we\n• вие – you (plural/formal)\n• те – they\n\nNote: Subject pronouns are often dropped in Bulgarian when the verb form makes the subject clear.",
+      "examples": [
+        {"target": "Аз съм студент.", "transliteration": "Az sam student.", "english": "I am a student."},
+        {"target": "Той е от България.", "transliteration": "Toy e ot Balgariya.", "english": "He is from Bulgaria."},
+        {"target": "Ние учим български.", "transliteration": "Nie uchim balgarski.", "english": "We are learning Bulgarian."}
+      ],
+      "quiz": [
+        {"question": "What does \"ние\" mean?", "options": ["I", "You", "We", "They"], "correctIndex": 2},
+        {"question": "Which pronoun means \"she\" in Bulgarian?", "options": ["то", "той", "тя", "ти"], "correctIndex": 2}
+      ]
+    },
+    {
+      "id": "bg_grammar_verb_to_be",
+      "title": "The Verb \"to be\" (съм)",
+      "level": "A1",
+      "explanation": "The verb \"съм\" (to be) is one of the most important verbs in Bulgarian.\n\nPresent tense conjugation:\n• аз съм – I am\n• ти си – you are\n• той/тя/то е – he/she/it is\n• ние сме – we are\n• вие сте – you are (plural)\n• те са – they are\n\nNegative form: add \"не\" before the verb (не съм, не си, не е...)",
+      "examples": [
+        {"target": "Аз съм добре.", "transliteration": "Az sam dobre.", "english": "I am fine."},
+        {"target": "Те са приятели.", "transliteration": "Te sa priyateli.", "english": "They are friends."},
+        {"target": "Не съм уморен.", "transliteration": "Ne sam umoren.", "english": "I am not tired."}
+      ],
+      "quiz": [
+        {"question": "How do you say \"they are\" in Bulgarian?", "options": ["те си", "те е", "те са", "те сте"], "correctIndex": 2},
+        {"question": "To make \"съм\" negative, you add:", "options": ["не before the verb", "не after the verb", "-не suffix", "без before"], "correctIndex": 0}
+      ]
+    },
+    {
+      "id": "bg_grammar_present_tense",
+      "title": "Present Tense Verb Conjugation",
+      "level": "A2",
+      "explanation": "Bulgarian verbs are conjugated based on person and number. There are three conjugation groups.\n\nExample – говоря (to speak):\n• аз говоря – I speak\n• ти говориш – you speak\n• той говори – he speaks\n• ние говорим – we speak\n• вие говорите – you (pl) speak\n• те говорят – they speak",
+      "examples": [
+        {"target": "Аз говоря английски.", "transliteration": "Az govorya angliyski.", "english": "I speak English."},
+        {"target": "Ти четеш книга.", "transliteration": "Ti chetes kniga.", "english": "You are reading a book."},
+        {"target": "Те пеят красиво.", "transliteration": "Te peyat krasivo.", "english": "They sing beautifully."}
+      ],
+      "quiz": [
+        {"question": "How do you say \"we speak\" using говоря?", "options": ["ние говоря", "ние говорим", "ние говорят", "ние говориш"], "correctIndex": 1},
+        {"question": "Complete: \"Ти ___ книга.\" (read)", "options": ["четат", "чета", "четеш", "чете"], "correctIndex": 2}
+      ]
+    },
+    {
+      "id": "bg_grammar_past_tense",
+      "title": "Past Tense (Минало свършено)",
+      "level": "A2",
+      "explanation": "The simple past tense in Bulgarian is used to describe completed actions in the past.\n\nIt is formed from the past stem + personal endings:\n• аз говорих – I spoke\n• ти говори – you spoke\n• той говори – he spoke\n• ние говорихме – we spoke\n• вие говорихте – you (pl) spoke\n• те говориха – they spoke",
+      "examples": [
+        {"target": "Вчера учих цял ден.", "transliteration": "Vchera uchikh tsyal den.", "english": "Yesterday I studied all day."},
+        {"target": "Тя пристигна в пет часа.", "transliteration": "Tya pristigna v pet chasa.", "english": "She arrived at five o'clock."},
+        {"target": "Ние ядохме заедно.", "transliteration": "Nie yadokhme zaedno.", "english": "We ate together."}
+      ],
+      "quiz": [
+        {"question": "Which sentence is in the past tense?", "options": ["Аз говоря добре.", "Тя пристигна вчера.", "Ние ще пътуваме.", "Ти четеш книга."], "correctIndex": 1},
+        {"question": "Вчера means:", "options": ["today", "tomorrow", "yesterday", "last year"], "correctIndex": 2}
+      ]
+    },
+    {
+      "id": "bg_grammar_future_tense",
+      "title": "Future Tense",
+      "level": "B1",
+      "explanation": "The future tense in Bulgarian is formed using the particle \"ще\" + the present tense form of the verb.\n\nFormation: ще + present tense verb\n• Аз ще говоря – I will speak\n• Ти ще говориш – You will speak\n\nNegative future: \"няма да\" + present tense\n• Аз няма да говоря – I will not speak",
+      "examples": [
+        {"target": "Утре ще отида на работа.", "transliteration": "Utre shte otida na rabota.", "english": "Tomorrow I will go to work."},
+        {"target": "Те ще пристигнат следващата седмица.", "transliteration": "Te shte pristignat sledvashtata sedmitsa.", "english": "They will arrive next week."},
+        {"target": "Няма да вали дъжд.", "transliteration": "Nyama da vali dazhduh.", "english": "It will not rain."}
+      ],
+      "quiz": [
+        {"question": "How is the future tense formed in Bulgarian?", "options": ["будет + infinitive", "ще + present tense", "да + past tense", "ако + verb"], "correctIndex": 1},
+        {"question": "How do you say \"I will not go\" in Bulgarian?", "options": ["Аз ще не отида", "Аз ще отида не", "Аз няма да отида", "Аз не ще отида"], "correctIndex": 2}
+      ]
+    }
+  ]
+}

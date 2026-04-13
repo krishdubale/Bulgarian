@@ -1,0 +1,96 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "categories": [
+    {
+      "id": "greetings",
+      "name": "Greetings",
+      "icon": "👋",
+      "words": [
+        {"id": "ro_greetings_001", "target": "Bună ziua", "transliteration": "Boo-nuh zee-wa", "english": "Good day / Hello", "category": "Greetings", "level": "A1", "example": {"target": "Bună ziua, cum sunteți?", "english": "Good day, how are you?"}},
+        {"id": "ro_greetings_002", "target": "Bună dimineața", "transliteration": "Boo-nuh dee-mee-neh-tsa", "english": "Good morning", "category": "Greetings", "level": "A1", "example": {"target": "Bună dimineața! Ați dormit bine?", "english": "Good morning! Did you sleep well?"}},
+        {"id": "ro_greetings_003", "target": "Bună seara", "transliteration": "Boo-nuh seh-ah-ra", "english": "Good evening", "category": "Greetings", "level": "A1", "example": {"target": "Bună seara, domnule!", "english": "Good evening, sir!"}},
+        {"id": "ro_greetings_004", "target": "La revedere", "transliteration": "La reh-veh-deh-reh", "english": "Goodbye", "category": "Greetings", "level": "A1", "example": {"target": "La revedere, pe mâine!", "english": "Goodbye, see you tomorrow!"}},
+        {"id": "ro_greetings_005", "target": "Mulțumesc", "transliteration": "Moolt-soo-mesk", "english": "Thank you", "category": "Greetings", "level": "A1", "example": {"target": "Mulțumesc foarte mult!", "english": "Thank you very much!"}},
+        {"id": "ro_greetings_006", "target": "Vă rog", "transliteration": "Vuh rog", "english": "Please", "category": "Greetings", "level": "A1", "example": {"target": "Vă rog, ajutați-mă.", "english": "Please, help me."}},
+        {"id": "ro_greetings_007", "target": "Scuzați", "transliteration": "Skoo-zats", "english": "Excuse me", "category": "Greetings", "level": "A1", "example": {"target": "Scuzați, unde este gara?", "english": "Excuse me, where is the station?"}},
+        {"id": "ro_greetings_008", "target": "Da", "transliteration": "Da", "english": "Yes", "category": "Greetings", "level": "A1", "example": {"target": "Da, înțeleg.", "english": "Yes, I understand."}},
+        {"id": "ro_greetings_009", "target": "Nu", "transliteration": "Noo", "english": "No", "category": "Greetings", "level": "A1", "example": {"target": "Nu, nu știu.", "english": "No, I don't know."}},
+        {"id": "ro_greetings_010", "target": "Ce mai faci?", "transliteration": "Cheh my fach?", "english": "How are you?", "category": "Greetings", "level": "A1", "example": {"target": "Bună! Ce mai faci?", "english": "Hi! How are you?"}}
+      ]
+    },
+    {
+      "id": "numbers",
+      "name": "Numbers",
+      "icon": "🔢",
+      "words": [
+        {"id": "ro_numbers_001", "target": "unu", "transliteration": "oo-noo", "english": "one", "category": "Numbers", "level": "A1", "example": {"target": "un bilet, vă rog", "english": "one ticket, please"}},
+        {"id": "ro_numbers_002", "target": "doi", "transliteration": "doy", "english": "two", "category": "Numbers", "level": "A1", "example": {"target": "doi oameni", "english": "two people"}},
+        {"id": "ro_numbers_003", "target": "trei", "transliteration": "trey", "english": "three", "category": "Numbers", "level": "A1", "example": {"target": "trei copii", "english": "three children"}},
+        {"id": "ro_numbers_004", "target": "patru", "transliteration": "pa-troo", "english": "four", "category": "Numbers", "level": "A1", "example": {"target": "patru anotimpuri", "english": "four seasons"}},
+        {"id": "ro_numbers_005", "target": "cinci", "transliteration": "chinch", "english": "five", "category": "Numbers", "level": "A1", "example": {"target": "cinci minute", "english": "five minutes"}},
+        {"id": "ro_numbers_006", "target": "șase", "transliteration": "sha-seh", "english": "six", "category": "Numbers", "level": "A1", "example": {"target": "șase ore", "english": "six hours"}},
+        {"id": "ro_numbers_007", "target": "șapte", "transliteration": "shap-teh", "english": "seven", "category": "Numbers", "level": "A1", "example": {"target": "șapte zile într-o săptămână", "english": "seven days in a week"}},
+        {"id": "ro_numbers_008", "target": "opt", "transliteration": "opt", "english": "eight", "category": "Numbers", "level": "A1", "example": {"target": "opt ore de somn", "english": "eight hours of sleep"}},
+        {"id": "ro_numbers_009", "target": "nouă", "transliteration": "no-wuh", "english": "nine", "category": "Numbers", "level": "A1", "example": {"target": "nouă luni", "english": "nine months"}},
+        {"id": "ro_numbers_010", "target": "zece", "transliteration": "zeh-cheh", "english": "ten", "category": "Numbers", "level": "A1", "example": {"target": "zece lei", "english": "ten lei (Romanian currency)"}}
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Family",
+      "icon": "👨‍👩‍👧‍👦",
+      "words": [
+        {"id": "ro_family_001", "target": "mamă", "transliteration": "ma-muh", "english": "mother", "category": "Family", "level": "A1", "example": {"target": "Mama mea este profesoară.", "english": "My mother is a teacher."}},
+        {"id": "ro_family_002", "target": "tată", "transliteration": "ta-tuh", "english": "father", "category": "Family", "level": "A1", "example": {"target": "Tatăl meu lucrează în București.", "english": "My father works in Bucharest."}},
+        {"id": "ro_family_003", "target": "frate", "transliteration": "fra-teh", "english": "brother", "category": "Family", "level": "A1", "example": {"target": "Am un frate.", "english": "I have a brother."}},
+        {"id": "ro_family_004", "target": "soră", "transliteration": "so-ruh", "english": "sister", "category": "Family", "level": "A1", "example": {"target": "Sora mea are 15 ani.", "english": "My sister is 15 years old."}},
+        {"id": "ro_family_005", "target": "bunic", "transliteration": "boo-nik", "english": "grandfather", "category": "Family", "level": "A1", "example": {"target": "Bunicul spune povești.", "english": "Grandfather tells stories."}},
+        {"id": "ro_family_006", "target": "bunică", "transliteration": "boo-ni-kuh", "english": "grandmother", "category": "Family", "level": "A1", "example": {"target": "Bunica gătește foarte bine.", "english": "Grandmother cooks very well."}},
+        {"id": "ro_family_007", "target": "copil", "transliteration": "ko-pil", "english": "child", "category": "Family", "level": "A1", "example": {"target": "Copilul se joacă în parc.", "english": "The child plays in the park."}},
+        {"id": "ro_family_008", "target": "familie", "transliteration": "fa-mi-li-eh", "english": "family", "category": "Family", "level": "A1", "example": {"target": "Familia este importantă.", "english": "Family is important."}}
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "icon": "🍎",
+      "words": [
+        {"id": "ro_food_001", "target": "pâine", "transliteration": "puh-ee-neh", "english": "bread", "category": "Food", "level": "A1", "example": {"target": "Vreau pâine, vă rog.", "english": "I want bread, please."}},
+        {"id": "ro_food_002", "target": "apă", "transliteration": "a-puh", "english": "water", "category": "Food", "level": "A1", "example": {"target": "Un pahar de apă, vă rog.", "english": "A glass of water, please."}},
+        {"id": "ro_food_003", "target": "cafea", "transliteration": "ka-feh-ah", "english": "coffee", "category": "Food", "level": "A1", "example": {"target": "Îmi place cafeaua cu lapte.", "english": "I like coffee with milk."}},
+        {"id": "ro_food_004", "target": "ceai", "transliteration": "chay", "english": "tea", "category": "Food", "level": "A1", "example": {"target": "Ceaiul este fierbinte.", "english": "The tea is hot."}},
+        {"id": "ro_food_005", "target": "lapte", "transliteration": "lap-teh", "english": "milk", "category": "Food", "level": "A1", "example": {"target": "Lapte proaspăt de la magazin.", "english": "Fresh milk from the store."}},
+        {"id": "ro_food_006", "target": "ou", "transliteration": "oh-oo", "english": "egg", "category": "Food", "level": "A1", "example": {"target": "Două ouă la micul dejun.", "english": "Two eggs for breakfast."}},
+        {"id": "ro_food_007", "target": "brânză", "transliteration": "bruhn-zuh", "english": "cheese", "category": "Food", "level": "A1", "example": {"target": "Brânza este delicioasă.", "english": "The cheese is delicious."}},
+        {"id": "ro_food_008", "target": "carne", "transliteration": "kar-neh", "english": "meat", "category": "Food", "level": "A1", "example": {"target": "Nu mănânc carne.", "english": "I don't eat meat."}}
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "icon": "🎨",
+      "words": [
+        {"id": "ro_colors_001", "target": "roșu", "transliteration": "ro-shoo", "english": "red", "category": "Colors", "level": "A1", "example": {"target": "Trandafirul roșu este frumos.", "english": "The red rose is beautiful."}},
+        {"id": "ro_colors_002", "target": "albastru", "transliteration": "al-bas-troo", "english": "blue", "category": "Colors", "level": "A1", "example": {"target": "Cerul este albastru.", "english": "The sky is blue."}},
+        {"id": "ro_colors_003", "target": "verde", "transliteration": "ver-deh", "english": "green", "category": "Colors", "level": "A1", "example": {"target": "Iarba este verde.", "english": "The grass is green."}},
+        {"id": "ro_colors_004", "target": "galben", "transliteration": "gal-ben", "english": "yellow", "category": "Colors", "level": "A1", "example": {"target": "Soarele este galben.", "english": "The sun is yellow."}},
+        {"id": "ro_colors_005", "target": "alb", "transliteration": "alb", "english": "white", "category": "Colors", "level": "A1", "example": {"target": "Zăpada este albă.", "english": "The snow is white."}},
+        {"id": "ro_colors_006", "target": "negru", "transliteration": "neh-groo", "english": "black", "category": "Colors", "level": "A1", "example": {"target": "Pisica este neagră.", "english": "The cat is black."}}
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "Animals",
+      "icon": "🐾",
+      "words": [
+        {"id": "ro_animals_001", "target": "câine", "transliteration": "kuh-ee-neh", "english": "dog", "category": "Animals", "level": "A1", "example": {"target": "Câinele latră.", "english": "The dog barks."}},
+        {"id": "ro_animals_002", "target": "pisică", "transliteration": "pi-si-kuh", "english": "cat", "category": "Animals", "level": "A1", "example": {"target": "Pisica doarme.", "english": "The cat sleeps."}},
+        {"id": "ro_animals_003", "target": "pasăre", "transliteration": "pa-suh-reh", "english": "bird", "category": "Animals", "level": "A1", "example": {"target": "Pasărea cântă.", "english": "The bird sings."}},
+        {"id": "ro_animals_004", "target": "pește", "transliteration": "pesh-teh", "english": "fish", "category": "Animals", "level": "A1", "example": {"target": "Peștele înoată.", "english": "The fish swims."}},
+        {"id": "ro_animals_005", "target": "cal", "transliteration": "kal", "english": "horse", "category": "Animals", "level": "A1", "example": {"target": "Calul aleargă repede.", "english": "The horse runs fast."}},
+        {"id": "ro_animals_006", "target": "leu", "transliteration": "leh-oo", "english": "lion", "category": "Animals", "level": "A1", "example": {"target": "Leul este regele animalelor.", "english": "The lion is the king of animals."}}
+      ]
+    }
+  ]
+}

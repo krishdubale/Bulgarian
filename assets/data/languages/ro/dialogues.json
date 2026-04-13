@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "dialogues": [
+    {
+      "id": "ro_dialogue_cafe",
+      "title": "At the Café",
+      "level": "A1",
+      "description": "Ordering a coffee in a Romanian café",
+      "lines": [
+        {"speaker": "A", "target": "Bună ziua! Ce doriți?", "english": "Good day! What would you like?"},
+        {"speaker": "B", "target": "O cafea, vă rog.", "english": "A coffee, please."},
+        {"speaker": "A", "target": "Cu lapte sau fără?", "english": "With milk or without?"},
+        {"speaker": "B", "target": "Cu lapte, vă rog. Cât costă?", "english": "With milk, please. How much does it cost?"},
+        {"speaker": "A", "target": "Zece lei.", "english": "Ten lei."},
+        {"speaker": "B", "target": "Mulțumesc!", "english": "Thank you!"},
+        {"speaker": "A", "target": "Cu plăcere!", "english": "You're welcome!"}
+      ]
+    },
+    {
+      "id": "ro_dialogue_meeting",
+      "title": "Meeting Someone",
+      "level": "A1",
+      "description": "Introducing yourself to a new person",
+      "lines": [
+        {"speaker": "A", "target": "Bună! Mă numesc Ana.", "english": "Hi! My name is Ana."},
+        {"speaker": "B", "target": "Încântat de cunoștință! Eu sunt Mihai.", "english": "Nice to meet you! I'm Mihai."},
+        {"speaker": "A", "target": "De unde ești?", "english": "Where are you from?"},
+        {"speaker": "B", "target": "Sunt din București. Tu?", "english": "I'm from Bucharest. You?"},
+        {"speaker": "A", "target": "Eu sunt din Cluj.", "english": "I'm from Cluj."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "phrases": [
+    {"id": "ka_phrase_001", "target": "მე მქვია...", "transliteration": "me mkvia...", "english": "My name is...", "category": "Introduction", "level": "A1"},
+    {"id": "ka_phrase_002", "target": "არ მესმის.", "transliteration": "ar mesmis", "english": "I don't understand.", "category": "Communication", "level": "A1"},
+    {"id": "ka_phrase_003", "target": "ინგლისურად ლაპარაკობთ?", "transliteration": "inglisruad lap'arak'obt?", "english": "Do you speak English?", "category": "Communication", "level": "A1"},
+    {"id": "ka_phrase_004", "target": "რა ღირს?", "transliteration": "ra ghirs?", "english": "How much does it cost?", "category": "Shopping", "level": "A1"},
+    {"id": "ka_phrase_005", "target": "სად არის...?", "transliteration": "sad aris...?", "english": "Where is...?", "category": "Directions", "level": "A1"},
+    {"id": "ka_phrase_006", "target": "დამეხმარეთ!", "transliteration": "damekhmaret!", "english": "Help me!", "category": "Emergency", "level": "A1"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "ro",
+  "exercises": [
+    {
+      "id": "ro_writing_001",
+      "title": "Introduce Yourself",
+      "level": "A1",
+      "prompt": "Write 3 sentences introducing yourself in Romanian. Include your name, where you are from, and one thing you like.",
+      "hints": ["Mă numesc...", "Sunt din...", "Îmi place..."],
+      "exampleAnswer": "Mă numesc Alex. Sunt din Londra. Îmi place cafeaua."
+    }
+  ]
+}

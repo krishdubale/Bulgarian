@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "languageId": "bg",
+  "phrases": [
+    {"id": "bg_phrase_001", "target": "Как се казваш?", "transliteration": "Kak se kazvash?", "english": "What is your name?", "level": "A1", "context": "Meeting someone new"},
+    {"id": "bg_phrase_002", "target": "Казвам се...", "transliteration": "Kazvam se...", "english": "My name is...", "level": "A1", "context": "Introducing yourself"},
+    {"id": "bg_phrase_003", "target": "Откъде си?", "transliteration": "Otkade si?", "english": "Where are you from?", "level": "A1", "context": "Getting to know someone"},
+    {"id": "bg_phrase_004", "target": "Колко години си?", "transliteration": "Kolko godini si?", "english": "How old are you?", "level": "A1", "context": "Personal information"},
+    {"id": "bg_phrase_005", "target": "Говориш ли английски?", "transliteration": "Govorish li angliyski?", "english": "Do you speak English?", "level": "A1", "context": "Language abilities"},
+    {"id": "bg_phrase_006", "target": "Не разбирам.", "transliteration": "Ne razbiram.", "english": "I do not understand.", "level": "A1", "context": "Communication difficulty"},
+    {"id": "bg_phrase_007", "target": "Можете ли да говорите по-бавно?", "transliteration": "Mozhete li da govorite po-bavno?", "english": "Can you speak more slowly?", "level": "A1", "context": "Asking for slower speech"},
+    {"id": "bg_phrase_008", "target": "Колко струва?", "transliteration": "Kolko struva?", "english": "How much does it cost?", "level": "A1", "context": "Shopping"},
+    {"id": "bg_phrase_009", "target": "Къде е тоалетната?", "transliteration": "Kade e toaletnata?", "english": "Where is the bathroom?", "level": "A1", "context": "Finding facilities"},
+    {"id": "bg_phrase_010", "target": "Мога ли да платя с карта?", "transliteration": "Moga li da platya s karta?", "english": "Can I pay by card?", "level": "A2", "context": "Payment"},
+    {"id": "bg_phrase_011", "target": "Имате ли свободна стая?", "transliteration": "Imate li svobodna staya?", "english": "Do you have a free room?", "level": "A2", "context": "Hotel booking"},
+    {"id": "bg_phrase_012", "target": "Бих искал/а да резервирам маса.", "transliteration": "Bikh iskal/a da rezerviram masa.", "english": "I would like to reserve a table.", "level": "A2", "context": "Restaurant reservation"},
+    {"id": "bg_phrase_013", "target": "Какво препоръчвате?", "transliteration": "Kakvo preporachvate?", "english": "What do you recommend?", "level": "A2", "context": "Asking for recommendations"},
+    {"id": "bg_phrase_014", "target": "Имам алергия към...", "transliteration": "Imam alergiya kam...", "english": "I am allergic to...", "level": "B1", "context": "Health and food"},
+    {"id": "bg_phrase_015", "target": "Бихте ли ми помогнали с...", "transliteration": "Bikhte li mi pomognali s...", "english": "Could you help me with...", "level": "B1", "context": "Asking for help (formal)"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "languageId": "sv",
+  "exercises": [
+    {
+      "id": "sv_writing_001",
+      "title": "Introduce Yourself",
+      "level": "A1",
+      "prompt": "Write 3 sentences introducing yourself in Swedish. Include your name, where you are from, and something you like.",
+      "hints": ["Jag heter...", "Jag kommer från...", "Jag tycker om..."],
+      "exampleAnswer": "Jag heter Alex. Jag kommer från London. Jag tycker om kaffe."
+    }
+  ]
+}

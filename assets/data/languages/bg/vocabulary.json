@@ -1,0 +1,151 @@
+{
+  "version": "1.0",
+  "languageId": "bg",
+  "categories": [
+    {
+      "id": "greetings",
+      "name": "Greetings",
+      "icon": "👋",
+      "words": [
+        {"id": "bg_greetings_001", "target": "Здравей", "transliteration": "Zdravey", "english": "Hello", "category": "Greetings", "level": "A1", "example": {"target": "Здравей, как си?", "english": "Hello, how are you?"}},
+        {"id": "bg_greetings_002", "target": "Добро утро", "transliteration": "Dobro utro", "english": "Good morning", "category": "Greetings", "level": "A1", "example": {"target": "Добро утро! Как спа?", "english": "Good morning! How did you sleep?"}},
+        {"id": "bg_greetings_003", "target": "Добър ден", "transliteration": "Dobur den", "english": "Good afternoon", "category": "Greetings", "level": "A1", "example": {"target": "Добър ден, господине.", "english": "Good afternoon, sir."}},
+        {"id": "bg_greetings_004", "target": "Добър вечер", "transliteration": "Dobur vecher", "english": "Good evening", "category": "Greetings", "level": "A1", "example": {"target": "Добър вечер на всички!", "english": "Good evening everyone!"}},
+        {"id": "bg_greetings_005", "target": "Довиждане", "transliteration": "Dovizhdane", "english": "Goodbye", "category": "Greetings", "level": "A1", "example": {"target": "Довиждане, до утре!", "english": "Goodbye, see you tomorrow!"}},
+        {"id": "bg_greetings_006", "target": "Благодаря", "transliteration": "Blagodarya", "english": "Thank you", "category": "Greetings", "level": "A1", "example": {"target": "Благодаря ти много!", "english": "Thank you very much!"}},
+        {"id": "bg_greetings_007", "target": "Моля", "transliteration": "Molya", "english": "Please / You're welcome", "category": "Greetings", "level": "A1", "example": {"target": "Моля, помогни ми.", "english": "Please, help me."}},
+        {"id": "bg_greetings_008", "target": "Съжалявам", "transliteration": "Sazhalyavam", "english": "I am sorry", "category": "Greetings", "level": "A1", "example": {"target": "Съжалявам, закъснях.", "english": "I am sorry, I am late."}},
+        {"id": "bg_greetings_009", "target": "Да", "transliteration": "Da", "english": "Yes", "category": "Greetings", "level": "A1", "example": {"target": "Да, разбирам.", "english": "Yes, I understand."}},
+        {"id": "bg_greetings_010", "target": "Не", "transliteration": "Ne", "english": "No", "category": "Greetings", "level": "A1", "example": {"target": "Не, не знам.", "english": "No, I do not know."}},
+        {"id": "bg_greetings_011", "target": "Как си?", "transliteration": "Kak si?", "english": "How are you?", "category": "Greetings", "level": "A1", "example": {"target": "Как си днес?", "english": "How are you today?"}},
+        {"id": "bg_greetings_012", "target": "Добре", "transliteration": "Dobre", "english": "Fine / Good", "category": "Greetings", "level": "A1", "example": {"target": "Добре съм, благодаря.", "english": "I am fine, thank you."}}
+      ]
+    },
+    {
+      "id": "numbers",
+      "name": "Numbers",
+      "icon": "🔢",
+      "words": [
+        {"id": "bg_numbers_001", "target": "едно", "transliteration": "edno", "english": "one", "category": "Numbers", "level": "A1", "example": {"target": "едно кафе, моля", "english": "one coffee, please"}},
+        {"id": "bg_numbers_002", "target": "две", "transliteration": "dve", "english": "two", "category": "Numbers", "level": "A1", "example": {"target": "две чаши вода", "english": "two glasses of water"}},
+        {"id": "bg_numbers_003", "target": "три", "transliteration": "tri", "english": "three", "category": "Numbers", "level": "A1", "example": {"target": "три деца", "english": "three children"}},
+        {"id": "bg_numbers_004", "target": "четири", "transliteration": "chetiri", "english": "four", "category": "Numbers", "level": "A1", "example": {"target": "четири сезона", "english": "four seasons"}},
+        {"id": "bg_numbers_005", "target": "пет", "transliteration": "pet", "english": "five", "category": "Numbers", "level": "A1", "example": {"target": "пет минути", "english": "five minutes"}},
+        {"id": "bg_numbers_006", "target": "шест", "transliteration": "shest", "english": "six", "category": "Numbers", "level": "A1", "example": {"target": "шест часа", "english": "six hours"}},
+        {"id": "bg_numbers_007", "target": "седем", "transliteration": "sedem", "english": "seven", "category": "Numbers", "level": "A1", "example": {"target": "седем дни в седмицата", "english": "seven days in a week"}},
+        {"id": "bg_numbers_008", "target": "осем", "transliteration": "osem", "english": "eight", "category": "Numbers", "level": "A1", "example": {"target": "осем часа сън", "english": "eight hours of sleep"}},
+        {"id": "bg_numbers_009", "target": "девет", "transliteration": "devet", "english": "nine", "category": "Numbers", "level": "A1", "example": {"target": "девет месеца", "english": "nine months"}},
+        {"id": "bg_numbers_010", "target": "десет", "transliteration": "deset", "english": "ten", "category": "Numbers", "level": "A1", "example": {"target": "десет лева", "english": "ten leva (Bulgarian currency)"}}
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Family",
+      "icon": "👨‍👩‍👧‍👦",
+      "words": [
+        {"id": "bg_family_001", "target": "майка", "transliteration": "mayka", "english": "mother", "category": "Family", "level": "A1", "example": {"target": "Моята майка е учителка.", "english": "My mother is a teacher."}},
+        {"id": "bg_family_002", "target": "баща", "transliteration": "bashta", "english": "father", "category": "Family", "level": "A1", "example": {"target": "Баща ми работи в София.", "english": "My father works in Sofia."}},
+        {"id": "bg_family_003", "target": "брат", "transliteration": "brat", "english": "brother", "category": "Family", "level": "A1", "example": {"target": "Имам един брат.", "english": "I have one brother."}},
+        {"id": "bg_family_004", "target": "сестра", "transliteration": "sestra", "english": "sister", "category": "Family", "level": "A1", "example": {"target": "Сестра ми е на 15 години.", "english": "My sister is 15 years old."}},
+        {"id": "bg_family_005", "target": "дядо", "transliteration": "dyado", "english": "grandfather", "category": "Family", "level": "A1", "example": {"target": "Дядо ми разказва истории.", "english": "My grandfather tells stories."}},
+        {"id": "bg_family_006", "target": "баба", "transliteration": "baba", "english": "grandmother", "category": "Family", "level": "A1", "example": {"target": "Баба ми готви много добре.", "english": "My grandmother cooks very well."}},
+        {"id": "bg_family_007", "target": "дете", "transliteration": "dete", "english": "child", "category": "Family", "level": "A1", "example": {"target": "Детето играе в парка.", "english": "The child plays in the park."}},
+        {"id": "bg_family_008", "target": "семейство", "transliteration": "semeystvo", "english": "family", "category": "Family", "level": "A1", "example": {"target": "Семейството е важно.", "english": "Family is important."}},
+        {"id": "bg_family_009", "target": "съпруг", "transliteration": "saprug", "english": "husband", "category": "Family", "level": "A1", "example": {"target": "Съпругът ми е лекар.", "english": "My husband is a doctor."}},
+        {"id": "bg_family_010", "target": "съпруга", "transliteration": "sapruga", "english": "wife", "category": "Family", "level": "A1", "example": {"target": "Съпругата му е адвокат.", "english": "His wife is a lawyer."}}
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Food",
+      "icon": "🍎",
+      "words": [
+        {"id": "bg_food_001", "target": "хляб", "transliteration": "khlyab", "english": "bread", "category": "Food", "level": "A1", "example": {"target": "Искам хляб, моля.", "english": "I want bread, please."}},
+        {"id": "bg_food_002", "target": "вода", "transliteration": "voda", "english": "water", "category": "Food", "level": "A1", "example": {"target": "Чаша вода, моля.", "english": "A glass of water, please."}},
+        {"id": "bg_food_003", "target": "кафе", "transliteration": "kafe", "english": "coffee", "category": "Food", "level": "A1", "example": {"target": "Обичам кафе с мляко.", "english": "I love coffee with milk."}},
+        {"id": "bg_food_004", "target": "чай", "transliteration": "chay", "english": "tea", "category": "Food", "level": "A1", "example": {"target": "Чаят е горещ.", "english": "The tea is hot."}},
+        {"id": "bg_food_005", "target": "мляко", "transliteration": "mlyako", "english": "milk", "category": "Food", "level": "A1", "example": {"target": "Прясно мляко от магазина.", "english": "Fresh milk from the store."}},
+        {"id": "bg_food_006", "target": "яйце", "transliteration": "yaytse", "english": "egg", "category": "Food", "level": "A1", "example": {"target": "Две яйца за закуска.", "english": "Two eggs for breakfast."}},
+        {"id": "bg_food_007", "target": "сирене", "transliteration": "sirene", "english": "cheese (white)", "category": "Food", "level": "A1", "example": {"target": "Баницата е със сирене.", "english": "The banitsa is with white cheese."}},
+        {"id": "bg_food_008", "target": "месо", "transliteration": "meso", "english": "meat", "category": "Food", "level": "A1", "example": {"target": "Не ям месо.", "english": "I do not eat meat."}},
+        {"id": "bg_food_009", "target": "салата", "transliteration": "salata", "english": "salad", "category": "Food", "level": "A1", "example": {"target": "Шопска салата е вкусна.", "english": "Shopska salad is delicious."}},
+        {"id": "bg_food_010", "target": "ябълка", "transliteration": "yabylka", "english": "apple", "category": "Food", "level": "A1", "example": {"target": "Тази ябълка е сладка.", "english": "This apple is sweet."}}
+      ]
+    },
+    {
+      "id": "travel",
+      "name": "Travel",
+      "icon": "✈️",
+      "words": [
+        {"id": "bg_travel_001", "target": "влак", "transliteration": "vlak", "english": "train", "category": "Travel", "level": "A1", "example": {"target": "Влакът пристига в 10.", "english": "The train arrives at 10."}},
+        {"id": "bg_travel_002", "target": "автобус", "transliteration": "avtobus", "english": "bus", "category": "Travel", "level": "A1", "example": {"target": "Автобусът е закъснял.", "english": "The bus is late."}},
+        {"id": "bg_travel_003", "target": "летище", "transliteration": "letishte", "english": "airport", "category": "Travel", "level": "A1", "example": {"target": "Летището е далеч.", "english": "The airport is far."}},
+        {"id": "bg_travel_004", "target": "хотел", "transliteration": "hotel", "english": "hotel", "category": "Travel", "level": "A1", "example": {"target": "Хотелът е на центъра.", "english": "The hotel is in the center."}},
+        {"id": "bg_travel_005", "target": "паспорт", "transliteration": "pasport", "english": "passport", "category": "Travel", "level": "A1", "example": {"target": "Имам ли паспорта си?", "english": "Do I have my passport?"}},
+        {"id": "bg_travel_006", "target": "карта", "transliteration": "karta", "english": "map", "category": "Travel", "level": "A1", "example": {"target": "Имаш ли карта на града?", "english": "Do you have a map of the city?"}},
+        {"id": "bg_travel_007", "target": "билет", "transliteration": "bilet", "english": "ticket", "category": "Travel", "level": "A1", "example": {"target": "Един билет, моля.", "english": "One ticket, please."}},
+        {"id": "bg_travel_008", "target": "гара", "transliteration": "gara", "english": "train station", "category": "Travel", "level": "A1", "example": {"target": "Гарата е близо.", "english": "The train station is nearby."}}
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "icon": "🎨",
+      "words": [
+        {"id": "bg_colors_001", "target": "червен", "transliteration": "cherven", "english": "red", "category": "Colors", "level": "A1", "example": {"target": "Червената роза е красива.", "english": "The red rose is beautiful."}},
+        {"id": "bg_colors_002", "target": "син", "transliteration": "sin", "english": "blue", "category": "Colors", "level": "A1", "example": {"target": "Небето е синьо.", "english": "The sky is blue."}},
+        {"id": "bg_colors_003", "target": "зелен", "transliteration": "zelen", "english": "green", "category": "Colors", "level": "A1", "example": {"target": "Тревата е зелена.", "english": "The grass is green."}},
+        {"id": "bg_colors_004", "target": "жълт", "transliteration": "zhalt", "english": "yellow", "category": "Colors", "level": "A1", "example": {"target": "Слънцето е жълто.", "english": "The sun is yellow."}},
+        {"id": "bg_colors_005", "target": "бял", "transliteration": "byal", "english": "white", "category": "Colors", "level": "A1", "example": {"target": "Снегът е бял.", "english": "The snow is white."}},
+        {"id": "bg_colors_006", "target": "черен", "transliteration": "cheren", "english": "black", "category": "Colors", "level": "A1", "example": {"target": "Котката е черна.", "english": "The cat is black."}},
+        {"id": "bg_colors_007", "target": "оранжев", "transliteration": "oranzhev", "english": "orange", "category": "Colors", "level": "A1", "example": {"target": "Портокалът е оранжев.", "english": "The orange is orange."}},
+        {"id": "bg_colors_008", "target": "лилав", "transliteration": "lilav", "english": "purple", "category": "Colors", "level": "A1", "example": {"target": "Лилавото цвете е красиво.", "english": "The purple flower is beautiful."}}
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "Animals",
+      "icon": "🐾",
+      "words": [
+        {"id": "bg_animals_001", "target": "куче", "transliteration": "kuche", "english": "dog", "category": "Animals", "level": "A1", "example": {"target": "Кучето лае.", "english": "The dog barks."}},
+        {"id": "bg_animals_002", "target": "котка", "transliteration": "kotka", "english": "cat", "category": "Animals", "level": "A1", "example": {"target": "Котката спи.", "english": "The cat sleeps."}},
+        {"id": "bg_animals_003", "target": "птица", "transliteration": "ptitsa", "english": "bird", "category": "Animals", "level": "A1", "example": {"target": "Птицата пее.", "english": "The bird sings."}},
+        {"id": "bg_animals_004", "target": "риба", "transliteration": "riba", "english": "fish", "category": "Animals", "level": "A1", "example": {"target": "Рибата плува.", "english": "The fish swims."}},
+        {"id": "bg_animals_005", "target": "кон", "transliteration": "kon", "english": "horse", "category": "Animals", "level": "A1", "example": {"target": "Конят тича бързо.", "english": "The horse runs fast."}},
+        {"id": "bg_animals_006", "target": "лъв", "transliteration": "luv", "english": "lion", "category": "Animals", "level": "A1", "example": {"target": "Лъвът е царят на животните.", "english": "The lion is king of the animals."}},
+        {"id": "bg_animals_007", "target": "мечка", "transliteration": "mechka", "english": "bear", "category": "Animals", "level": "A1", "example": {"target": "Мечката спи през зимата.", "english": "The bear sleeps in winter."}},
+        {"id": "bg_animals_008", "target": "вълк", "transliteration": "valk", "english": "wolf", "category": "Animals", "level": "A1", "example": {"target": "Вълкът вие на луната.", "english": "The wolf howls at the moon."}}
+      ]
+    },
+    {
+      "id": "body",
+      "name": "Body",
+      "icon": "💪",
+      "words": [
+        {"id": "bg_body_001", "target": "глава", "transliteration": "glava", "english": "head", "category": "Body", "level": "A1", "example": {"target": "Боли ме главата.", "english": "My head hurts."}},
+        {"id": "bg_body_002", "target": "ръка", "transliteration": "raka", "english": "hand / arm", "category": "Body", "level": "A1", "example": {"target": "Дай ми ръка.", "english": "Give me your hand."}},
+        {"id": "bg_body_003", "target": "крак", "transliteration": "krak", "english": "leg / foot", "category": "Body", "level": "A1", "example": {"target": "Боли ме кракът.", "english": "My leg hurts."}},
+        {"id": "bg_body_004", "target": "очи", "transliteration": "ochi", "english": "eyes", "category": "Body", "level": "A1", "example": {"target": "Тя има сини очи.", "english": "She has blue eyes."}},
+        {"id": "bg_body_005", "target": "уши", "transliteration": "ushi", "english": "ears", "category": "Body", "level": "A1", "example": {"target": "Ушите ме болят.", "english": "My ears hurt."}},
+        {"id": "bg_body_006", "target": "уста", "transliteration": "usta", "english": "mouth", "category": "Body", "level": "A1", "example": {"target": "Отвори устата.", "english": "Open your mouth."}},
+        {"id": "bg_body_007", "target": "нос", "transliteration": "nos", "english": "nose", "category": "Body", "level": "A1", "example": {"target": "Носът ми тече.", "english": "My nose is running."}},
+        {"id": "bg_body_008", "target": "сърце", "transliteration": "sartse", "english": "heart", "category": "Body", "level": "A1", "example": {"target": "Сърцето бие.", "english": "The heart beats."}}
+      ]
+    },
+    {
+      "id": "time",
+      "name": "Time",
+      "icon": "⏰",
+      "words": [
+        {"id": "bg_time_001", "target": "ден", "transliteration": "den", "english": "day", "category": "Time", "level": "A1", "example": {"target": "Денят е дълъг.", "english": "The day is long."}},
+        {"id": "bg_time_002", "target": "нощ", "transliteration": "nosht", "english": "night", "category": "Time", "level": "A1", "example": {"target": "Нощта е тиха.", "english": "The night is quiet."}},
+        {"id": "bg_time_003", "target": "седмица", "transliteration": "sedmitsa", "english": "week", "category": "Time", "level": "A1", "example": {"target": "Тази седмица е натоварена.", "english": "This week is busy."}},
+        {"id": "bg_time_004", "target": "месец", "transliteration": "mesets", "english": "month", "category": "Time", "level": "A1", "example": {"target": "Следващия месец пътувам.", "english": "Next month I am traveling."}},
+        {"id": "bg_time_005", "target": "година", "transliteration": "godina", "english": "year", "category": "Time", "level": "A1", "example": {"target": "Тази година беше трудна.", "english": "This year was difficult."}},
+        {"id": "bg_time_006", "target": "сега", "transliteration": "sega", "english": "now", "category": "Time", "level": "A1", "example": {"target": "Ела сега.", "english": "Come now."}},
+        {"id": "bg_time_007", "target": "утре", "transliteration": "utre", "english": "tomorrow", "category": "Time", "level": "A1", "example": {"target": "Ще се видим утре.", "english": "We will see each other tomorrow."}},
+        {"id": "bg_time_008", "target": "вчера", "transliteration": "vchera", "english": "yesterday", "category": "Time", "level": "A1", "example": {"target": "Вчера беше хубав ден.", "english": "Yesterday was a nice day."}}
+      ]
+    }
+  ]
+}

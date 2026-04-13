@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "languageId": "bg",
+  "exercises": [
+    {"id": "bg_writing_001", "type": "translate", "prompt": "Translate to Bulgarian: \"Hello, my name is Maria.\"", "answer": "Здравей, казвам се Мария.", "hint": "Use Здравей for Hello, казвам се for my name is", "level": "A1"},
+    {"id": "bg_writing_002", "type": "translate", "prompt": "Translate to Bulgarian: \"I am from Sofia.\"", "answer": "Аз съм от София.", "hint": "Аз = I, съм = am, от = from", "level": "A1"},
+    {"id": "bg_writing_003", "type": "translate", "prompt": "Translate to Bulgarian: \"The book is interesting.\"", "answer": "Книгата е интересна.", "hint": "Note: книгата uses the definite article suffix -та", "level": "A1"},
+    {"id": "bg_writing_004", "type": "fill_blank", "prompt": "Fill in the blank: \"Аз ___ студент.\" (I am a student)", "answer": "съм", "hint": "Use the correct form of \"to be\" for first person singular", "level": "A1"},
+    {"id": "bg_writing_005", "type": "fill_blank", "prompt": "Fill in the blank: \"Те ___ приятели.\" (They are friends)", "answer": "са", "hint": "Use the correct form of \"to be\" for third person plural", "level": "A1"},
+    {"id": "bg_writing_006", "type": "fill_blank", "prompt": "Fill in the blank: \"Утре ___ отида на работа.\" (I will go to work)", "answer": "ще", "hint": "Future tense particle in Bulgarian", "level": "A2"},
+    {"id": "bg_writing_007", "type": "translate", "prompt": "Translate to Bulgarian: \"Thank you very much!\"", "answer": "Благодаря ти много!", "hint": "Благодаря = thank you, много = very/much", "level": "A1"},
+    {"id": "bg_writing_008", "type": "translate", "prompt": "Translate to Bulgarian: \"We are learning Bulgarian.\"", "answer": "Ние учим български.", "hint": "учим is the first person plural of учa", "level": "A2"},
+    {"id": "bg_writing_009", "type": "fill_blank", "prompt": "Fill in the blank: \"Вчера аз ___ цял ден.\" (Yesterday I studied all day)", "answer": "учих", "hint": "Past tense of уча for first person singular", "level": "A2"},
+    {"id": "bg_writing_010", "type": "translate", "prompt": "Translate to Bulgarian: \"I will not go tomorrow.\"", "answer": "Утре няма да отида.", "hint": "Negative future uses няма да", "level": "B1"}
+  ]
+}

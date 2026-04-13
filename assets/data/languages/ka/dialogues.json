@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "languageId": "ka",
+  "dialogues": [
+    {
+      "id": "ka_dialogue_market",
+      "title": "At the Market",
+      "level": "A1",
+      "description": "Buying food at a Georgian market",
+      "lines": [
+        {"speaker": "A", "target": "გამარჯობა! რა გსურთ?", "english": "Hello! What would you like?"},
+        {"speaker": "B", "target": "პური მინდა, თუ შეიძლება.", "english": "I want bread, please."},
+        {"speaker": "A", "target": "კიდევ რამე?", "english": "Anything else?"},
+        {"speaker": "B", "target": "რა ღირს ხაჭაპური?", "english": "How much is khachapuri?"},
+        {"speaker": "A", "target": "ხუთი ლარი.", "english": "Five lari."},
+        {"speaker": "B", "target": "კარგი, ერთი ხაჭაპური. მადლობა!", "english": "Good, one khachapuri. Thank you!"}
+      ]
+    }
+  ]
+}
