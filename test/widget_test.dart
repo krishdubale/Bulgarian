@@ -23,7 +23,7 @@ void main() {
     expect(find.byType(MaterialApp), findsOneWidget);
   });
 
-  testWidgets('Home screen shows welcome text', (WidgetTester tester) async {
+  testWidgets('Unauthenticated flow lands on sign in', (WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
 
@@ -37,10 +37,7 @@ void main() {
     );
 
     await tester.pumpAndSettle();
-    // The app should show navigation items
-    expect(find.text('Home'), findsOneWidget);
-    expect(find.text('Vocabulary'), findsOneWidget);
-    expect(find.text('Progress'), findsOneWidget);
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.text('Learn Bulgarian'), findsOneWidget);
+    expect(find.text('Sign In'), findsOneWidget);
   });
 }

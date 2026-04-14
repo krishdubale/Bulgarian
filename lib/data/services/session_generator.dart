@@ -2,25 +2,28 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/lesson_session_model.dart';
-import '../models/srs_model.dart';
 import '../models/user_learning_profile.dart';
 import 'srs_service.dart';
 import 'content_loader.dart';
+import 'progression_policy_service.dart';
 
 final sessionGeneratorProvider = Provider<SessionGenerator>((ref) {
   final srsService = ref.watch(srsServiceProvider);
   final contentLoader = ref.watch(contentLoaderProvider);
-  return SessionGenerator(srsService, contentLoader);
+  final policy = ref.watch(progressionPolicyProvider);
+  return SessionGenerator(srsService, contentLoader, policy);
 });
 
 /// Generates interactive sessions from static content.
 /// Mixes new content, review items, and weak items intelligently.
 class SessionGenerator {
-  SessionGenerator(this._srsService, this._contentLoader);
+  SessionGenerator(this._srsService, this._contentLoader, this._policy);
 
   final SrsService _srsService;
   final ContentLoader _contentLoader;
+  final ProgressionPolicyService _policy;
   final _random = Random();
+  static const _practiceTargetDuration = Duration(minutes: 6);
 
   /// Generate a lesson session for a specific lesson.
   Future<LessonSession> generateLessonSession({
@@ -84,11 +87,10 @@ class SessionGenerator {
     exercises.sort((a, b) {
       const order = {
         ExerciseType.mcq: 0,
-        ExerciseType.match: 1,
-        ExerciseType.fillBlank: 2,
-        ExerciseType.translate: 3,
-        ExerciseType.sentenceBuild: 4,
-        ExerciseType.listening: 5,
+        ExerciseType.fillBlank: 1,
+        ExerciseType.translate: 2,
+        ExerciseType.sentenceBuild: 3,
+        ExerciseType.listening: 4,
       };
       return (order[a.type] ?? 0).compareTo(order[b.type] ?? 0);
     });
@@ -123,7 +125,7 @@ class SessionGenerator {
 
       exercises.add(_createExercise(
         item: word,
-        type: _pickReviewExerciseType(card, 4, null),
+        type: ExerciseType.mcq,
         allWords: allWords,
         index: i,
         difficulty: 3,
@@ -149,29 +151,72 @@ class SessionGenerator {
     UserLearningProfile? profile,
   }) async {
     final weakCards = _srsService.getWeakItems(languageId, count: 8);
+    final dueCards = _srsService.getDueCards(languageId);
     final vocab = await _contentLoader.loadVocabulary(languageId);
     final allWords = vocab.expand((cat) => cat.words).toList();
+    final hasSevereWeakness =
+        weakCards.length >= _policy.severeWeakQueueThreshold;
+    final mix = _policy.practiceSessionMix(severeWeakQueue: hasSevereWeakness);
 
     final exercises = <SessionExercise>[];
-    for (int i = 0; i < weakCards.length && i < 6; i++) {
-      final card = weakCards[i];
-      final word = allWords.where((w) => w.id == card.itemId).firstOrNull;
-      if (word == null) continue;
 
-      final type = _pickReviewExerciseType(card, difficulty, profile);
+    // Repair block share.
+    final weakWordIds = weakCards.map((c) => c.itemId).toSet();
+    final weakWords = allWords.where((w) => weakWordIds.contains(w.id)).toList();
+    final repairWords = _takeRandom(weakWords, mix.repairItems);
+    for (int i = 0; i < repairWords.length; i++) {
+      final exerciseType =
+          _pickExerciseType((difficulty - 1).clamp(1, 10), profile);
       exercises.add(_createExercise(
-        item: word,
+        item: repairWords[i],
+        type: exerciseType,
+        allWords: allWords,
+        index: exercises.length,
+        difficulty: (difficulty - 1).clamp(1, 10),
+      ));
+    }
+
+    // Review share.
+    final dueWordIds = dueCards.map((c) => c.itemId).toSet();
+    final dueWords = allWords.where((w) => dueWordIds.contains(w.id)).toList();
+    final reviewWords = _takeRandom(
+      dueWords.where((w) => !repairWords.any((r) => r.id == w.id)).toList(),
+      mix.reviewItems,
+    );
+    for (int i = 0; i < reviewWords.length; i++) {
+      final type = _pickExerciseType(difficulty, profile);
+      exercises.add(_createExercise(
+        item: reviewWords[i],
         type: type,
         allWords: allWords,
-        index: i,
+        index: exercises.length,
         difficulty: difficulty,
       ));
     }
 
-    // Fill with random items if not enough weak items.
-    while (exercises.length < 5 && allWords.isNotEmpty) {
-      final word = allWords[_random.nextInt(allWords.length)];
-      if (exercises.any((e) => e.relatedItemId == word.id)) continue;
+    // New share.
+    final usedIds = exercises.map((e) => e.relatedItemId).whereType<String>().toSet();
+    final newPool = allWords.where((w) => !usedIds.contains(w.id)).toList();
+    final newWords = _takeRandom(newPool, mix.newItems);
+    for (int i = 0; i < newWords.length; i++) {
+      final exerciseType = _pickExerciseType(difficulty + 1, profile);
+      exercises.add(_createExercise(
+        item: newWords[i],
+        type: exerciseType,
+        allWords: allWords,
+        index: exercises.length,
+        difficulty: (difficulty + 1).clamp(1, 10),
+      ));
+    }
+
+    // Top up to full 15-item session.
+    final usedIdsForTopUp =
+        exercises.map((e) => e.relatedItemId).whereType<String>().toSet();
+    while (exercises.length < mix.total && allWords.isNotEmpty) {
+      final unusedWords =
+          allWords.where((w) => !usedIdsForTopUp.contains(w.id)).toList();
+      if (unusedWords.isEmpty) break;
+      final word = unusedWords[_random.nextInt(unusedWords.length)];
       exercises.add(_createExercise(
         item: word,
         type: _pickExerciseType(difficulty, profile),
@@ -179,6 +224,12 @@ class SessionGenerator {
         index: exercises.length,
         difficulty: difficulty,
       ));
+      usedIdsForTopUp.add(word.id);
+    }
+
+    // Keep exactly target total.
+    if (exercises.length > mix.total) {
+      exercises.removeRange(mix.total, exercises.length);
     }
 
     return LessonSession(
@@ -188,7 +239,7 @@ class SessionGenerator {
       exercises: exercises,
       difficulty: difficulty,
       xpReward: exercises.length * 3,
-      targetDuration: const Duration(minutes: 2),
+      targetDuration: _practiceTargetDuration,
       sessionType: SessionType.practice,
     );
   }
@@ -226,7 +277,7 @@ class SessionGenerator {
       lessonId: 'challenge',
       languageId: languageId,
       exercises: exercises,
-      difficulty: ((difficulty + 2).clamp(1, 10)) as int,
+      difficulty: (difficulty + 2).clamp(1, 10),
       xpReward: exercises.length * 5,
       targetDuration: const Duration(minutes: 2),
       sessionType: SessionType.challenge,
@@ -251,8 +302,6 @@ class SessionGenerator {
         return _createTranslateExercise(item, index);
       case ExerciseType.sentenceBuild:
         return _createSentenceBuildExercise(item, index);
-      case ExerciseType.match:
-        return _createMcqExercise(item, allWords, index); // fallback to MCQ
       case ExerciseType.listening:
         return _createMcqExercise(item, allWords, index);
     }
@@ -357,7 +406,7 @@ class SessionGenerator {
         ExerciseType.mcq,
         ExerciseType.fillBlank,
         ExerciseType.translate,
-        ExerciseType.match,
+        ExerciseType.listening,
       ];
       return types[_random.nextInt(types.length)];
     } else {
@@ -369,33 +418,6 @@ class SessionGenerator {
       ];
       return types[_random.nextInt(types.length)];
     }
-  }
-
-  ExerciseType _pickReviewExerciseType(
-    SrsCard card,
-    int difficulty,
-    UserLearningProfile? profile,
-  ) {
-    if (card.stabilityScore >= 0.82) {
-      const harder = [
-        ExerciseType.translate,
-        ExerciseType.sentenceBuild,
-        ExerciseType.fillBlank,
-        ExerciseType.listening,
-      ];
-      return harder[_random.nextInt(harder.length)];
-    }
-
-    if (card.stabilityScore < 0.55 || card.failureStreak >= 2) {
-      const scaffolded = [
-        ExerciseType.mcq,
-        ExerciseType.match,
-        ExerciseType.fillBlank,
-      ];
-      return scaffolded[_random.nextInt(scaffolded.length)];
-    }
-
-    return _pickExerciseType(difficulty, profile);
   }
 
   List<ContentWord> _getLessonWords(
@@ -420,6 +442,6 @@ class SessionGenerator {
   }
 
   int _calculateXpReward(int difficulty, int exerciseCount) {
-    return ((exerciseCount * 3 + difficulty * 2).clamp(10, 50)) as int;
+    return (exerciseCount * 3 + difficulty * 2).clamp(10, 50);
   }
 }

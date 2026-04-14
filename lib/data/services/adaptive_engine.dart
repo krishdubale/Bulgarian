@@ -197,7 +197,7 @@ class AdaptiveEngine {
   List<ExerciseType> _getEasierTypes() => [
         ExerciseType.mcq,
         ExerciseType.mcq,
-        ExerciseType.match,
+        ExerciseType.fillBlank,
         ExerciseType.fillBlank,
       ];
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/app_providers.dart';
+import '../../../data/repositories/auth_repository.dart';
 import '../../../data/repositories/progress_repository.dart';
+import '../../../data/services/session_analytics_service.dart';
 
 final darkModeProvider = StateNotifierProvider<DarkModeNotifier, bool>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
@@ -28,18 +31,34 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(darkModeProvider);
+    final auth = ref.watch(authStateProvider);
     final progress = ref.watch(userProgressProvider);
     final theme = Theme.of(context);
     const goalOptions = [20, 30, 50, 100, 150];
+    final displayName = auth.displayName?.trim();
+    final avatarInitial =
+        (displayName != null && displayName.isNotEmpty)
+            ? displayName.substring(0, 1).toUpperCase()
+            : 'U';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
-        automaticallyImplyLeading: false,
+        title: const Text('Profile & Settings'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          _SectionHeader(title: 'Account'),
+          Card(
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Text(avatarInitial),
+              ),
+              title: Text(displayName?.isNotEmpty == true ? displayName! : 'User'),
+              subtitle: Text(auth.email ?? 'No email available'),
+            ),
+          ),
+          const SizedBox(height: 12),
           _SectionHeader(title: 'Appearance'),
           Card(
             child: SwitchListTile(
@@ -140,6 +159,27 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          _SectionHeader(title: 'Testing & Cohort'),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.poll),
+                  title: const Text('Weekly cohort report'),
+                  subtitle: const Text('View event counts for current week'),
+                  onTap: () => _showWeeklyReport(context, ref),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.feedback_outlined),
+                  title: const Text('Day-7 feedback hook'),
+                  subtitle: const Text('Submit delayed recall/retention feedback'),
+                  onTap: () => _showDay7Feedback(context, ref),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
           _SectionHeader(title: 'About'),
           Card(
             child: Column(
@@ -164,8 +204,138 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: 16),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.logout, color: Colors.red),
+            label:
+                const Text('Sign Out', style: TextStyle(color: Colors.red)),
+            onPressed: () => ref.read(authStateProvider.notifier).logout(),
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.red),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+          ),
           const SizedBox(height: 32),
         ],
+      ),
+    );
+  }
+
+  Future<void> _showWeeklyReport(BuildContext context, WidgetRef ref) async {
+    final analytics = ref.read(sessionAnalyticsServiceProvider);
+    final counts = analytics.weeklyEventCounts();
+    final csv = analytics.exportCsv();
+    await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Weekly Cohort Report'),
+        content: SizedBox(
+          width: 360,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (counts.isEmpty) const Text('No events recorded this week.'),
+                ...counts.entries.map((e) => Text('${e.key}: ${e.value}')),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              try {
+                await Clipboard.setData(ClipboardData(text: csv));
+                if (!context.mounted) return;
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Report copied to clipboard')),
+                );
+              } catch (_) {
+                if (!context.mounted) return;
+                debugPrint('Failed to copy weekly cohort report to clipboard');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Could not copy report')),
+                );
+              }
+            },
+            child: const Text('Copy CSV'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showDay7Feedback(BuildContext context, WidgetRef ref) async {
+    String? recall;
+    String? friction;
+    await showDialog(
+      context: context,
+      builder: (_) => StatefulBuilder(
+        builder: (context, setLocalState) => AlertDialog(
+          title: const Text('Day-7 Feedback'),
+          content: SizedBox(
+            width: 360,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Did you remember content from days 1–3?'),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  children: ['Yes', 'Partly', 'No']
+                      .map(
+                        (v) => ChoiceChip(
+                          label: Text(v),
+                          selected: recall == v,
+                          onSelected: (_) => setLocalState(() => recall = v),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(height: 12),
+                const Text('Where did you feel most stuck?'),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  children: ['Session start', 'Mid-session', 'Review block', 'End summary']
+                      .map(
+                        (v) => ChoiceChip(
+                          label: Text(v),
+                          selected: friction == v,
+                          onSelected: (_) => setLocalState(() => friction = v),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await ref.read(sessionAnalyticsServiceProvider).logEvent(
+                  'day7_feedback',
+                  {
+                    'recall': recall,
+                    'friction': friction,
+                  },
+                );
+                if (context.mounted) Navigator.of(context).pop();
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        ),
       ),
     );
   }

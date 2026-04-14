@@ -96,6 +96,30 @@ Without Firebase configuration, authentication and per-account progress sync wil
 flutter test
 ```
 
+## Engineering Workflow Gates
+
+Run this quality gate locally for each prompt-sized change:
+
+```bash
+bash tool/validate_prompt.sh
+```
+
+Baseline command contract:
+
+```bash
+flutter pub get
+dart format --set-exit-if-changed .
+flutter analyze
+flutter test
+flutter test test/widget_test.dart
+```
+
+Execution governance and stage ordering are defined in:
+
+- `docs/execution_playbook.md`
+- `.github/pull_request_template.md`
+- `.github/workflows/ci.yml`
+
 ## Future Enhancements
 
 - [ ] Bulgarian TTS audio integration (`flutter_tts`)

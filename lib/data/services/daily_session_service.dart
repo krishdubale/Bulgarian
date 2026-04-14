@@ -6,26 +6,31 @@ import '../models/user_progress_model.dart';
 import 'session_generator.dart';
 import 'evaluation_service.dart';
 import 'srs_service.dart';
+import 'progression_policy_service.dart';
+import '../models/progression_policy_model.dart';
 
 final dailySessionServiceProvider = Provider<DailySessionService>((ref) {
   final sessionGen = ref.watch(sessionGeneratorProvider);
   final evaluation = ref.watch(evaluationServiceProvider);
   final srsService = ref.watch(srsServiceProvider);
-  return DailySessionService(sessionGen, evaluation, srsService);
+  final policy = ref.watch(progressionPolicyProvider);
+  return DailySessionService(sessionGen, evaluation, srsService, policy);
 });
 
 /// Orchestrates the daily user learning experience.
-/// Builds a DailyPlan with warm-up, lesson, practice, and challenge sessions.
+/// Builds a single-session daily plan to maximize completion consistency.
 class DailySessionService {
   DailySessionService(
     this._sessionGenerator,
     this._evaluationService,
     this._srsService,
+    this._policy,
   );
 
   final SessionGenerator _sessionGenerator;
   final EvaluationService _evaluationService;
   final SrsService _srsService;
+  final ProgressionPolicyService _policy;
 
   /// Build today's daily plan for a user.
   Future<DailyPlan> getDailyPlan({
@@ -36,64 +41,24 @@ class DailySessionService {
     final difficulty = profile != null
         ? _evaluationService.getRecommendedDifficulty(profile)
         : 3;
+    final adjustedDifficulty =
+        progress.streakDays >= 7 ? (difficulty + 1).clamp(1, 10) : difficulty;
 
-    // 1. Repair: urgent mistakes/high-risk due items.
-    LessonSession? warmup;
-    final urgentCount = _srsService.getUrgentCards(languageId, limit: 5).length;
-    final dueCount = _srsService.getDailyReviewCount(languageId);
-    if (urgentCount > 0 || dueCount > 0) {
-      warmup = await _sessionGenerator.generateWarmupSession(
-        languageId: languageId,
-      );
-    }
-
-    // 2. New lesson: generate from next uncompleted lesson.
-    final nextLessonId = _getNextLessonId(progress);
-    LessonSession? newLesson;
-    if (nextLessonId != null) {
-      newLesson = await _sessionGenerator.generateLessonSession(
-        languageId: languageId,
-        lessonId: nextLessonId,
-        difficulty: difficulty,
-        profile: profile,
-      );
-    }
-
-    // 3. Review: delayed retrieval from weak + due items.
-    final practice = await _sessionGenerator.generatePracticeSession(
+    // Daily app loop: one mixed session (review + weak-item repair + new).
+    final session = await _sessionGenerator.generatePracticeSession(
       languageId: languageId,
-      difficulty: difficulty,
+      difficulty: adjustedDifficulty,
       profile: profile,
     );
 
-    // 4. Challenge: optional harder session.
-    final challenge = await _sessionGenerator.generateChallengeSession(
-      languageId: languageId,
-      difficulty: difficulty,
-    );
-
-    int totalMinutes = 0;
-    int totalActivities = 0;
-    if (warmup != null) {
-      totalMinutes += 3;
-      totalActivities++;
-    }
-    if (newLesson != null) {
-      totalMinutes += 6;
-      totalActivities++;
-    }
-    totalMinutes += 6; // review/practice always exists
-    totalActivities++;
-    totalMinutes += 2; // micro-check/challenge
-    totalActivities++;
-
     return DailyPlan(
-      warmup: warmup,
-      newLesson: newLesson,
-      practice: practice,
-      challenge: challenge,
-      totalEstimatedMinutes: totalMinutes,
-      totalActivities: totalActivities,
+      coreSession: session,
+      warmup: null,
+      newLesson: null,
+      practice: session,
+      challenge: null,
+      totalEstimatedMinutes: session.targetDuration.inMinutes,
+      totalActivities: 1,
     );
   }
 
@@ -103,50 +68,33 @@ class DailySessionService {
     UserLearningProfile? profile,
     required String languageId,
   }) {
-    // Priority 1: Repair urgent weak items.
-    final urgentCount = _srsService.getUrgentCards(languageId, limit: 5).length;
-    if (urgentCount > 0) {
-      return LearningAction.review;
+    final weakCards = _srsService.getWeakItems(languageId, count: 12);
+    final weakCount = weakCards.length;
+    final requiredRepairBlocks = _policy.requiredRepairBlocks(
+      WeakAreaReport(
+        weakSkills: weakCards.map((c) => c.itemId).toList(),
+        severe: weakCount >= _policy.severeWeakQueueThreshold,
+      ),
+    );
+    if (requiredRepairBlocks > 0) {
+      return LearningAction.practice;
     }
 
-    // Priority 2: Review if SRS items are due.
+    // Priority 1: Review if SRS items are due.
     final dueCount = _srsService.getDailyReviewCount(languageId);
     if (dueCount > 3) {
       return LearningAction.review;
     }
 
-    // Priority 3: Practice if struggling.
+    // Priority 2: Practice if struggling.
     if (profile != null && profile.isStruggling) {
       return LearningAction.practice;
     }
 
-    // Priority 4: Continue with lessons.
+    // Priority 3: Continue with lessons.
     return LearningAction.nextLesson;
   }
 
-  /// Determine the next lesson ID based on progress.
-  String? _getNextLessonId(UserProgressModel progress) {
-    // Basic lesson sequence — expandable later with curriculum.
-    const lessonSequence = [
-      'alphabet_a1',
-      'greetings_a1',
-      'numbers_a1',
-      'grammar_sentence_a1',
-      'family_a1',
-      'grammar_noun_gender_a1',
-      'food_a1',
-      'travel_a1',
-      'colors_a1',
-      'animals_a1',
-    ];
-
-    for (final lessonId in lessonSequence) {
-      if (!progress.completedLessons.contains(lessonId)) {
-        return lessonId;
-      }
-    }
-    return null; // all lessons completed
-  }
 }
 
 /// Recommended action for the user.

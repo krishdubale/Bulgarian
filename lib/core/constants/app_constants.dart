@@ -28,6 +28,20 @@ class AppConstants {
   static const int xpPerWord = 5;
   static const int xpForStreak = 20;
   static const int xpForQuiz = 15;
+  static const String initialLessonId = 'alphabet_a1';
+  static const String initialUnitId = 'unit_1';
+  static const List<String> defaultLessonSequence = [
+    'alphabet_a1',
+    'greetings_a1',
+    'numbers_a1',
+    'grammar_sentence_a1',
+    'family_a1',
+    'grammar_noun_gender_a1',
+    'food_a1',
+    'travel_a1',
+    'colors_a1',
+    'animals_a1',
+  ];
 
   static const String keyXpPoints = 'xp_points';
   static const String keyStreakDays = 'streak_days';
