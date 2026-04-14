@@ -28,18 +28,15 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  bool _didAutoResume = false;
-  bool _didLogVisit = false;
+  bool _initializedHomeFlow = false;
 
   @override
-  Widget build(BuildContext context) {
-    final progress = ref.watch(userProgressProvider);
-    final language = ref.watch(selectedLanguageProvider);
-    final dailyPlan = ref.watch(dailyPlanProvider);
-    final pending = ref.read(sessionResumeServiceProvider).load();
-
-    if (!_didLogVisit) {
-      _didLogVisit = true;
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _initializedHomeFlow) return;
+      _initializedHomeFlow = true;
+      final progress = ref.read(userProgressProvider);
       final returnBucket = progress.streakDays >= 7
           ? 'D7'
           : (progress.streakDays >= 3 ? 'D3' : 'D1');
@@ -47,22 +44,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         'bucket': returnBucket,
         'streakDays': progress.streakDays,
       });
-    }
 
-    if (!_didAutoResume && pending != null) {
-      _didAutoResume = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => LessonSessionScreen(
-              session: pending.session,
-              resumeState: pending,
-            ),
+      final pending = ref.read(sessionResumeServiceProvider).load();
+      if (pending == null) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => LessonSessionScreen(
+            session: pending.session,
+            resumeState: pending,
           ),
-        );
-      });
-    }
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final progress = ref.watch(userProgressProvider);
+    final language = ref.watch(selectedLanguageProvider);
+    final dailyPlan = ref.watch(dailyPlanProvider);
 
     return Scaffold(
       appBar: AppBar(

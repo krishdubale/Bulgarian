@@ -244,8 +244,19 @@ class SettingsScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: csv));
-              if (context.mounted) Navigator.of(context).pop();
+              try {
+                await Clipboard.setData(ClipboardData(text: csv));
+                if (!context.mounted) return;
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Report copied to clipboard')),
+                );
+              } catch (_) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Could not copy report')),
+                );
+              }
             },
             child: const Text('Copy CSV'),
           ),
