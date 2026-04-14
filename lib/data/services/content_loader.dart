@@ -256,16 +256,25 @@ class ContentLoader {
     }
   }
 
+  CourseBlueprint _emptyCourseBlueprint() {
+    return CourseBlueprint.fromJson(const <String, dynamic>{});
+  }
+
   /// Load the shared A1-B1 course blueprint.
   Future<CourseBlueprint> loadCourseBlueprint() async {
     if (_courseBlueprintCache != null) return _courseBlueprintCache!;
 
-    final raw = await rootBundle.loadString(
-      'assets/data/course_blueprint.json',
-    );
-    final data = json.decode(raw) as Map<String, dynamic>;
-    _courseBlueprintCache = CourseBlueprint.fromJson(data);
-    return _courseBlueprintCache!;
+    try {
+      final raw = await rootBundle.loadString(
+        'assets/data/course_blueprint.json',
+      );
+      final data = json.decode(raw) as Map<String, dynamic>;
+      _courseBlueprintCache = CourseBlueprint.fromJson(data);
+      return _courseBlueprintCache!;
+    } catch (e) {
+      _courseBlueprintCache = _emptyCourseBlueprint();
+      return _courseBlueprintCache!;
+    }
   }
 
   /// Clear all cached data.
