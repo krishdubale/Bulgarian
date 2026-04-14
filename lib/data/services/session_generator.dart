@@ -154,8 +154,9 @@ class SessionGenerator {
     final dueCards = _srsService.getDueCards(languageId);
     final vocab = await _contentLoader.loadVocabulary(languageId);
     final allWords = vocab.expand((cat) => cat.words).toList();
-    final severeWeakQueue = weakCards.length >= _policy.severeWeakQueueThreshold;
-    final mix = _policy.practiceSessionMix(severeWeakQueue: severeWeakQueue);
+    final isSevereWeakQueue =
+        weakCards.length >= _policy.severeWeakQueueThreshold;
+    final mix = _policy.practiceSessionMix(severeWeakQueue: isSevereWeakQueue);
 
     final exercises = <SessionExercise>[];
 

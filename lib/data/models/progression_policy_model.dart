@@ -80,4 +80,3 @@ class UnitJumpTestDecision {
     this.requiresResumeAtFirstNotMastered = false,
   });
 }
-
