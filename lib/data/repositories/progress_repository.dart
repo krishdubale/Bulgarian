@@ -59,8 +59,7 @@ class ProgressRepository {
     final practicedItems = Set<String>.from(
       (progress['practicedItems'] as List?) ?? const [],
     );
-    final initialUnlockedLessons = UserProgressModel.initial().unlockedLessons;
-    final initialUnlockedUnits = UserProgressModel.initial().unlockedUnits;
+    final initialDefaults = UserProgressModel.initial();
 
     final model = UserProgressModel(
       xpPoints: (progress['xpPoints'] as num?)?.toInt() ?? 0,
@@ -85,14 +84,14 @@ class ProgressRepository {
       unlockedLessons:
           Set<String>.from(
         (progress['unlockedLessons'] as List?) ??
-            initialUnlockedLessons.toList(),
+            initialDefaults.unlockedLessons.toList(),
       ),
       completedUnits:
           Set<String>.from((progress['completedUnits'] as List?) ?? const []),
       unlockedUnits:
           Set<String>.from(
         (progress['unlockedUnits'] as List?) ??
-            initialUnlockedUnits.toList(),
+            initialDefaults.unlockedUnits.toList(),
       ),
       unitBadges:
           Set<String>.from((progress['unitBadges'] as List?) ?? const []),

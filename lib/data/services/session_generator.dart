@@ -23,6 +23,7 @@ class SessionGenerator {
   final ContentLoader _contentLoader;
   final ProgressionPolicyService _policy;
   final _random = Random();
+  static const _practiceTargetDuration = Duration(minutes: 6);
 
   /// Generate a lesson session for a specific lesson.
   Future<LessonSession> generateLessonSession({
@@ -239,7 +240,7 @@ class SessionGenerator {
       exercises: exercises,
       difficulty: difficulty,
       xpReward: exercises.length * 3,
-      targetDuration: const Duration(minutes: 6),
+      targetDuration: _practiceTargetDuration,
       sessionType: SessionType.practice,
     );
   }
