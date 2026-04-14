@@ -9,9 +9,9 @@ final progressionPolicyProvider = Provider<ProgressionPolicyService>((ref) {
 class ProgressionPolicyService {
   const ProgressionPolicyService();
 
-  static const double passCompletionThreshold = 0.90;
-  static const double passScoreThreshold = 0.75;
-  static const int passCriticalErrorLimit = 2;
+  static const double _passCompletionThreshold = 0.90;
+  static const double _passScoreThreshold = 0.75;
+  static const int _passCriticalErrorLimit = 2;
   static const int _severeWeakQueueThreshold = 4;
   static const int _smallDueReviewThreshold = 3;
   static const double subskillPassThreshold = 0.70;
@@ -23,9 +23,9 @@ class ProgressionPolicyService {
     required LessonPerformanceSnapshot snapshot,
     required int lessonNumberWithinUnit,
   }) {
-    final passed = snapshot.completionRate >= passCompletionThreshold &&
-        snapshot.score >= passScoreThreshold &&
-        snapshot.unresolvedCriticalErrors <= passCriticalErrorLimit;
+    final passed = snapshot.completionRate >= _passCompletionThreshold &&
+        snapshot.score >= _passScoreThreshold &&
+        snapshot.unresolvedCriticalErrors <= _passCriticalErrorLimit;
 
     final strongPass = passed &&
         snapshot.score >= 0.90 &&

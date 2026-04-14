@@ -48,6 +48,15 @@ class Progress {
       };
 
   factory Progress.fromJson(Map<String, dynamic> json) {
+    final rawSkillStates = json['skillStates'] as Map?;
+    final parsedSkillStates = <String, int>{};
+    rawSkillStates?.forEach((key, value) {
+      final parsed = value is num ? value.toInt() : int.tryParse('$value');
+      if (parsed != null) {
+        parsedSkillStates[key.toString()] = parsed;
+      }
+    });
+
     return Progress(
       userId: json['userId'] as String? ?? '',
       languageId: json['languageId'] as String? ?? '',
@@ -55,13 +64,7 @@ class Progress {
       currentLessonId: json['currentLessonId'] as String? ?? '',
       xp: (json['xp'] as num?)?.toInt() ?? 0,
       streak: (json['streak'] as num?)?.toInt() ?? 0,
-      skillStates: Map<String, int>.from(
-        (json['skillStates'] as Map?)?.map(
-              (k, v) => MapEntry(k as String, (v as num).toInt()),
-            ) ??
-            const {},
-      ),
+      skillStates: parsedSkillStates,
     );
   }
 }
-

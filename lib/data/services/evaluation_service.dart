@@ -48,7 +48,7 @@ class EvaluationService {
           retries: answer.retryCount,
         );
         xpEarned += _policy.applyDailyDiminishingReturns(
-          currentTodayXp: todayXp + xpEarned,
+          currentTodayXp: todayXp,
           rawAward: rawXp,
         );
       }
