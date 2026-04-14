@@ -121,10 +121,31 @@ class SrsService {
   List<SrsCard> getAdaptiveReviewQueue(String languageId, {int limit = 15}) {
     if (limit <= 0) return [];
 
-    final due = getDueCards(languageId);
+    final now = DateTime.now();
+    final cards = loadCards(languageId).values.toList();
+
+    final due = cards
+        .where((c) => !c.nextReviewDate.isAfter(now))
+        .toList()
+      ..sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
+
     final matureDue = due.where((c) => c.stabilityScore >= 0.72).toList();
-    final fragile = getFragileCards(languageId, limit: limit * 2);
-    final hotspots = getUrgentCards(languageId, limit: limit * 2);
+
+    final fragile = cards
+        .where((c) => c.successRate < 0.7 || c.stabilityScore < 0.5)
+        .toList()
+      ..sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
+    if (fragile.length > limit * 2) {
+      fragile.removeRange(limit * 2, fragile.length);
+    }
+
+    final hotspots = cards
+        .where((c) => c.reviewPriority > 0)
+        .toList()
+      ..sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
+    if (hotspots.length > limit * 2) {
+      hotspots.removeRange(limit * 2, hotspots.length);
+    }
 
     final matureTarget = (limit * 0.4).round();
     final fragileTarget = (limit * 0.4).round();
@@ -152,7 +173,7 @@ class SrsService {
       takeCards(due, limit - queue.length);
     }
     if (queue.length < limit) {
-      final all = loadCards(languageId).values.toList()
+      final all = List<SrsCard>.from(cards)
         ..sort((a, b) => b.reviewPriority.compareTo(a.reviewPriority));
       takeCards(all, limit - queue.length);
     }
