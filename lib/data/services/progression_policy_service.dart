@@ -14,6 +14,8 @@ class ProgressionPolicyService {
   static const int passCriticalErrorLimit = 2;
   static const int _severeWeakQueueThreshold = 4;
   static const int _smallDueReviewThreshold = 3;
+  static const double subskillPassThreshold = 0.70;
+  static const double reviewHoldRetentionThreshold = 0.70;
 
   int get severeWeakQueueThreshold => _severeWeakQueueThreshold;
 
@@ -53,7 +55,8 @@ class ProgressionPolicyService {
     required double score,
     required List<double> subskillScores,
   }) {
-    final allSectionsPassed = subskillScores.every((s) => s >= 0.70);
+    final allSectionsPassed =
+        subskillScores.every((s) => s >= subskillPassThreshold);
     final passed = score >= 0.85 && allSectionsPassed;
     return UnitJumpTestDecision(
       passed: passed,
@@ -63,7 +66,7 @@ class ProgressionPolicyService {
 
   bool shouldApplyReviewHold({
     required double priorUnitRetention,
-    double threshold = 0.70,
+    double threshold = reviewHoldRetentionThreshold,
   }) {
     return priorUnitRetention < threshold;
   }

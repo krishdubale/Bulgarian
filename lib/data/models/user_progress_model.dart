@@ -1,3 +1,5 @@
+import '../../core/constants/app_constants.dart';
+
 class UserProgressModel {
   final String languageId;
   final int xpPoints;
@@ -42,9 +44,9 @@ class UserProgressModel {
     this.longestStreak = 0,
     this.awardedMilestones = const {},
     this.lessonStates = const {},
-    this.unlockedLessons = const {'alphabet_a1'},
+    this.unlockedLessons = const {AppConstants.initialLessonId},
     this.completedUnits = const {},
-    this.unlockedUnits = const {'unit_1'},
+    this.unlockedUnits = const {AppConstants.initialUnitId},
     this.unitBadges = const {},
     this.reviewHoldActive = false,
     this.reviewDebtCount = 0,

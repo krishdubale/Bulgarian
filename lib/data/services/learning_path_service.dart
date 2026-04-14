@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/app_constants.dart';
 import '../models/user_learning_profile.dart';
 import '../models/user_progress_model.dart';
 import 'srs_service.dart';
@@ -180,20 +181,7 @@ class LearningPathService {
   }
 
   String? _getNextUncompletedLesson(UserProgressModel progress) {
-    const sequence = [
-      'alphabet_a1',
-      'greetings_a1',
-      'numbers_a1',
-      'grammar_sentence_a1',
-      'family_a1',
-      'grammar_noun_gender_a1',
-      'food_a1',
-      'travel_a1',
-      'colors_a1',
-      'animals_a1',
-    ];
-
-    for (final id in sequence) {
+    for (final id in AppConstants.defaultLessonSequence) {
       if (!progress.completedLessons.contains(id) &&
           progress.unlockedLessons.contains(id)) {
         return id;
@@ -203,7 +191,7 @@ class LearningPathService {
   }
 
   int _countRemainingLessons(UserProgressModel progress) {
-    const total = 10; // A1 lessons
+    const total = AppConstants.defaultLessonSequence.length;
     return total - progress.lessonsCompleted.clamp(0, total);
   }
 }

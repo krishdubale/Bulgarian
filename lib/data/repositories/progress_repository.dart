@@ -59,6 +59,7 @@ class ProgressRepository {
     final practicedItems = Set<String>.from(
       (progress['practicedItems'] as List?) ?? const [],
     );
+    final initialDefaults = UserProgressModel.initial();
 
     final model = UserProgressModel(
       xpPoints: (progress['xpPoints'] as num?)?.toInt() ?? 0,
@@ -81,11 +82,17 @@ class ProgressRepository {
         (progress['lessonStates'] as Map?) ?? const {},
       ),
       unlockedLessons:
-          Set<String>.from((progress['unlockedLessons'] as List?) ?? const ['alphabet_a1']),
+          Set<String>.from(
+        (progress['unlockedLessons'] as List?) ??
+            initialDefaults.unlockedLessons.toList(),
+      ),
       completedUnits:
           Set<String>.from((progress['completedUnits'] as List?) ?? const []),
       unlockedUnits:
-          Set<String>.from((progress['unlockedUnits'] as List?) ?? const ['unit_1']),
+          Set<String>.from(
+        (progress['unlockedUnits'] as List?) ??
+            initialDefaults.unlockedUnits.toList(),
+      ),
       unitBadges:
           Set<String>.from((progress['unitBadges'] as List?) ?? const []),
       reviewHoldActive: progress['reviewHoldActive'] as bool? ?? false,
@@ -371,18 +378,7 @@ class UserProgressNotifier extends StateNotifier<UserProgressModel> {
   }
 
   String? _nextLessonId(String currentLessonId) {
-    const lessonSequence = [
-      'alphabet_a1',
-      'greetings_a1',
-      'numbers_a1',
-      'grammar_sentence_a1',
-      'family_a1',
-      'grammar_noun_gender_a1',
-      'food_a1',
-      'travel_a1',
-      'colors_a1',
-      'animals_a1',
-    ];
+    const lessonSequence = AppConstants.defaultLessonSequence;
     final idx = lessonSequence.indexOf(currentLessonId);
     if (idx < 0 || idx >= lessonSequence.length - 1) return null;
     return lessonSequence[idx + 1];

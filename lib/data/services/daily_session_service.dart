@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/app_constants.dart';
 import '../models/lesson_session_model.dart';
 import '../models/user_learning_profile.dart';
 import '../models/user_progress_model.dart';
@@ -136,21 +137,7 @@ class DailySessionService {
 
   /// Determine the next lesson ID based on progress.
   String? _getNextLessonId(UserProgressModel progress) {
-    // Basic lesson sequence — expandable later with curriculum.
-    const lessonSequence = [
-      'alphabet_a1',
-      'greetings_a1',
-      'numbers_a1',
-      'grammar_sentence_a1',
-      'family_a1',
-      'grammar_noun_gender_a1',
-      'food_a1',
-      'travel_a1',
-      'colors_a1',
-      'animals_a1',
-    ];
-
-    for (final lessonId in lessonSequence) {
+    for (final lessonId in AppConstants.defaultLessonSequence) {
       if (!progress.completedLessons.contains(lessonId) &&
           progress.unlockedLessons.contains(lessonId)) {
         return lessonId;
