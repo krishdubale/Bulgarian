@@ -197,7 +197,7 @@ class SrsCard {
   }
 
   int _failedInterval(int quality) {
-    if (quality <= 1) return 0;
+    if (quality <= 1) return 1;
     return 1;
   }
 }
