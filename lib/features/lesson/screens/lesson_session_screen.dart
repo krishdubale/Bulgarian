@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/design_tokens.dart';
-import '../../../data/models/lesson_session_model.dart';
-import '../../../data/services/evaluation_service.dart';
-import '../../../data/repositories/progress_repository.dart';
-import '../../../data/services/session_analytics_service.dart';
-import '../../../data/services/session_resume_service.dart';
+import '../../../core/models/lesson_session_model.dart';
+import '../../../core/services/evaluation_service.dart';
+import '../../../core/repositories/progress_repository.dart';
+import '../../../core/services/session_analytics_service.dart';
+import '../../../core/services/session_resume_service.dart';
 
 /// Full interactive lesson session screen.
 /// Displays exercises one at a time with immediate feedback and a summary at the end.

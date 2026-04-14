@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/app_providers.dart';
-import '../../../data/repositories/auth_repository.dart';
-import '../../../data/repositories/progress_repository.dart';
-import '../../../data/services/session_analytics_service.dart';
+import '../../../core/repositories/auth_repository.dart';
+import '../../../core/repositories/progress_repository.dart';
+import '../../../core/services/session_analytics_service.dart';
 
 final darkModeProvider = StateNotifierProvider<DarkModeNotifier, bool>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);

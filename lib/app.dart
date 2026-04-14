@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'data/services/language_manager.dart';
+import 'features/settings/screens/settings_screen.dart';
 
 class LinguaFlowApp extends ConsumerWidget {
   const LinguaFlowApp({super.key});

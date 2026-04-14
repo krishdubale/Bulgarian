@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/services/content_loader.dart';
-import '../../../data/services/language_manager.dart';
-import '../../../data/repositories/progress_repository.dart';
+import '../../../core/services/content_loader.dart';
+import '../../../core/services/language_manager.dart';
+import '../../../core/repositories/progress_repository.dart';
 
 final selectedCategoryProvider = StateProvider<String>((ref) => 'Greetings');
 

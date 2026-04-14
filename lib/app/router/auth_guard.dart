@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/repositories/auth_repository.dart';
+import '../../core/repositories/auth_repository.dart';
 import 'app_routes.dart';
 
 class AuthGuardInput {

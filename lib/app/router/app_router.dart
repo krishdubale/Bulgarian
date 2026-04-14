@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
-import '../../features/home/screens/home_screen.dart';
+import '../../features/basic_learning/screens/basic_flow.dart';
 import '../../features/path/screens/path_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../shared/shared.dart';
@@ -48,7 +48,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRouteKey.home.path,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => const BasicHomeScreen(),
       ),
       GoRoute(
         path: AppRouteKey.path.path,

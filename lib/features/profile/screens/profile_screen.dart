@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/repositories/auth_repository.dart';
-import '../../../data/repositories/progress_repository.dart';
+import '../../../core/repositories/auth_repository.dart';
+import '../../../core/repositories/progress_repository.dart';
 import '../../../core/constants/app_constants.dart';
 
 class ProfileScreen extends ConsumerWidget {

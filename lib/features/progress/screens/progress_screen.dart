@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../core/constants/app_constants.dart';
-import '../../../data/repositories/progress_repository.dart';
+import '../../../core/repositories/progress_repository.dart';
 
 class ProgressScreen extends ConsumerWidget {
   const ProgressScreen({super.key});

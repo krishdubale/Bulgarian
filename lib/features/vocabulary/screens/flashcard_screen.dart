@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/services/content_loader.dart';
-import '../../../data/services/language_manager.dart';
-import '../../../data/repositories/progress_repository.dart';
+import '../../../core/services/content_loader.dart';
+import '../../../core/services/language_manager.dart';
+import '../../../core/repositories/progress_repository.dart';
 
 class FlashcardScreen extends ConsumerStatefulWidget {
   final String category;

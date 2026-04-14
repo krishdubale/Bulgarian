@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_constants.dart';
-import '../../../data/repositories/progress_repository.dart';
+import '../../../core/repositories/progress_repository.dart';
 
 class PathScreen extends ConsumerWidget {
   const PathScreen({super.key});

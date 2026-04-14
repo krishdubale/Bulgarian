@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/design_tokens.dart';
-import '../../../data/models/language_model.dart';
-import '../../../data/services/language_manager.dart';
+import '../../../core/models/language_model.dart';
+import '../../../core/services/language_manager.dart';
 
 class LanguageSelectionScreen extends ConsumerWidget {
   const LanguageSelectionScreen({super.key});

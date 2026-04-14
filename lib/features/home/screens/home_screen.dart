@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../data/models/lesson_session_model.dart';
-import '../../../data/repositories/progress_repository.dart';
-import '../../../data/services/daily_session_service.dart';
-import '../../../data/services/language_manager.dart';
-import '../../../data/services/session_analytics_service.dart';
-import '../../../data/services/session_resume_service.dart';
+import '../../../core/models/lesson_session_model.dart';
+import '../../../core/repositories/progress_repository.dart';
+import '../../../core/services/daily_session_service.dart';
+import '../../../core/services/language_manager.dart';
+import '../../../core/services/session_analytics_service.dart';
+import '../../../core/services/session_resume_service.dart';
 import '../../lesson/screens/lesson_session_screen.dart';
 
 final dailyPlanProvider = FutureProvider<DailyPlan>((ref) async {

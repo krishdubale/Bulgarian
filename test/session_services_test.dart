@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:linguaflow_app/data/models/lesson_session_model.dart';
-import 'package:linguaflow_app/data/services/session_analytics_service.dart';
-import 'package:linguaflow_app/data/services/session_resume_service.dart';
+import 'package:linguaflow_app/core/models/lesson_session_model.dart';
+import 'package:linguaflow_app/core/services/session_analytics_service.dart';
+import 'package:linguaflow_app/core/services/session_resume_service.dart';
 
 void main() {
   test('SessionResumeService saves and loads snapshot', () async {
