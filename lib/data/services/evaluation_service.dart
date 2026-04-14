@@ -67,8 +67,11 @@ class EvaluationService {
       );
 
       if (answer.isCorrect) {
-        strongItems.add(itemId);
+        if (!weakItems.contains(itemId)) {
+          strongItems.add(itemId);
+        }
       } else {
+        strongItems.remove(itemId);
         weakItems.add(itemId);
       }
 
