@@ -164,10 +164,11 @@ class SessionGenerator {
     final weakWords = allWords.where((w) => weakWordIds.contains(w.id)).toList();
     final repairWords = _takeRandom(weakWords, mix.repairItems);
     for (int i = 0; i < repairWords.length; i++) {
-      final type = _pickExerciseType((difficulty - 1).clamp(1, 10), profile);
+      final exerciseType =
+          _pickExerciseType((difficulty - 1).clamp(1, 10), profile);
       exercises.add(_createExercise(
         item: repairWords[i],
-        type: type,
+        type: exerciseType,
         allWords: allWords,
         index: exercises.length,
         difficulty: (difficulty - 1).clamp(1, 10),
@@ -197,10 +198,10 @@ class SessionGenerator {
     final newPool = allWords.where((w) => !usedIds.contains(w.id)).toList();
     final newWords = _takeRandom(newPool, mix.newItems);
     for (int i = 0; i < newWords.length; i++) {
-      final type = _pickExerciseType(difficulty + 1, profile);
+      final exerciseType = _pickExerciseType(difficulty + 1, profile);
       exercises.add(_createExercise(
         item: newWords[i],
-        type: type,
+        type: exerciseType,
         allWords: allWords,
         index: exercises.length,
         difficulty: (difficulty + 1).clamp(1, 10),
