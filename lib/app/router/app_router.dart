@@ -80,8 +80,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
     errorBuilder: (context, state) => MinimalBootScreen(
       title: 'Route not found',
-      message: state.error?.toString(),
+      message: 'Please go back and try again.',
     ),
   );
 });
-

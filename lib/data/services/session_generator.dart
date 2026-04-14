@@ -210,12 +210,11 @@ class SessionGenerator {
     }
 
     // Top up to full 15-item session.
+    final usedIdsForTopUp =
+        exercises.map((e) => e.relatedItemId).whereType<String>().toSet();
     while (exercises.length < mix.total && allWords.isNotEmpty) {
-      final usedIds = exercises
-          .map((e) => e.relatedItemId)
-          .whereType<String>()
-          .toSet();
-      final unusedWords = allWords.where((w) => !usedIds.contains(w.id)).toList();
+      final unusedWords =
+          allWords.where((w) => !usedIdsForTopUp.contains(w.id)).toList();
       if (unusedWords.isEmpty) break;
       final word = unusedWords[_random.nextInt(unusedWords.length)];
       exercises.add(_createExercise(
@@ -225,6 +224,7 @@ class SessionGenerator {
         index: exercises.length,
         difficulty: difficulty,
       ));
+      usedIdsForTopUp.add(word.id);
     }
 
     // Keep exactly target total.
