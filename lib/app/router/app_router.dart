@@ -98,6 +98,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             children: [
               const Text('Route not found'),
               const SizedBox(height: 8),
+              Text('Attempted route: ${state.matchedLocation}'),
+              const SizedBox(height: 4),
               const Text('That page is unavailable right now.'),
               const SizedBox(height: 16),
               ElevatedButton(

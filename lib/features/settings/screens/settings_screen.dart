@@ -53,7 +53,7 @@ class SettingsScreen extends ConsumerWidget {
                 child: Text(avatarInitial),
               ),
               title: Text(displayName?.isNotEmpty == true ? displayName! : 'User'),
-              subtitle: Text(auth.email ?? 'Signed in'),
+              subtitle: Text(auth.email ?? 'No email available'),
             ),
           ),
           const SizedBox(height: 12),
