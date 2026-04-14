@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -88,9 +89,25 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
     ],
-    errorBuilder: (context, state) => MinimalBootScreen(
-      title: 'Route not found',
-      message: 'Please go back and try again.',
+    errorBuilder: (context, state) => Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Route not found'),
+              const SizedBox(height: 8),
+              const Text('That page is unavailable right now.'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => context.go(AppRouteKey.home.path),
+                child: const Text('Go to Home'),
+              ),
+            ],
+          ),
+        ),
+      ),
     ),
   );
 });

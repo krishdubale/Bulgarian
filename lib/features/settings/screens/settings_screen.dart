@@ -33,6 +33,11 @@ class SettingsScreen extends ConsumerWidget {
     final progress = ref.watch(userProgressProvider);
     final theme = Theme.of(context);
     const goalOptions = [20, 30, 50, 100, 150];
+    final displayName = auth.displayName?.trim();
+    final avatarInitial =
+        (displayName != null && displayName.isNotEmpty)
+            ? displayName.substring(0, 1).toUpperCase()
+            : 'U';
 
     return Scaffold(
       appBar: AppBar(
@@ -45,11 +50,9 @@ class SettingsScreen extends ConsumerWidget {
           Card(
             child: ListTile(
               leading: CircleAvatar(
-                child: Text(
-                  (auth.displayName ?? 'U').substring(0, 1).toUpperCase(),
-                ),
+                child: Text(avatarInitial),
               ),
-              title: Text(auth.displayName ?? 'User'),
+              title: Text(displayName?.isNotEmpty == true ? displayName! : 'User'),
               subtitle: Text(auth.email ?? 'Signed in'),
             ),
           ),
