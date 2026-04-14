@@ -58,36 +58,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRouteKey.profileSettings.path,
         builder: (context, state) => const SettingsScreen(),
       ),
-      GoRoute(
-        path: AppRouteKey.unit.path,
-        builder: (context, state) => const MinimalBootScreen(
-          title: 'Unit',
-        ),
-      ),
-      GoRoute(
-        path: AppRouteKey.lesson.path,
-        builder: (context, state) => const MinimalBootScreen(
-          title: 'Lesson',
-        ),
-      ),
-      GoRoute(
-        path: AppRouteKey.practice.path,
-        builder: (context, state) => const MinimalBootScreen(
-          title: 'Practice',
-        ),
-      ),
-      GoRoute(
-        path: AppRouteKey.review.path,
-        builder: (context, state) => const MinimalBootScreen(
-          title: 'Review',
-        ),
-      ),
-      GoRoute(
-        path: AppRouteKey.checkpoint.path,
-        builder: (context, state) => const MinimalBootScreen(
-          title: 'Checkpoint',
-        ),
-      ),
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(

@@ -5,13 +5,20 @@ import '../../../core/theme/design_tokens.dart';
 import '../../../data/models/lesson_session_model.dart';
 import '../../../data/services/evaluation_service.dart';
 import '../../../data/repositories/progress_repository.dart';
+import '../../../data/services/session_analytics_service.dart';
+import '../../../data/services/session_resume_service.dart';
 
 /// Full interactive lesson session screen.
 /// Displays exercises one at a time with immediate feedback and a summary at the end.
 class LessonSessionScreen extends ConsumerStatefulWidget {
   final LessonSession session;
+  final SessionResumeState? resumeState;
 
-  const LessonSessionScreen({super.key, required this.session});
+  const LessonSessionScreen({
+    super.key,
+    required this.session,
+    this.resumeState,
+  });
 
   @override
   ConsumerState<LessonSessionScreen> createState() =>
@@ -28,11 +35,18 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
   late AnimationController _feedbackController;
   late AnimationController _progressController;
   late Animation<double> _feedbackScale;
+  bool _sessionCompleted = false;
 
   @override
   void initState() {
     super.initState();
     _exerciseStartTime = DateTime.now();
+    if (widget.resumeState != null) {
+      _currentIndex = widget.resumeState!.currentIndex;
+      _answered = widget.resumeState!.answered;
+      _selectedAnswer = widget.resumeState!.selectedAnswer;
+      _results.addAll(widget.resumeState!.results);
+    }
     _feedbackController = AnimationController(
       vsync: this,
       duration: DesignTokens.animNormal,
@@ -45,10 +59,26 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
       parent: _feedbackController,
       curve: DesignTokens.animCurveBounce,
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(sessionAnalyticsServiceProvider).logEvent('session_start', {
+        'sessionId': widget.session.id,
+        'languageId': widget.session.languageId,
+        'exerciseCount': widget.session.exercises.length,
+        'resumed': widget.resumeState != null,
+      });
+      _persistResume();
+    });
   }
 
   @override
   void dispose() {
+    if (!_sessionCompleted) {
+      ref.read(sessionAnalyticsServiceProvider).logEvent('session_dropoff', {
+        'sessionId': widget.session.id,
+        'currentIndex': _currentIndex,
+        'completedExercises': _results.length,
+      });
+    }
     _feedbackController.dispose();
     _progressController.dispose();
     super.dispose();
@@ -88,6 +118,19 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
       exerciseType: _currentExercise.type,
     ));
 
+    ref.read(sessionAnalyticsServiceProvider).logEvent('session_correction', {
+      'sessionId': widget.session.id,
+      'exerciseId': _currentExercise.id,
+      'correct': isCorrect,
+      'exerciseType': _currentExercise.type.name,
+    });
+    if (!isCorrect) {
+      ref.read(sessionAnalyticsServiceProvider).logEvent('session_retry_needed', {
+        'sessionId': widget.session.id,
+        'exerciseId': _currentExercise.id,
+      });
+    }
+    _persistResume();
     _feedbackController.forward(from: 0);
   }
 
@@ -102,6 +145,7 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
       _selectedAnswer = null;
       _exerciseStartTime = DateTime.now();
     });
+    _persistResume();
     _feedbackController.reset();
   }
 
@@ -124,6 +168,23 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
             result: result,
           );
     }
+    _sessionCompleted = true;
+    await ref.read(sessionResumeServiceProvider).clear();
+    await ref.read(sessionAnalyticsServiceProvider).logEvent('session_finish', {
+      'sessionId': widget.session.id,
+      'accuracy': result.accuracy,
+      'correct': result.correctAnswers,
+      'total': result.totalExercises,
+      'weakCount': result.weakItems.length,
+      'timeTakenSec': result.timeTaken.inSeconds,
+    });
+    await ref.read(sessionAnalyticsServiceProvider).logMetric({
+      'sessionId': widget.session.id,
+      'immediateAccuracy': result.accuracy,
+      'errorRecurrenceRate': result.weakItems.length / (result.totalExercises == 0 ? 1 : result.totalExercises),
+      'timeToMasterySignal': result.isStrongPass ? 1 : 0,
+      'reviewCompliance': 1,
+    });
 
     if (!mounted) return;
 
@@ -511,6 +572,18 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
     }
   }
 
+  Future<void> _persistResume() async {
+    final snapshot = SessionResumeState(
+      session: widget.session,
+      currentIndex: _currentIndex,
+      answered: _answered,
+      selectedAnswer: _selectedAnswer,
+      results: List<ExerciseResult>.from(_results),
+      updatedAt: DateTime.now(),
+    );
+    await ref.read(sessionResumeServiceProvider).save(snapshot);
+  }
+
   void _showExitDialog() {
     showDialog(
       context: context,
@@ -537,14 +610,25 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
 }
 
 /// Session summary screen showing results after completing a session.
-class SessionSummaryScreen extends StatelessWidget {
+class SessionSummaryScreen extends ConsumerStatefulWidget {
   final SessionResult result;
 
   const SessionSummaryScreen({super.key, required this.result});
 
   @override
+  ConsumerState<SessionSummaryScreen> createState() =>
+      _SessionSummaryScreenState();
+}
+
+class _SessionSummaryScreenState extends ConsumerState<SessionSummaryScreen> {
+  bool _surveySubmitted = false;
+  String? _surveyConfusion;
+  String? _surveyLength;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final result = widget.result;
     final accuracy = (result.accuracy * 100).round();
     final passed = result.isPassed;
 
@@ -673,11 +757,79 @@ class SessionSummaryScreen extends StatelessWidget {
                                   leading: const Icon(Icons.refresh,
                                       color: DesignTokens.accent),
                                   title: Text(r.correctAnswer),
-                                  subtitle: Text(
-                                      'You answered: ${r.userAnswer}'),
-                                ),
-                              )),
+                                   subtitle: Text(
+                                       'You answered: ${r.userAnswer}'),
+                                 ),
+                               )),
                     ],
+                    const SizedBox(height: DesignTokens.spacingLg),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(DesignTokens.spacingMd),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Quick feedback',
+                              style: theme.textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8,
+                              children: ['Clear', 'Repetitive', 'Confusing']
+                                  .map(
+                                    (value) => ChoiceChip(
+                                      label: Text(value),
+                                      selected: _surveyConfusion == value,
+                                      onSelected: _surveySubmitted
+                                          ? null
+                                          : (_) => setState(
+                                              () => _surveyConfusion = value),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8,
+                              children: ['Too short', 'Good length', 'Too long']
+                                  .map(
+                                    (value) => ChoiceChip(
+                                      label: Text(value),
+                                      selected: _surveyLength == value,
+                                      onSelected: _surveySubmitted
+                                          ? null
+                                          : (_) => setState(
+                                              () => _surveyLength = value),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: _surveySubmitted
+                                    ? null
+                                    : () async {
+                                        await ref
+                                            .read(sessionAnalyticsServiceProvider)
+                                            .logEvent('post_session_survey', {
+                                          'sessionId': result.sessionId,
+                                          'confusion': _surveyConfusion,
+                                          'length': _surveyLength,
+                                        });
+                                        if (!mounted) return;
+                                        setState(() => _surveySubmitted = true);
+                                      },
+                                child: Text(
+                                  _surveySubmitted ? 'Submitted' : 'Submit',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -695,7 +847,7 @@ class SessionSummaryScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 18),
                   ),
-                  child: const Text('Continue',
+                  child: const Text('Continue Daily Session',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),

@@ -6,11 +6,6 @@ enum AppRouteKey {
   home,
   path,
   profileSettings,
-  unit,
-  lesson,
-  practice,
-  review,
-  checkpoint,
 }
 
 extension AppRouteKeyX on AppRouteKey {
@@ -30,16 +25,6 @@ extension AppRouteKeyX on AppRouteKey {
         return '/path';
       case AppRouteKey.profileSettings:
         return '/settings';
-      case AppRouteKey.unit:
-        return '/unit/:unitId';
-      case AppRouteKey.lesson:
-        return '/lesson/:lessonId';
-      case AppRouteKey.practice:
-        return '/practice';
-      case AppRouteKey.review:
-        return '/review';
-      case AppRouteKey.checkpoint:
-        return '/checkpoint/:unitId';
     }
   }
 }

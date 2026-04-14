@@ -52,6 +52,7 @@ class DailySessionService {
     );
 
     return DailyPlan(
+      coreSession: session,
       warmup: null,
       newLesson: null,
       practice: session,

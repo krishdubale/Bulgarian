@@ -6,6 +6,8 @@ import '../../../data/models/lesson_session_model.dart';
 import '../../../data/repositories/progress_repository.dart';
 import '../../../data/services/daily_session_service.dart';
 import '../../../data/services/language_manager.dart';
+import '../../../data/services/session_analytics_service.dart';
+import '../../../data/services/session_resume_service.dart';
 import '../../lesson/screens/lesson_session_screen.dart';
 
 final dailyPlanProvider = FutureProvider<DailyPlan>((ref) async {
@@ -18,14 +20,49 @@ final dailyPlanProvider = FutureProvider<DailyPlan>((ref) async {
   );
 });
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  bool _didAutoResume = false;
+  bool _didLogVisit = false;
+
+  @override
+  Widget build(BuildContext context) {
     final progress = ref.watch(userProgressProvider);
     final language = ref.watch(selectedLanguageProvider);
     final dailyPlan = ref.watch(dailyPlanProvider);
+    final pending = ref.read(sessionResumeServiceProvider).load();
+
+    if (!_didLogVisit) {
+      _didLogVisit = true;
+      final returnBucket = progress.streakDays >= 7
+          ? 'D7'
+          : (progress.streakDays >= 3 ? 'D3' : 'D1');
+      ref.read(sessionAnalyticsServiceProvider).logEvent('return_visit', {
+        'bucket': returnBucket,
+        'streakDays': progress.streakDays,
+      });
+    }
+
+    if (!_didAutoResume && pending != null) {
+      _didAutoResume = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => LessonSessionScreen(
+              session: pending.session,
+              resumeState: pending,
+            ),
+          ),
+        );
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -64,12 +101,6 @@ class HomeScreen extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (_, __) => const _FallbackSessionCard(),
           ),
-          const SizedBox(height: 16),
-          dailyPlan.when(
-            data: (plan) => _TodayMixCard(plan: plan),
-            loading: () => const SizedBox.shrink(),
-            error: (_, __) => const SizedBox.shrink(),
-          ),
         ],
       ),
     );
@@ -83,8 +114,10 @@ class _SessionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nextSession =
-        plan.activities.isNotEmpty ? plan.activities.first.session : null;
+    final nextSession = plan.coreSession;
+    final label = plan.totalActivities > 1
+        ? 'Continue Daily Session'
+        : 'Start Daily Session';
 
     return Card(
       child: Padding(
@@ -98,7 +131,7 @@ class _SessionCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '${plan.totalActivities} blocks • ~${plan.totalEstimatedMinutes} min',
+              '~${plan.totalEstimatedMinutes} min • fixed daily set',
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
@@ -108,57 +141,13 @@ class _SessionCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: nextSession == null
-                    ? null
-                    : () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                LessonSessionScreen(session: nextSession),
-                          ),
-                        ),
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('Continue Session'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TodayMixCard extends StatelessWidget {
-  final DailyPlan plan;
-
-  const _TodayMixCard({required this.plan});
-
-  @override
-  Widget build(BuildContext context) {
-    if (plan.activities.isEmpty) return const SizedBox.shrink();
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Today\'s Session Mix',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 10),
-            ...plan.activities.map(
-              (a) => Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  children: [
-                    const Icon(Icons.check_circle_outline, size: 18),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text('${a.title} • ${a.estimatedMinutes} min'),
-                    ),
-                  ],
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => LessonSessionScreen(session: nextSession),
+                  ),
                 ),
+                icon: const Icon(Icons.play_arrow),
+                label: Text(label),
               ),
             ),
           ],
@@ -200,4 +189,3 @@ class _FallbackSessionCard extends StatelessWidget {
     );
   }
 }
-
