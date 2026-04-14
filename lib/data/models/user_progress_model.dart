@@ -1,3 +1,5 @@
+import '../../core/constants/app_constants.dart';
+
 class UserProgressModel {
   final String languageId;
   final int xpPoints;
@@ -15,6 +17,14 @@ class UserProgressModel {
   final int streakFreezeCount;
   final int longestStreak;
   final Set<String> awardedMilestones;
+  final Map<String, String> lessonStates; // lessonId -> attempted/passed/strongPass
+  final Set<String> unlockedLessons;
+  final Set<String> completedUnits;
+  final Set<String> unlockedUnits;
+  final Set<String> unitBadges;
+  final bool reviewHoldActive;
+  final int reviewDebtCount;
+  final int weakQueueCount;
 
   const UserProgressModel({
     this.languageId = 'bg',
@@ -33,6 +43,14 @@ class UserProgressModel {
     this.streakFreezeCount = 3,
     this.longestStreak = 0,
     this.awardedMilestones = const {},
+    this.lessonStates = const {},
+    this.unlockedLessons = const {AppConstants.initialLessonId},
+    this.completedUnits = const {},
+    this.unlockedUnits = const {AppConstants.initialUnitId},
+    this.unitBadges = const {},
+    this.reviewHoldActive = false,
+    this.reviewDebtCount = 0,
+    this.weakQueueCount = 0,
   });
 
   factory UserProgressModel.initial({String languageId = 'bg'}) {
@@ -88,6 +106,14 @@ class UserProgressModel {
     int? streakFreezeCount,
     int? longestStreak,
     Set<String>? awardedMilestones,
+    Map<String, String>? lessonStates,
+    Set<String>? unlockedLessons,
+    Set<String>? completedUnits,
+    Set<String>? unlockedUnits,
+    Set<String>? unitBadges,
+    bool? reviewHoldActive,
+    int? reviewDebtCount,
+    int? weakQueueCount,
   }) {
     return UserProgressModel(
       languageId: languageId ?? this.languageId,
@@ -106,6 +132,14 @@ class UserProgressModel {
       streakFreezeCount: streakFreezeCount ?? this.streakFreezeCount,
       longestStreak: longestStreak ?? this.longestStreak,
       awardedMilestones: awardedMilestones ?? this.awardedMilestones,
+      lessonStates: lessonStates ?? this.lessonStates,
+      unlockedLessons: unlockedLessons ?? this.unlockedLessons,
+      completedUnits: completedUnits ?? this.completedUnits,
+      unlockedUnits: unlockedUnits ?? this.unlockedUnits,
+      unitBadges: unitBadges ?? this.unitBadges,
+      reviewHoldActive: reviewHoldActive ?? this.reviewHoldActive,
+      reviewDebtCount: reviewDebtCount ?? this.reviewDebtCount,
+      weakQueueCount: weakQueueCount ?? this.weakQueueCount,
     );
   }
 }

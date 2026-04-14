@@ -1,14 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/app_constants.dart';
 import '../models/user_learning_profile.dart';
 import '../models/user_progress_model.dart';
 import 'srs_service.dart';
 import 'evaluation_service.dart';
+import 'progression_policy_service.dart';
+import '../models/progression_policy_model.dart';
 
 final learningPathProvider = Provider<LearningPathService>((ref) {
   final srsService = ref.watch(srsServiceProvider);
   final evaluation = ref.watch(evaluationServiceProvider);
-  return LearningPathService(srsService, evaluation);
+  final policy = ref.watch(progressionPolicyProvider);
+  return LearningPathService(srsService, evaluation, policy);
 });
 
 /// Recommended action for the user.
@@ -36,10 +40,11 @@ class PathRecommendation {
 /// Optimizes the learner's path through the curriculum.
 /// Decides when to skip, slow down, or suggest specific actions.
 class LearningPathService {
-  LearningPathService(this._srsService, this._evaluationService);
+  LearningPathService(this._srsService, this._evaluationService, this._policy);
 
   final SrsService _srsService;
   final EvaluationService _evaluationService;
+  final ProgressionPolicyService _policy;
 
   /// Get prioritized list of recommended actions.
   List<PathRecommendation> getRecommendations({
@@ -48,6 +53,13 @@ class LearningPathService {
     UserLearningProfile? profile,
   }) {
     final recommendations = <PathRecommendation>[];
+    final weakCards = _srsService.getWeakItems(languageId, count: 20);
+    final weakCount = weakCards.length;
+    final weakReport = WeakAreaReport(
+      weakSkills: weakCards.map((c) => c.itemId).toList(),
+      severe: weakCount >= _policy.severeWeakQueueThreshold,
+    );
+    final repairBlocks = _policy.requiredRepairBlocks(weakReport);
 
     // Priority 1: Urgent SRS reviews
     final dueCount = _srsService.getDailyReviewCount(languageId);
@@ -57,6 +69,18 @@ class LearningPathService {
         title: 'Review Time',
         description: '$dueCount items need review to maintain retention.',
         estimatedMinutes: 2,
+        priority: 1,
+      ));
+    }
+
+    if (repairBlocks > 0) {
+      recommendations.add(PathRecommendation(
+        action: PathAction.practice,
+        title: repairBlocks > 1 ? 'Required Repair Blocks' : 'Required Repair',
+        description: repairBlocks > 1
+            ? 'Complete 2 repair blocks before new lessons.'
+            : 'Complete 1 repair block before new lessons.',
+        estimatedMinutes: repairBlocks * 3,
         priority: 1,
       ));
     }
@@ -157,27 +181,17 @@ class LearningPathService {
   }
 
   String? _getNextUncompletedLesson(UserProgressModel progress) {
-    const sequence = [
-      'alphabet_a1',
-      'greetings_a1',
-      'numbers_a1',
-      'grammar_sentence_a1',
-      'family_a1',
-      'grammar_noun_gender_a1',
-      'food_a1',
-      'travel_a1',
-      'colors_a1',
-      'animals_a1',
-    ];
-
-    for (final id in sequence) {
-      if (!progress.completedLessons.contains(id)) return id;
+    for (final id in AppConstants.defaultLessonSequence) {
+      if (!progress.completedLessons.contains(id) &&
+          progress.unlockedLessons.contains(id)) {
+        return id;
+      }
     }
     return null;
   }
 
   int _countRemainingLessons(UserProgressModel progress) {
-    const total = 10; // A1 lessons
+    const total = AppConstants.defaultLessonSequence.length;
     return total - progress.lessonsCompleted.clamp(0, total);
   }
 }
