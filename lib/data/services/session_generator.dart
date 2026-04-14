@@ -5,20 +5,23 @@ import '../models/lesson_session_model.dart';
 import '../models/user_learning_profile.dart';
 import 'srs_service.dart';
 import 'content_loader.dart';
+import 'progression_policy_service.dart';
 
 final sessionGeneratorProvider = Provider<SessionGenerator>((ref) {
   final srsService = ref.watch(srsServiceProvider);
   final contentLoader = ref.watch(contentLoaderProvider);
-  return SessionGenerator(srsService, contentLoader);
+  final policy = ref.watch(progressionPolicyProvider);
+  return SessionGenerator(srsService, contentLoader, policy);
 });
 
 /// Generates interactive sessions from static content.
 /// Mixes new content, review items, and weak items intelligently.
 class SessionGenerator {
-  SessionGenerator(this._srsService, this._contentLoader);
+  SessionGenerator(this._srsService, this._contentLoader, this._policy);
 
   final SrsService _srsService;
   final ContentLoader _contentLoader;
+  final ProgressionPolicyService _policy;
   final _random = Random();
 
   /// Generate a lesson session for a specific lesson.
@@ -148,29 +151,65 @@ class SessionGenerator {
     UserLearningProfile? profile,
   }) async {
     final weakCards = _srsService.getWeakItems(languageId, count: 8);
+    final dueCards = _srsService.getDueCards(languageId);
     final vocab = await _contentLoader.loadVocabulary(languageId);
     final allWords = vocab.expand((cat) => cat.words).toList();
+    final severeWeakQueue = weakCards.length >= 4;
+    final mix = _policy.practiceSessionMix(severeWeakQueue: severeWeakQueue);
 
     final exercises = <SessionExercise>[];
-    for (int i = 0; i < weakCards.length && i < 6; i++) {
-      final card = weakCards[i];
-      final word = allWords.where((w) => w.id == card.itemId).firstOrNull;
-      if (word == null) continue;
 
-      final type = _pickExerciseType(difficulty, profile);
+    // Repair block share.
+    final weakWordIds = weakCards.map((c) => c.itemId).toSet();
+    final weakWords = allWords.where((w) => weakWordIds.contains(w.id)).toList();
+    final repairWords = _takeRandom(weakWords, mix.repairItems);
+    for (int i = 0; i < repairWords.length; i++) {
+      final type = _pickExerciseType((difficulty - 1).clamp(1, 10), profile);
       exercises.add(_createExercise(
-        item: word,
+        item: repairWords[i],
         type: type,
         allWords: allWords,
-        index: i,
+        index: exercises.length,
+        difficulty: (difficulty - 1).clamp(1, 10),
+      ));
+    }
+
+    // Review share.
+    final dueWordIds = dueCards.map((c) => c.itemId).toSet();
+    final dueWords = allWords.where((w) => dueWordIds.contains(w.id)).toList();
+    final reviewWords = _takeRandom(
+      dueWords.where((w) => !repairWords.any((r) => r.id == w.id)).toList(),
+      mix.reviewItems,
+    );
+    for (int i = 0; i < reviewWords.length; i++) {
+      final type = _pickExerciseType(difficulty, profile);
+      exercises.add(_createExercise(
+        item: reviewWords[i],
+        type: type,
+        allWords: allWords,
+        index: exercises.length,
         difficulty: difficulty,
       ));
     }
 
-    // Fill with random items if not enough weak items.
-    while (exercises.length < 5 && allWords.isNotEmpty) {
+    // New share.
+    final usedIds = exercises.map((e) => e.relatedItemId).whereType<String>().toSet();
+    final newPool = allWords.where((w) => !usedIds.contains(w.id)).toList();
+    final newWords = _takeRandom(newPool, mix.newItems);
+    for (int i = 0; i < newWords.length; i++) {
+      final type = _pickExerciseType(difficulty + 1, profile);
+      exercises.add(_createExercise(
+        item: newWords[i],
+        type: type,
+        allWords: allWords,
+        index: exercises.length,
+        difficulty: (difficulty + 1).clamp(1, 10),
+      ));
+    }
+
+    // Top up to full 15-item session.
+    while (exercises.length < mix.total && allWords.isNotEmpty) {
       final word = allWords[_random.nextInt(allWords.length)];
-      if (exercises.any((e) => e.relatedItemId == word.id)) continue;
       exercises.add(_createExercise(
         item: word,
         type: _pickExerciseType(difficulty, profile),
@@ -180,6 +219,11 @@ class SessionGenerator {
       ));
     }
 
+    // Keep exactly target total.
+    if (exercises.length > mix.total) {
+      exercises.removeRange(mix.total, exercises.length);
+    }
+
     return LessonSession(
       id: 'practice_${DateTime.now().millisecondsSinceEpoch}',
       lessonId: 'practice',
@@ -187,7 +231,7 @@ class SessionGenerator {
       exercises: exercises,
       difficulty: difficulty,
       xpReward: exercises.length * 3,
-      targetDuration: const Duration(minutes: 2),
+      targetDuration: const Duration(minutes: 6),
       sessionType: SessionType.practice,
     );
   }

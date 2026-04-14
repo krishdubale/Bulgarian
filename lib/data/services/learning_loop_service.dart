@@ -298,7 +298,8 @@ class LearningLoopService {
     ];
 
     for (final lessonId in lessonSequence) {
-      if (!progress.completedLessons.contains(lessonId)) {
+      if (!progress.completedLessons.contains(lessonId) &&
+          progress.unlockedLessons.contains(lessonId)) {
         return lessonId;
       }
     }

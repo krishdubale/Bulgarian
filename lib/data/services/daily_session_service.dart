@@ -6,12 +6,15 @@ import '../models/user_progress_model.dart';
 import 'session_generator.dart';
 import 'evaluation_service.dart';
 import 'srs_service.dart';
+import 'progression_policy_service.dart';
+import '../models/progression_policy_model.dart';
 
 final dailySessionServiceProvider = Provider<DailySessionService>((ref) {
   final sessionGen = ref.watch(sessionGeneratorProvider);
   final evaluation = ref.watch(evaluationServiceProvider);
   final srsService = ref.watch(srsServiceProvider);
-  return DailySessionService(sessionGen, evaluation, srsService);
+  final policy = ref.watch(progressionPolicyProvider);
+  return DailySessionService(sessionGen, evaluation, srsService, policy);
 });
 
 /// Orchestrates the daily user learning experience.
@@ -21,11 +24,13 @@ class DailySessionService {
     this._sessionGenerator,
     this._evaluationService,
     this._srsService,
+    this._policy,
   );
 
   final SessionGenerator _sessionGenerator;
   final EvaluationService _evaluationService;
   final SrsService _srsService;
+  final ProgressionPolicyService _policy;
 
   /// Build today's daily plan for a user.
   Future<DailyPlan> getDailyPlan({
@@ -102,6 +107,17 @@ class DailySessionService {
     UserLearningProfile? profile,
     required String languageId,
   }) {
+    final weakCount = _srsService.getWeakItems(languageId, count: 12).length;
+    final requiredRepairBlocks = _policy.requiredRepairBlocks(
+      WeakAreaReport(
+        weakSkills: List<String>.filled(weakCount, 'weak'),
+        severe: weakCount >= 4,
+      ),
+    );
+    if (requiredRepairBlocks > 0) {
+      return LearningAction.practice;
+    }
+
     // Priority 1: Review if SRS items are due.
     final dueCount = _srsService.getDailyReviewCount(languageId);
     if (dueCount > 3) {
@@ -134,7 +150,8 @@ class DailySessionService {
     ];
 
     for (final lessonId in lessonSequence) {
-      if (!progress.completedLessons.contains(lessonId)) {
+      if (!progress.completedLessons.contains(lessonId) &&
+          progress.unlockedLessons.contains(lessonId)) {
         return lessonId;
       }
     }

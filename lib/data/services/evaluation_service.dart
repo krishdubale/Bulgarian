@@ -2,18 +2,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/lesson_session_model.dart';
 import '../models/user_learning_profile.dart';
+import '../models/progression_policy_model.dart';
 import 'srs_service.dart';
+import 'progression_policy_service.dart';
 
 final evaluationServiceProvider = Provider<EvaluationService>((ref) {
   final srsService = ref.watch(srsServiceProvider);
-  return EvaluationService(srsService);
+  final policy = ref.watch(progressionPolicyProvider);
+  return EvaluationService(srsService, policy);
 });
 
 /// Evaluates session performance, updates SRS cards, and adjusts learning profiles.
 class EvaluationService {
-  EvaluationService(this._srsService);
+  EvaluationService(this._srsService, this._policy);
 
   final SrsService _srsService;
+  final ProgressionPolicyService _policy;
 
   /// Evaluate a completed session and return results.
   Future<SessionResult> evaluateSession({
@@ -24,26 +28,53 @@ class EvaluationService {
     final correctCount = answers.where((a) => a.isCorrect).length;
     final accuracy = answers.isEmpty ? 0.0 : correctCount / answers.length;
 
-    // Calculate XP.
+    // Calculate XP (quality weighted).
     int xpEarned = 0;
+    int criticalErrors = 0;
     for (final answer in answers) {
+      if (!answer.isCorrect &&
+          (answer.exerciseType == ExerciseType.translate ||
+              answer.exerciseType == ExerciseType.sentenceBuild)) {
+        criticalErrors++;
+      }
+
       if (answer.isCorrect) {
-        // Base points for the exercise.
-        final exercise = session.exercises.firstWhere(
-          (e) => e.id == answer.exerciseId,
-          orElse: () => session.exercises.first,
+        final mode = _modeFromExercise(answer.exerciseType);
+        final rawXp = _policy.qualityWeightedXp(
+          mode: mode,
+          isCorrect: true,
+          usedHints: answer.usedHint,
+          retries: answer.retryCount,
         );
-        xpEarned += exercise.points;
+        xpEarned += _policy.applyDailyDiminishingReturns(
+          currentTodayXp: xpEarned,
+          rawAward: rawXp,
+        );
       }
     }
 
-    // Accuracy bonus.
-    if (accuracy >= 0.9) xpEarned += 5;
-    if (accuracy >= 1.0) xpEarned += 5; // perfect bonus
+    // Strong pass bonus.
+    if (accuracy >= 0.9) xpEarned += 8;
 
     // Streak bonus.
     final streakBonus = streakDays >= 7 ? 10 : (streakDays >= 3 ? 5 : 0);
     xpEarned += streakBonus;
+
+    final completionRate = session.exercises.isEmpty
+        ? 0.0
+        : (answers.length / session.exercises.length).clamp(0.0, 1.0);
+    final hintDependence = answers.isEmpty
+        ? 0.0
+        : answers.where((a) => a.usedHint).length / answers.length;
+    final lessonDecision = _policy.evaluateLesson(
+      snapshot: LessonPerformanceSnapshot(
+        score: accuracy,
+        completionRate: completionRate,
+        hintDependence: hintDependence,
+        unresolvedCriticalErrors: criticalErrors,
+      ),
+      lessonNumberWithinUnit: 1,
+    );
 
     // Identify weak and strong items.
     final weakItems = <String>[];
@@ -85,6 +116,9 @@ class EvaluationService {
       weakItems: weakItems,
       strongItems: strongItems,
       isPerfect: accuracy >= 1.0,
+      isPassed: lessonDecision.state == LessonAttemptState.passed ||
+          lessonDecision.state == LessonAttemptState.strongPass,
+      isStrongPass: lessonDecision.state == LessonAttemptState.strongPass,
     );
   }
 
@@ -182,8 +216,20 @@ class EvaluationService {
   bool shouldAdvance({
     required double accuracy,
     required int exerciseCount,
+    double completionRate = 1.0,
+    int unresolvedCriticalErrors = 0,
   }) {
-    return accuracy >= 0.7 && exerciseCount >= 5;
+    if (exerciseCount < 5) return false;
+    final decision = _policy.evaluateLesson(
+      snapshot: LessonPerformanceSnapshot(
+        score: accuracy,
+        completionRate: completionRate,
+        hintDependence: 0,
+        unresolvedCriticalErrors: unresolvedCriticalErrors,
+      ),
+      lessonNumberWithinUnit: 1,
+    );
+    return decision.unlockNextLesson;
   }
 
   /// Recommend difficulty level based on profile.
@@ -215,6 +261,20 @@ class EvaluationService {
     if (result.responseTime.inSeconds < 3) return 5; // instant recall
     if (result.responseTime.inSeconds < 8) return 4; // good recall
     return 3; // correct but slow
+  }
+
+  SkillMode _modeFromExercise(ExerciseType type) {
+    switch (type) {
+      case ExerciseType.mcq:
+      case ExerciseType.match:
+      case ExerciseType.listening:
+        return SkillMode.recognition;
+      case ExerciseType.fillBlank:
+        return SkillMode.recall;
+      case ExerciseType.translate:
+      case ExerciseType.sentenceBuild:
+        return SkillMode.production;
+    }
   }
 }
 

@@ -4,11 +4,14 @@ import '../models/user_learning_profile.dart';
 import '../models/user_progress_model.dart';
 import 'srs_service.dart';
 import 'evaluation_service.dart';
+import 'progression_policy_service.dart';
+import '../models/progression_policy_model.dart';
 
 final learningPathProvider = Provider<LearningPathService>((ref) {
   final srsService = ref.watch(srsServiceProvider);
   final evaluation = ref.watch(evaluationServiceProvider);
-  return LearningPathService(srsService, evaluation);
+  final policy = ref.watch(progressionPolicyProvider);
+  return LearningPathService(srsService, evaluation, policy);
 });
 
 /// Recommended action for the user.
@@ -36,10 +39,11 @@ class PathRecommendation {
 /// Optimizes the learner's path through the curriculum.
 /// Decides when to skip, slow down, or suggest specific actions.
 class LearningPathService {
-  LearningPathService(this._srsService, this._evaluationService);
+  LearningPathService(this._srsService, this._evaluationService, this._policy);
 
   final SrsService _srsService;
   final EvaluationService _evaluationService;
+  final ProgressionPolicyService _policy;
 
   /// Get prioritized list of recommended actions.
   List<PathRecommendation> getRecommendations({
@@ -48,6 +52,12 @@ class LearningPathService {
     UserLearningProfile? profile,
   }) {
     final recommendations = <PathRecommendation>[];
+    final weakCount = _srsService.getWeakItems(languageId, count: 20).length;
+    final weakReport = WeakAreaReport(
+      weakSkills: List<String>.filled(weakCount, 'weak'),
+      severe: weakCount >= 4,
+    );
+    final repairBlocks = _policy.requiredRepairBlocks(weakReport);
 
     // Priority 1: Urgent SRS reviews
     final dueCount = _srsService.getDailyReviewCount(languageId);
@@ -57,6 +67,18 @@ class LearningPathService {
         title: 'Review Time',
         description: '$dueCount items need review to maintain retention.',
         estimatedMinutes: 2,
+        priority: 1,
+      ));
+    }
+
+    if (repairBlocks > 0) {
+      recommendations.add(PathRecommendation(
+        action: PathAction.practice,
+        title: repairBlocks > 1 ? 'Required Repair Blocks' : 'Required Repair',
+        description: repairBlocks > 1
+            ? 'Complete 2 repair blocks before new lessons.'
+            : 'Complete 1 repair block before new lessons.',
+        estimatedMinutes: repairBlocks * 3,
         priority: 1,
       ));
     }
@@ -171,7 +193,10 @@ class LearningPathService {
     ];
 
     for (final id in sequence) {
-      if (!progress.completedLessons.contains(id)) return id;
+      if (!progress.completedLessons.contains(id) &&
+          progress.unlockedLessons.contains(id)) {
+        return id;
+      }
     }
     return null;
   }

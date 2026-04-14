@@ -117,6 +117,12 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
 
     // Update user XP.
     await ref.read(userProgressProvider.notifier).addXp(result.xpEarned);
+    if (widget.session.sessionType == SessionType.lesson) {
+      await ref.read(userProgressProvider.notifier).applyLessonSessionResult(
+            lessonId: widget.session.lessonId,
+            result: result,
+          );
+    }
 
     if (!mounted) return;
 
@@ -541,6 +547,7 @@ class SessionSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final accuracy = (result.accuracy * 100).round();
+    final passed = result.isPassed;
 
     return Scaffold(
       body: SafeArea(
@@ -561,7 +568,7 @@ class SessionSummaryScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         gradient: result.isPerfect
                             ? DesignTokens.successGradient
-                            : (accuracy >= 70
+                            : (passed
                                 ? DesignTokens.primaryGradient
                                 : DesignTokens.warmGradient),
                         boxShadow: DesignTokens.glowPrimary,
@@ -569,7 +576,7 @@ class SessionSummaryScreen extends StatelessWidget {
                       child: Icon(
                         result.isPerfect
                             ? Icons.emoji_events
-                            : (accuracy >= 70
+                            : (passed
                                 ? Icons.check_circle
                                 : Icons.refresh),
                         size: 48,
@@ -581,7 +588,7 @@ class SessionSummaryScreen extends StatelessWidget {
                     Text(
                       result.isPerfect
                           ? 'Perfect! 🎉'
-                          : (accuracy >= 70
+                          : (passed
                               ? 'Great job! 👏'
                               : 'Keep practicing! 💪'),
                       style: theme.textTheme.headlineMedium,
@@ -603,7 +610,7 @@ class SessionSummaryScreen extends StatelessWidget {
                         _StatColumn(
                           value: '$accuracy%',
                           label: 'Accuracy',
-                          color: accuracy >= 70
+                          color: passed
                               ? DesignTokens.success
                               : DesignTokens.accent,
                         ),

@@ -85,6 +85,8 @@ class SessionResult {
   final List<String> weakItems; // items to reinforce
   final List<String> strongItems; // items mastered
   final bool isPerfect;
+  final bool isPassed;
+  final bool isStrongPass;
 
   const SessionResult({
     required this.sessionId,
@@ -99,6 +101,8 @@ class SessionResult {
     this.weakItems = const [],
     this.strongItems = const [],
     this.isPerfect = false,
+    this.isPassed = false,
+    this.isStrongPass = false,
   });
 }
 
@@ -111,6 +115,9 @@ class ExerciseResult {
   final String correctAnswer;
   final Duration responseTime;
   final ExerciseType exerciseType;
+  final bool usedHint;
+  final int retryCount;
+  final String? errorLabel;
 
   const ExerciseResult({
     required this.exerciseId,
@@ -120,6 +127,9 @@ class ExerciseResult {
     required this.correctAnswer,
     required this.responseTime,
     required this.exerciseType,
+    this.usedHint = false,
+    this.retryCount = 0,
+    this.errorLabel,
   });
 }
 

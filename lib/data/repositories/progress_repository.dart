@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../models/lesson_session_model.dart';
 import '../models/user_progress_model.dart';
 import 'auth_repository.dart';
 
@@ -71,6 +72,25 @@ class ProgressRepository {
       todayXp: (progress['todayXp'] as num?)?.toInt() ?? 0,
       completedLessons: completedLessons,
       practicedItems: practicedItems,
+      currentLessonIndex: (progress['currentLessonIndex'] as num?)?.toInt() ?? 0,
+      streakFreezeCount: (progress['streakFreezeCount'] as num?)?.toInt() ?? 3,
+      longestStreak: (progress['longestStreak'] as num?)?.toInt() ?? 0,
+      awardedMilestones:
+          Set<String>.from((progress['awardedMilestones'] as List?) ?? const []),
+      lessonStates: Map<String, String>.from(
+        (progress['lessonStates'] as Map?) ?? const {},
+      ),
+      unlockedLessons:
+          Set<String>.from((progress['unlockedLessons'] as List?) ?? const ['alphabet_a1']),
+      completedUnits:
+          Set<String>.from((progress['completedUnits'] as List?) ?? const []),
+      unlockedUnits:
+          Set<String>.from((progress['unlockedUnits'] as List?) ?? const ['unit_1']),
+      unitBadges:
+          Set<String>.from((progress['unitBadges'] as List?) ?? const []),
+      reviewHoldActive: progress['reviewHoldActive'] as bool? ?? false,
+      reviewDebtCount: (progress['reviewDebtCount'] as num?)?.toInt() ?? 0,
+      weakQueueCount: (progress['weakQueueCount'] as num?)?.toInt() ?? 0,
     );
 
     final today = DateTime.now();
@@ -100,6 +120,18 @@ class ProgressRepository {
         'todayXp': progress.todayXp,
         'completedLessons': progress.completedLessons.toList(),
         'practicedItems': progress.practicedItems.toList(),
+        'currentLessonIndex': progress.currentLessonIndex,
+        'streakFreezeCount': progress.streakFreezeCount,
+        'longestStreak': progress.longestStreak,
+        'awardedMilestones': progress.awardedMilestones.toList(),
+        'lessonStates': progress.lessonStates,
+        'unlockedLessons': progress.unlockedLessons.toList(),
+        'completedUnits': progress.completedUnits.toList(),
+        'unlockedUnits': progress.unlockedUnits.toList(),
+        'unitBadges': progress.unitBadges.toList(),
+        'reviewHoldActive': progress.reviewHoldActive,
+        'reviewDebtCount': progress.reviewDebtCount,
+        'weakQueueCount': progress.weakQueueCount,
       },
     }, SetOptions(merge: true));
   }
@@ -197,6 +229,36 @@ class UserProgressNotifier extends StateNotifier<UserProgressModel> {
       xpPoints: newXp,
       todayXp: state.todayXp + amount,
       currentLevel: _computeLevel(newXp),
+    );
+    state = updated;
+    await _repo.saveProgress(updated);
+  }
+
+  Future<void> applyLessonSessionResult({
+    required String lessonId,
+    required SessionResult result,
+  }) async {
+    final newLessonStates = Map<String, String>.from(state.lessonStates);
+    newLessonStates[lessonId] = result.isStrongPass
+        ? 'strongPass'
+        : (result.isPassed ? 'passed' : 'attempted');
+
+    final completedLessons = Set<String>.from(state.completedLessons);
+    final unlockedLessons = Set<String>.from(state.unlockedLessons);
+
+    if (result.isPassed) {
+      completedLessons.add(lessonId);
+      final next = _nextLessonId(lessonId);
+      if (next != null) {
+        unlockedLessons.add(next);
+      }
+    }
+
+    final updated = state.copyWith(
+      lessonStates: newLessonStates,
+      completedLessons: completedLessons,
+      unlockedLessons: unlockedLessons,
+      lessonsCompleted: completedLessons.length,
     );
     state = updated;
     await _repo.saveProgress(updated);
@@ -306,5 +368,23 @@ class UserProgressNotifier extends StateNotifier<UserProgressModel> {
     if (xp >= AppConstants.levelXpRequirements['B1']!) return 'B1';
     if (xp >= AppConstants.levelXpRequirements['A2']!) return 'A2';
     return 'A1';
+  }
+
+  String? _nextLessonId(String currentLessonId) {
+    const lessonSequence = [
+      'alphabet_a1',
+      'greetings_a1',
+      'numbers_a1',
+      'grammar_sentence_a1',
+      'family_a1',
+      'grammar_noun_gender_a1',
+      'food_a1',
+      'travel_a1',
+      'colors_a1',
+      'animals_a1',
+    ];
+    final idx = lessonSequence.indexOf(currentLessonId);
+    if (idx < 0 || idx >= lessonSequence.length - 1) return null;
+    return lessonSequence[idx + 1];
   }
 }

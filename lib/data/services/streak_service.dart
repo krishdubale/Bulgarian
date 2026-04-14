@@ -2,11 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/providers/app_providers.dart';
+import 'progression_policy_service.dart';
 
 
 final streakServiceProvider = Provider<StreakService>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
-  return StreakService(prefs);
+  final policy = ref.watch(progressionPolicyProvider);
+  return StreakService(prefs, policy);
 });
 
 /// Streak milestone thresholds.
@@ -35,9 +37,10 @@ class StreakUpdate {
 
 /// Manages daily streak tracking with freeze support.
 class StreakService {
-  StreakService(this._prefs);
+  StreakService(this._prefs, this._policy);
 
   final SharedPreferences _prefs;
+  final ProgressionPolicyService _policy;
   static const _freezeKey = 'streak_freeze_count';
   static const _lastActiveKey = 'streak_last_active_date';
   static const _longestStreakKey = 'longest_streak';
@@ -123,6 +126,20 @@ class StreakService {
   /// Reset freeze count to max (monthly refresh).
   Future<void> refreshFreezes() async {
     await _prefs.setInt(_freezeKey, _maxFreezes);
+  }
+
+  bool qualifiesStreakDay({
+    required int passedLessonsCompleted,
+    required int reviewBlocksCompleted,
+    required int dueReviewCount,
+    required int dueReviewsCompleted,
+  }) {
+    return _policy.qualifiesForStreakDay(
+      passedLessonsCompleted: passedLessonsCompleted,
+      reviewBlocksCompleted: reviewBlocksCompleted,
+      dueReviewCount: dueReviewCount,
+      dueReviewsCompleted: dueReviewsCompleted,
+    );
   }
 
   void _updateLongest(int current) {
