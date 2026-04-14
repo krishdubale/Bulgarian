@@ -107,11 +107,13 @@ class DailySessionService {
     UserLearningProfile? profile,
     required String languageId,
   }) {
-    final weakCount = _srsService.getWeakItems(languageId, count: 12).length;
+    final weakCards = _srsService.getWeakItems(languageId, count: 12);
+    final weakCount = weakCards.length;
     final requiredRepairBlocks = _policy.requiredRepairBlocks(
       WeakAreaReport(
-        weakSkills: List<String>.filled(weakCount, 'weak'),
-        severe: weakCount >= 4,
+        weakSkills: weakCards.map((c) => c.itemId).toList(),
+        severe:
+            weakCount >= ProgressionPolicyService.severeWeakQueueThreshold,
       ),
     );
     if (requiredRepairBlocks > 0) {

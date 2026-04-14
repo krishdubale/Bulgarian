@@ -154,7 +154,8 @@ class SessionGenerator {
     final dueCards = _srsService.getDueCards(languageId);
     final vocab = await _contentLoader.loadVocabulary(languageId);
     final allWords = vocab.expand((cat) => cat.words).toList();
-    final severeWeakQueue = weakCards.length >= 4;
+    final severeWeakQueue =
+        weakCards.length >= ProgressionPolicyService.severeWeakQueueThreshold;
     final mix = _policy.practiceSessionMix(severeWeakQueue: severeWeakQueue);
 
     final exercises = <SessionExercise>[];
@@ -210,6 +211,7 @@ class SessionGenerator {
     // Top up to full 15-item session.
     while (exercises.length < mix.total && allWords.isNotEmpty) {
       final word = allWords[_random.nextInt(allWords.length)];
+      if (exercises.any((e) => e.relatedItemId == word.id)) continue;
       exercises.add(_createExercise(
         item: word,
         type: _pickExerciseType(difficulty, profile),

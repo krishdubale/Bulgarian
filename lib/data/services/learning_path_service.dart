@@ -52,10 +52,12 @@ class LearningPathService {
     UserLearningProfile? profile,
   }) {
     final recommendations = <PathRecommendation>[];
-    final weakCount = _srsService.getWeakItems(languageId, count: 20).length;
+    final weakCards = _srsService.getWeakItems(languageId, count: 20);
+    final weakCount = weakCards.length;
     final weakReport = WeakAreaReport(
-      weakSkills: List<String>.filled(weakCount, 'weak'),
-      severe: weakCount >= 4,
+      weakSkills: weakCards.map((c) => c.itemId).toList(),
+      severe:
+          weakCount >= ProgressionPolicyService.severeWeakQueueThreshold,
     );
     final repairBlocks = _policy.requiredRepairBlocks(weakReport);
 
