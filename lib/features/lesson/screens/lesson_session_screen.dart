@@ -113,6 +113,7 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
       session: widget.session,
       answers: _results,
       streakDays: progress.streakDays,
+      todayXp: progress.todayXp,
     );
 
     // Update user XP.

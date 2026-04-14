@@ -24,6 +24,7 @@ class EvaluationService {
     required LessonSession session,
     required List<ExerciseResult> answers,
     required int streakDays,
+    int todayXp = 0,
   }) async {
     final correctCount = answers.where((a) => a.isCorrect).length;
     final accuracy = answers.isEmpty ? 0.0 : correctCount / answers.length;
@@ -47,7 +48,7 @@ class EvaluationService {
           retries: answer.retryCount,
         );
         xpEarned += _policy.applyDailyDiminishingReturns(
-          currentTodayXp: xpEarned,
+          currentTodayXp: todayXp + xpEarned,
           rawAward: rawXp,
         );
       }

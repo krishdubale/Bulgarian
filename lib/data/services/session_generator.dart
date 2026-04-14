@@ -210,8 +210,13 @@ class SessionGenerator {
 
     // Top up to full 15-item session.
     while (exercises.length < mix.total && allWords.isNotEmpty) {
-      final word = allWords[_random.nextInt(allWords.length)];
-      if (exercises.any((e) => e.relatedItemId == word.id)) continue;
+      final usedIds = exercises
+          .map((e) => e.relatedItemId)
+          .whereType<String>()
+          .toSet();
+      final unusedWords = allWords.where((w) => !usedIds.contains(w.id)).toList();
+      if (unusedWords.isEmpty) break;
+      final word = unusedWords[_random.nextInt(unusedWords.length)];
       exercises.add(_createExercise(
         item: word,
         type: _pickExerciseType(difficulty, profile),
