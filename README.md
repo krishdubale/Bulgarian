@@ -49,7 +49,6 @@ lib/
 ├── data/
 │   ├── models/                  # Word, Lesson, UserProgress, Exercise
 │   └── repositories/            # ProgressRepository (CRUD) + UserProgressNotifier
-├── assets/data/course_blueprint.json # Shared A1–B1 curriculum architecture (36 units, 288 lessons)
 └── features/
     ├── home/                    # Dashboard: streak, XP, level cards, module grid
     ├── alphabet/                # 30 Cyrillic letters grid + quiz mode
@@ -62,6 +61,10 @@ lib/
     ├── writing/                 # Translation and fill-in-the-blank
     ├── progress/                # Analytics (bar charts, level roadmap)
     └── settings/                # Dark mode, daily goal
+
+assets/
+└── data/
+    └── course_blueprint.json    # Shared A1–B1 curriculum architecture (36 units, 288 lessons)
 ```
 
 ## Getting Started
