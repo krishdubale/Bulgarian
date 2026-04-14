@@ -56,8 +56,7 @@ class LearningPathService {
     final weakCount = weakCards.length;
     final weakReport = WeakAreaReport(
       weakSkills: weakCards.map((c) => c.itemId).toList(),
-      severe:
-          weakCount >= ProgressionPolicyService.severeWeakQueueThreshold,
+      severe: weakCount >= _policy.severeWeakQueueThreshold,
     );
     final repairBlocks = _policy.requiredRepairBlocks(weakReport);
 

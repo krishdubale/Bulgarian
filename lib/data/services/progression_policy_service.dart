@@ -12,7 +12,10 @@ class ProgressionPolicyService {
   static const double passCompletionThreshold = 0.90;
   static const double passScoreThreshold = 0.75;
   static const int passCriticalErrorLimit = 2;
-  static const int severeWeakQueueThreshold = 4;
+  static const int _severeWeakQueueThreshold = 4;
+  static const int _smallDueReviewThreshold = 3;
+
+  int get severeWeakQueueThreshold => _severeWeakQueueThreshold;
 
   LessonEvaluationDecision evaluateLesson({
     required LessonPerformanceSnapshot snapshot,
@@ -70,7 +73,7 @@ class ProgressionPolicyService {
     required Map<String, int> sameErrorTypeMistakesIn7Days,
     required Map<String, double> retentionScores,
     required Map<String, double> latencyRatioToBaseline,
-    int severeWeakCountThreshold = severeWeakQueueThreshold,
+    int severeWeakCountThreshold = _severeWeakQueueThreshold,
   }) {
     final weak = <String>{};
 
@@ -168,7 +171,7 @@ class ProgressionPolicyService {
     required int dueReviewsCompleted,
   }) {
     if (passedLessonsCompleted < 1) return false;
-    if (dueReviewCount <= 3) {
+    if (dueReviewCount <= _smallDueReviewThreshold) {
       return dueReviewsCompleted >= dueReviewCount;
     }
     return reviewBlocksCompleted >= 1;

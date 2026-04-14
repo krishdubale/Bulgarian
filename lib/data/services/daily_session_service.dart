@@ -112,8 +112,7 @@ class DailySessionService {
     final requiredRepairBlocks = _policy.requiredRepairBlocks(
       WeakAreaReport(
         weakSkills: weakCards.map((c) => c.itemId).toList(),
-        severe:
-            weakCount >= ProgressionPolicyService.severeWeakQueueThreshold,
+        severe: weakCount >= _policy.severeWeakQueueThreshold,
       ),
     );
     if (requiredRepairBlocks > 0) {
