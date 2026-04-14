@@ -757,10 +757,10 @@ class _SessionSummaryScreenState extends ConsumerState<SessionSummaryScreen> {
                                   leading: const Icon(Icons.refresh,
                                       color: DesignTokens.accent),
                                   title: Text(r.correctAnswer),
-                                   subtitle: Text(
-                                       'You answered: ${r.userAnswer}'),
-                                 ),
-                               )),
+                                  subtitle:
+                                      Text('You answered: ${r.userAnswer}'),
+                                ),
+                                )),
                     ],
                     const SizedBox(height: DesignTokens.spacingLg),
                     Card(

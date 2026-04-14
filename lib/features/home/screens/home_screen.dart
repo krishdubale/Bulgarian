@@ -47,6 +47,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
       final pending = ref.read(sessionResumeServiceProvider).load();
       if (pending == null) return;
+      final isStale = DateTime.now().difference(pending.updatedAt).inHours >= 24;
+      if (isStale) {
+        ref.read(sessionResumeServiceProvider).clear();
+        return;
+      }
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => LessonSessionScreen(

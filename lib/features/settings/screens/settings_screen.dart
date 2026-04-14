@@ -253,6 +253,7 @@ class SettingsScreen extends ConsumerWidget {
                 );
               } catch (_) {
                 if (!context.mounted) return;
+                debugPrint('Failed to copy weekly cohort report to clipboard');
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Could not copy report')),
                 );
