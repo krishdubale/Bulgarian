@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/constants/app_constants.dart';
 import '../models/lesson_session_model.dart';
 import '../models/user_learning_profile.dart';
 import '../models/user_progress_model.dart';
@@ -19,7 +18,7 @@ final dailySessionServiceProvider = Provider<DailySessionService>((ref) {
 });
 
 /// Orchestrates the daily user learning experience.
-/// Builds a DailyPlan with warm-up, lesson, practice, and challenge sessions.
+/// Builds a single-session daily plan to maximize completion consistency.
 class DailySessionService {
   DailySessionService(
     this._sessionGenerator,
@@ -42,63 +41,23 @@ class DailySessionService {
     final difficulty = profile != null
         ? _evaluationService.getRecommendedDifficulty(profile)
         : 3;
+    final adjustedDifficulty =
+        progress.streakDays >= 7 ? (difficulty + 1).clamp(1, 10) : difficulty;
 
-    // 1. Warm-up: review SRS due items.
-    LessonSession? warmup;
-    final dueCount = _srsService.getDailyReviewCount(languageId);
-    if (dueCount > 0) {
-      warmup = await _sessionGenerator.generateWarmupSession(
-        languageId: languageId,
-      );
-    }
-
-    // 2. New lesson: generate from next uncompleted lesson.
-    final nextLessonId = _getNextLessonId(progress);
-    LessonSession? newLesson;
-    if (nextLessonId != null) {
-      newLesson = await _sessionGenerator.generateLessonSession(
-        languageId: languageId,
-        lessonId: nextLessonId,
-        difficulty: difficulty,
-        profile: profile,
-      );
-    }
-
-    // 3. Practice: mix weak and new items.
-    final practice = await _sessionGenerator.generatePracticeSession(
+    // Daily app loop: one mixed session (review + weak-item repair + new).
+    final session = await _sessionGenerator.generatePracticeSession(
       languageId: languageId,
-      difficulty: difficulty,
+      difficulty: adjustedDifficulty,
       profile: profile,
     );
 
-    // 4. Challenge: optional harder session.
-    final challenge = await _sessionGenerator.generateChallengeSession(
-      languageId: languageId,
-      difficulty: difficulty,
-    );
-
-    int totalMinutes = 0;
-    int totalActivities = 0;
-    if (warmup != null) {
-      totalMinutes += 2;
-      totalActivities++;
-    }
-    if (newLesson != null) {
-      totalMinutes += 3;
-      totalActivities++;
-    }
-    totalMinutes += 2; // practice always exists
-    totalActivities++;
-    totalMinutes += 2; // challenge
-    totalActivities++;
-
     return DailyPlan(
-      warmup: warmup,
-      newLesson: newLesson,
-      practice: practice,
-      challenge: challenge,
-      totalEstimatedMinutes: totalMinutes,
-      totalActivities: totalActivities,
+      warmup: null,
+      newLesson: null,
+      practice: session,
+      challenge: null,
+      totalEstimatedMinutes: session.targetDuration.inMinutes,
+      totalActivities: 1,
     );
   }
 
@@ -135,16 +94,6 @@ class DailySessionService {
     return LearningAction.nextLesson;
   }
 
-  /// Determine the next lesson ID based on progress.
-  String? _getNextLessonId(UserProgressModel progress) {
-    for (final lessonId in AppConstants.defaultLessonSequence) {
-      if (!progress.completedLessons.contains(lessonId) &&
-          progress.unlockedLessons.contains(lessonId)) {
-        return lessonId;
-      }
-    }
-    return null; // all lessons completed
-  }
 }
 
 /// Recommended action for the user.

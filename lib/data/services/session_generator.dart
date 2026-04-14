@@ -87,11 +87,10 @@ class SessionGenerator {
     exercises.sort((a, b) {
       const order = {
         ExerciseType.mcq: 0,
-        ExerciseType.match: 1,
-        ExerciseType.fillBlank: 2,
-        ExerciseType.translate: 3,
-        ExerciseType.sentenceBuild: 4,
-        ExerciseType.listening: 5,
+        ExerciseType.fillBlank: 1,
+        ExerciseType.translate: 2,
+        ExerciseType.sentenceBuild: 3,
+        ExerciseType.listening: 4,
       };
       return (order[a.type] ?? 0).compareTo(order[b.type] ?? 0);
     });
@@ -303,8 +302,6 @@ class SessionGenerator {
         return _createTranslateExercise(item, index);
       case ExerciseType.sentenceBuild:
         return _createSentenceBuildExercise(item, index);
-      case ExerciseType.match:
-        return _createMcqExercise(item, allWords, index); // fallback to MCQ
       case ExerciseType.listening:
         return _createMcqExercise(item, allWords, index);
     }
@@ -409,7 +406,7 @@ class SessionGenerator {
         ExerciseType.mcq,
         ExerciseType.fillBlank,
         ExerciseType.translate,
-        ExerciseType.match,
+        ExerciseType.listening,
       ];
       return types[_random.nextInt(types.length)];
     } else {

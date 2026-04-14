@@ -502,8 +502,6 @@ class _LessonSessionScreenState extends ConsumerState<LessonSessionScreen>
         return 'MULTIPLE CHOICE';
       case ExerciseType.fillBlank:
         return 'FILL IN THE BLANK';
-      case ExerciseType.match:
-        return 'MATCHING';
       case ExerciseType.translate:
         return 'TRANSLATION';
       case ExerciseType.sentenceBuild:

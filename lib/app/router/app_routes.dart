@@ -4,6 +4,8 @@ enum AppRouteKey {
   register,
   onboarding,
   home,
+  path,
+  profileSettings,
   unit,
   lesson,
   practice,
@@ -24,6 +26,10 @@ extension AppRouteKeyX on AppRouteKey {
         return '/onboarding';
       case AppRouteKey.home:
         return '/';
+      case AppRouteKey.path:
+        return '/path';
+      case AppRouteKey.profileSettings:
+        return '/settings';
       case AppRouteKey.unit:
         return '/unit/:unitId';
       case AppRouteKey.lesson:
@@ -37,4 +43,3 @@ extension AppRouteKeyX on AppRouteKey {
     }
   }
 }
-

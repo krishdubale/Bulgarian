@@ -267,7 +267,6 @@ class EvaluationService {
   SkillMode _modeFromExercise(ExerciseType type) {
     switch (type) {
       case ExerciseType.mcq:
-      case ExerciseType.match:
       case ExerciseType.listening:
         return SkillMode.recognition;
       case ExerciseType.fillBlank:

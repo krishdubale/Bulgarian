@@ -2,7 +2,6 @@
 enum ExerciseType {
   mcq,
   fillBlank,
-  match,
   translate,
   sentenceBuild,
   listening,

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/providers/app_providers.dart';
+import '../../../data/repositories/auth_repository.dart';
 import '../../../data/repositories/progress_repository.dart';
 
 final darkModeProvider = StateNotifierProvider<DarkModeNotifier, bool>((ref) {
@@ -28,18 +29,31 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(darkModeProvider);
+    final auth = ref.watch(authStateProvider);
     final progress = ref.watch(userProgressProvider);
     final theme = Theme.of(context);
     const goalOptions = [20, 30, 50, 100, 150];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
-        automaticallyImplyLeading: false,
+        title: const Text('Profile & Settings'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          _SectionHeader(title: 'Account'),
+          Card(
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Text(
+                  (auth.displayName ?? 'U').substring(0, 1).toUpperCase(),
+                ),
+              ),
+              title: Text(auth.displayName ?? 'User'),
+              subtitle: Text(auth.email ?? 'Signed in'),
+            ),
+          ),
+          const SizedBox(height: 12),
           _SectionHeader(title: 'Appearance'),
           Card(
             child: SwitchListTile(
@@ -162,6 +176,17 @@ class SettingsScreen extends ConsumerWidget {
                   subtitle: Text('A1 → C2 (CEFR)'),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.logout, color: Colors.red),
+            label:
+                const Text('Sign Out', style: TextStyle(color: Colors.red)),
+            onPressed: () => ref.read(authStateProvider.notifier).logout(),
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.red),
+              padding: const EdgeInsets.symmetric(vertical: 14),
             ),
           ),
           const SizedBox(height: 32),
